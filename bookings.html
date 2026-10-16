@@ -1,0 +1,462 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0b0b0d">
+  <title>My Bookings | Velora</title>
+
+  <style>
+    * { box-sizing: border-box; }
+
+    :root {
+      --bg: #0b0b0d;
+      --panel: #151518;
+      --gold: #d8b46a;
+      --text: #f7f4ed;
+      --muted: #aaa7a0;
+      --border: #2c2a25;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: var(--bg);
+      color: var(--text);
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    header {
+      border-bottom: 1px solid var(--border);
+      background: #0b0b0df5;
+    }
+
+    .header-inner {
+      max-width: 960px;
+      min-height: 70px;
+      margin: auto;
+      padding: 14px 18px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .logo {
+      color: var(--gold);
+      font-size: 24px;
+      font-weight: 800;
+      letter-spacing: 3px;
+    }
+
+    .back {
+      border: 1px solid var(--border);
+      padding: 10px 13px;
+      border-radius: 9px;
+      font-size: 13px;
+    }
+
+    main {
+      max-width: 850px;
+      margin: auto;
+      padding: 35px 16px 90px;
+    }
+
+    .eyebrow {
+      color: var(--gold);
+      font-size: 11px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+
+    h1 {
+      font-size: clamp(28px, 5vw, 40px);
+      margin: 0 0 12px;
+    }
+
+    .intro {
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.7;
+      max-width: 600px;
+      margin-bottom: 25px;
+    }
+
+    .notice {
+      background: #17150f;
+      border: 1px solid #514329;
+      color: #d8c7a2;
+      padding: 15px;
+      border-radius: 12px;
+      font-size: 13px;
+      line-height: 1.7;
+      margin-bottom: 22px;
+    }
+
+    .toolbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 15px;
+    }
+
+    .count {
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    button {
+      cursor: pointer;
+      font: inherit;
+    }
+
+    .refresh {
+      background: transparent;
+      color: var(--gold);
+      border: 1px solid var(--border);
+      border-radius: 9px;
+      padding: 10px 13px;
+      font-size: 13px;
+    }
+
+    .booking-list {
+      display: grid;
+      gap: 13px;
+    }
+
+    .booking-card {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 19px;
+    }
+
+    .booking-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 12px;
+      margin-bottom: 14px;
+    }
+
+    .booking-title {
+      font-size: 16px;
+      font-weight: 700;
+      overflow-wrap: anywhere;
+    }
+
+    .booking-date {
+      color: var(--muted);
+      font-size: 12px;
+      margin-top: 7px;
+    }
+
+    .status {
+      display: inline-block;
+      flex: 0 0 auto;
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 6px 9px;
+      color: var(--gold);
+      font-size: 11px;
+      text-transform: capitalize;
+    }
+
+    .booking-description {
+      color: #c8c2b8;
+      font-size: 13px;
+      line-height: 1.7;
+      overflow-wrap: anywhere;
+    }
+
+    .state {
+      text-align: center;
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 35px 20px;
+    }
+
+    .state-icon {
+      color: var(--gold);
+      font-size: 32px;
+      margin-bottom: 13px;
+    }
+
+    .state h2 {
+      font-size: 19px;
+      margin: 0 0 10px;
+    }
+
+    .state p {
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.7;
+      max-width: 460px;
+      margin: 0 auto;
+    }
+
+    .state a {
+      display: inline-block;
+      margin-top: 17px;
+      background: var(--gold);
+      color: #17130b;
+      padding: 12px 16px;
+      border-radius: 9px;
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    footer {
+      text-align: center;
+      color: #77736b;
+      font-size: 12px;
+      line-height: 1.8;
+      padding: 0 15px 28px;
+    }
+
+    @media (max-width: 480px) {
+      .booking-card { padding: 15px; }
+      .booking-top { flex-direction: column; }
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <div class="header-inner">
+      <a href="index.html" class="logo">VELORA</a>
+      <a href="profile.html" class="back">My Account</a>
+    </div>
+  </header>
+
+  <main>
+    <p class="eyebrow">Your activity</p>
+    <h1>My Bookings</h1>
+    <p class="intro">
+      View the status of your booking requests in one place.
+      Only bookings connected to your signed-in account should be shown.
+    </p>
+
+    <div class="notice">
+      <strong>Stay safe:</strong> Confirm the details, consent, location and
+      any agreed terms before meeting someone. Never send money under pressure.
+      Report suspicious requests and respect everyone's boundaries.
+    </div>
+
+    <div class="toolbar">
+      <span class="count" id="bookingCount">Checking account…</span>
+      <button class="refresh" id="refreshBtn" type="button">↻ Refresh</button>
+    </div>
+
+    <section class="booking-list" id="bookingList" aria-live="polite">
+      <div class="state">
+        <div class="state-icon">✦</div>
+        <h2>Loading bookings</h2>
+        <p>Please wait while we check your account.</p>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    Velora · Respect · Consent · Privacy<br>
+    Never share your password or verification codes.
+  </footer>
+
+  <script type="module">
+    import {
+      onAuthStateChanged
+    } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-auth.js";
+
+    import {
+      ref,
+      get
+    } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-database.js";
+
+    import { auth, db } from "./js/firebase.js";
+
+    const list = document.getElementById("bookingList");
+    const count = document.getElementById("bookingCount");
+    const refreshBtn = document.getElementById("refreshBtn");
+
+    let currentUser = null;
+    let loading = false;
+
+    function showState(title, description, link = "") {
+      list.replaceChildren();
+
+      const box = document.createElement("div");
+      box.className = "state";
+
+      const icon = document.createElement("div");
+      icon.className = "state-icon";
+      icon.textContent = "✦";
+
+      const heading = document.createElement("h2");
+      heading.textContent = title;
+
+      const paragraph = document.createElement("p");
+      paragraph.textContent = description;
+
+      box.append(icon, heading, paragraph);
+
+      if (link) {
+        const anchor = document.createElement("a");
+        anchor.href = link;
+        anchor.textContent = "Explore Velora";
+        box.appendChild(anchor);
+      }
+
+      list.appendChild(box);
+    }
+
+    function safeText(value, maxLength = 300) {
+      return typeof value === "string"
+        ? value.trim().slice(0, maxLength)
+        : "";
+    }
+
+    function formatDate(value) {
+      if (typeof value !== "number" || !Number.isFinite(value)) {
+        return "Date not available";
+      }
+
+      const date = new Date(value);
+
+      if (Number.isNaN(date.getTime())) {
+        return "Date not available";
+      }
+
+      return date.toLocaleString("en-IN", {
+        dateStyle: "medium",
+        timeStyle: "short"
+      });
+    }
+
+    function renderBookings(bookings) {
+      list.replaceChildren();
+
+      count.textContent =
+        bookings.length + (bookings.length === 1 ? " booking" : " bookings");
+
+      if (bookings.length === 0) {
+        showState(
+          "No bookings yet",
+          "You don't have any booking requests to display. When the booking system is configured and you make a request, your real booking status can appear here.",
+          "explore.html"
+        );
+        return;
+      }
+
+      bookings.forEach(booking => {
+        const card = document.createElement("article");
+        card.className = "booking-card";
+
+        const top = document.createElement("div");
+        top.className = "booking-top";
+
+        const details = document.createElement("div");
+
+        const title = document.createElement("div");
+        title.className = "booking-title";
+        title.textContent =
+          safeText(booking.serviceName, 100) || "Booking request";
+
+        const date = document.createElement("div");
+        date.className = "booking-date";
+        date.textContent = "Requested: " + formatDate(booking.createdAt);
+
+        details.append(title, date);
+
+        const status = document.createElement("span");
+        status.className = "status";
+        status.textContent =
+          safeText(booking.status, 40) || "pending";
+
+        top.append(details, status);
+
+        const description = document.createElement("p");
+        description.className = "booking-description";
+        description.textContent =
+          safeText(booking.message, 500) ||
+          "No additional booking information.";
+
+        card.append(top, description);
+        list.appendChild(card);
+      });
+    }
+
+    async function loadBookings() {
+      if (!currentUser || loading) return;
+
+      loading = true;
+      refreshBtn.disabled = true;
+      count.textContent = "Loading…";
+
+      showState("Loading bookings", "Fetching your account's booking requests.");
+
+      try {
+        // This path is a proposed schema; configure its database rules
+        // before using it for real booking data.
+        const snapshot = await get(
+          ref(db, "bookings/" + currentUser.uid)
+        );
+
+        const bookings = [];
+
+        if (snapshot.exists()) {
+          snapshot.forEach(child => {
+            const data = child.val();
+
+            if (data && typeof data === "object") {
+              bookings.push({
+                id: child.key,
+                serviceName: data.serviceName,
+                status: data.status,
+                message: data.message,
+                createdAt: data.createdAt
+              });
+            }
+          });
+        }
+
+        bookings.sort((a, b) =>
+          (b.createdAt || 0) - (a.createdAt || 0)
+        );
+
+        renderBookings(bookings);
+      } catch (error) {
+        console.error("Bookings load failed:", error);
+
+        count.textContent = "Unable to load";
+
+        showState(
+          "Bookings are not connected yet",
+          "The bookings database path or its read permissions may not be configured. No sample bookings are being displayed."
+        );
+      } finally {
+        loading = false;
+        refreshBtn.disabled = false;
+      }
+    }
+
+    onAuthStateChanged(auth, user => {
+      currentUser = user;
+
+      if (!user) {
+        window.location.replace("login.html");
+        return;
+      }
+
+      loadBookings();
+    });
+
+    refreshBtn.addEventListener("click", loadBookings);
+  </script>
+</body>
+</html>

@@ -1,0 +1,479 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0b0b0d">
+  <title>Public Profile | Velora</title>
+
+  <style>
+    * { box-sizing: border-box; }
+
+    :root {
+      --bg: #0b0b0d;
+      --panel: #151518;
+      --gold: #d8b46a;
+      --text: #f7f4ed;
+      --muted: #aaa7a0;
+      --border: #2c2a25;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: var(--bg);
+      color: var(--text);
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    header {
+      border-bottom: 1px solid var(--border);
+      background: #0b0b0df5;
+    }
+
+    .header-inner {
+      max-width: 960px;
+      min-height: 70px;
+      margin: auto;
+      padding: 14px 18px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .logo {
+      color: var(--gold);
+      font-size: 24px;
+      font-weight: 800;
+      letter-spacing: 3px;
+    }
+
+    .back {
+      border: 1px solid var(--border);
+      padding: 10px 13px;
+      border-radius: 9px;
+      font-size: 13px;
+    }
+
+    main {
+      max-width: 760px;
+      margin: auto;
+      padding: 32px 16px 70px;
+    }
+
+    .eyebrow {
+      color: var(--gold);
+      font-size: 11px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+
+    .card {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      overflow: hidden;
+    }
+
+    .cover {
+      height: 260px;
+      background: linear-gradient(135deg, #352b1d, #111114);
+      display: grid;
+      place-items: center;
+      overflow: hidden;
+    }
+
+    .cover img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .placeholder {
+      color: var(--gold);
+      font-size: 54px;
+    }
+
+    .content {
+      padding: 24px;
+    }
+
+    .name-row {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    h1 {
+      font-size: clamp(25px, 5vw, 34px);
+      margin: 0 0 9px;
+      overflow-wrap: anywhere;
+    }
+
+    .verified {
+      display: inline-block;
+      color: #a9e3b2;
+      background: #19271c;
+      border: 1px solid #385c40;
+      border-radius: 20px;
+      padding: 6px 10px;
+      font-size: 11px;
+    }
+
+    .category {
+      display: inline-block;
+      color: var(--gold);
+      border: 1px solid #65502e;
+      border-radius: 20px;
+      padding: 7px 11px;
+      font-size: 12px;
+      margin: 8px 0 14px;
+    }
+
+    .location {
+      color: var(--muted);
+      font-size: 13px;
+      margin-bottom: 22px;
+    }
+
+    h2 {
+      font-size: 16px;
+      margin: 22px 0 10px;
+    }
+
+    .bio {
+      color: #d0cbc1;
+      font-size: 14px;
+      line-height: 1.8;
+      overflow-wrap: anywhere;
+      white-space: pre-wrap;
+    }
+
+    .notice {
+      background: #111114;
+      border: 1px solid var(--border);
+      color: var(--muted);
+      border-radius: 12px;
+      padding: 15px;
+      margin-top: 20px;
+      font-size: 12px;
+      line-height: 1.7;
+    }
+
+    .actions {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-top: 22px;
+    }
+
+    .btn {
+      display: block;
+      text-align: center;
+      padding: 13px 10px;
+      border-radius: 10px;
+      font-weight: 700;
+      font-size: 13px;
+    }
+
+    .primary {
+      background: var(--gold);
+      color: #17130b;
+    }
+
+    .secondary {
+      border: 1px solid var(--border);
+    }
+
+    .state {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 32px 20px;
+      text-align: center;
+    }
+
+    .state-symbol {
+      color: var(--gold);
+      font-size: 32px;
+      margin-bottom: 12px;
+    }
+
+    .state h2 {
+      margin: 0 0 10px;
+      font-size: 20px;
+    }
+
+    .state p {
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.7;
+      overflow-wrap: anywhere;
+    }
+
+    .state a {
+      display: inline-block;
+      margin-top: 12px;
+      background: var(--gold);
+      color: #17130b;
+      border-radius: 9px;
+      padding: 11px 15px;
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    footer {
+      text-align: center;
+      color: #77736b;
+      font-size: 12px;
+      padding: 0 16px 30px;
+      line-height: 1.8;
+    }
+
+    @media (max-width: 480px) {
+      .cover { height: 220px; }
+      .content { padding: 18px; }
+      .actions { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <div class="header-inner">
+      <a href="index.html" class="logo">VELORA</a>
+      <a href="explore.html" class="back">← Explore</a>
+    </div>
+  </header>
+
+  <main>
+    <p class="eyebrow">Public member profile</p>
+    <div id="profileContainer">
+      <section class="state">
+        <div class="state-symbol">✦</div>
+        <h2>Loading profile</h2>
+        <p>Please wait while we check this public listing.</p>
+      </section>
+    </div>
+  </main>
+
+  <footer>
+    Velora · Respect · Consent · Privacy<br>
+    Public listings are intended for adults aged 18 and over.
+  </footer>
+
+  <script type="module">
+    import {
+      ref,
+      get
+    } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-database.js";
+
+    import { db } from "./js/firebase.js";
+
+    const container = document.getElementById("profileContainer");
+    const params = new URLSearchParams(window.location.search);
+    const profileId = params.get("id");
+
+    function showState(title, description) {
+      container.replaceChildren();
+
+      const box = document.createElement("section");
+      box.className = "state";
+
+      const symbol = document.createElement("div");
+      symbol.className = "state-symbol";
+      symbol.textContent = "✦";
+
+      const heading = document.createElement("h2");
+      heading.textContent = title;
+
+      const paragraph = document.createElement("p");
+      paragraph.textContent = description;
+
+      const link = document.createElement("a");
+      link.href = "explore.html";
+      link.textContent = "Back to Explore";
+
+      box.append(symbol, heading, paragraph, link);
+      container.appendChild(box);
+    }
+
+    function textValue(value, limit = 500) {
+      return typeof value === "string" ? value.trim().slice(0, limit) : "";
+    }
+
+    function addText(parent, tagName, className, value) {
+      const element = document.createElement(tagName);
+      element.className = className;
+      element.textContent = value;
+      parent.appendChild(element);
+      return element;
+    }
+
+    function safeImageUrl(value) {
+      const url = textValue(value, 1000);
+
+      try {
+        const parsed = new URL(url);
+        return parsed.protocol === "https:" ? parsed.href : "";
+      } catch {
+        return "";
+      }
+    }
+
+    function renderProfile(profile) {
+      container.replaceChildren();
+
+      const card = document.createElement("article");
+      card.className = "card";
+
+      const cover = document.createElement("div");
+      cover.className = "cover";
+
+      const imageUrl = safeImageUrl(profile.photoUrl);
+
+      if (imageUrl) {
+        const image = document.createElement("img");
+        image.src = imageUrl;
+        image.alt = "Public profile photo";
+        image.referrerPolicy = "no-referrer";
+
+        image.addEventListener("error", () => {
+          const placeholder = document.createElement("span");
+          placeholder.className = "placeholder";
+          placeholder.textContent = "✦";
+          image.replaceWith(placeholder);
+        }, { once: true });
+
+        cover.appendChild(image);
+      } else {
+        const placeholder = document.createElement("span");
+        placeholder.className = "placeholder";
+        placeholder.textContent = "✦";
+        cover.appendChild(placeholder);
+      }
+
+      const content = document.createElement("div");
+      content.className = "content";
+
+      const nameRow = document.createElement("div");
+      nameRow.className = "name-row";
+
+      addText(
+        nameRow,
+        "h1",
+        "",
+        textValue(profile.displayName, 70) || "Velora member"
+      );
+
+      const badge = document.createElement("span");
+      badge.className = "verified";
+      badge.textContent = "Approved listing";
+      nameRow.appendChild(badge);
+
+      content.appendChild(nameRow);
+
+      addText(
+        content,
+        "div",
+        "category",
+        textValue(profile.category, 40) || "Velora"
+      );
+
+      addText(
+        content,
+        "div",
+        "location",
+        textValue(profile.city, 80) || "Location not shared"
+      );
+
+      addText(content, "h2", "", "About");
+      addText(
+        content,
+        "p",
+        "bio",
+        textValue(profile.bio, 1500) || "No biography has been added."
+      );
+
+      const notice = document.createElement("div");
+      notice.className = "notice";
+      notice.textContent =
+        "Respect this person's privacy and boundaries. Do not share their images or personal information without permission. Never send money to someone you do not trust.";
+      content.appendChild(notice);
+
+      const actions = document.createElement("div");
+      actions.className = "actions";
+
+      const exploreLink = document.createElement("a");
+      exploreLink.className = "btn primary";
+      exploreLink.href = "explore.html";
+      exploreLink.textContent = "Explore more";
+
+      const accountLink = document.createElement("a");
+      accountLink.className = "btn secondary";
+      accountLink.href = "profile.html";
+      accountLink.textContent = "My account";
+
+      actions.append(exploreLink, accountLink);
+      content.appendChild(actions);
+
+      card.append(cover, content);
+      container.appendChild(card);
+    }
+
+    async function loadProfile() {
+      if (!profileId || profileId.length > 128) {
+        showState(
+          "Profile link is incomplete",
+          "Open a profile from the Explore page to view its public details."
+        );
+        return;
+      }
+
+      try {
+        const snapshot = await get(ref(db, "publicProfiles/" + profileId));
+
+        if (!snapshot.exists()) {
+          showState(
+            "Profile not found",
+            "This public listing may have been removed or is no longer available."
+          );
+          return;
+        }
+
+        const profile = snapshot.val();
+
+        if (
+          !profile ||
+          profile.status !== "approved" ||
+          profile.isPublic !== true
+        ) {
+          showState(
+            "Profile unavailable",
+            "This listing is not currently published for public viewing."
+          );
+          return;
+        }
+
+        renderProfile(profile);
+      } catch (error) {
+        console.error("Public profile load failed:", error);
+
+        showState(
+          "Unable to load this profile",
+          "Please check your connection and the Firebase publicProfiles read permissions, then try again."
+        );
+      }
+    }
+
+    loadProfile();
+  </script>
+</body>
+</html>

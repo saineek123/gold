@@ -1,0 +1,578 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0b0b0d">
+  <title>Explore | Velora</title>
+
+  <style>
+    * { box-sizing: border-box; }
+
+    :root {
+      --bg: #0b0b0d;
+      --panel: #151518;
+      --gold: #d8b46a;
+      --text: #f7f4ed;
+      --muted: #aaa7a0;
+      --border: #2c2a25;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: var(--bg);
+      color: var(--text);
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    .header {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      background: #0b0b0df2;
+      border-bottom: 1px solid var(--border);
+      backdrop-filter: blur(14px);
+    }
+
+    .header-inner {
+      max-width: 1120px;
+      min-height: 72px;
+      padding: 14px 20px;
+      margin: auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 15px;
+    }
+
+    .logo {
+      color: var(--gold);
+      font-size: 25px;
+      font-weight: 800;
+      letter-spacing: 3px;
+    }
+
+    .header-link {
+      border: 1px solid var(--border);
+      padding: 10px 14px;
+      border-radius: 10px;
+      font-size: 13px;
+    }
+
+    main {
+      max-width: 1120px;
+      margin: auto;
+      padding: 35px 20px 100px;
+    }
+
+    .eyebrow {
+      color: var(--gold);
+      font-size: 11px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+
+    h1 {
+      font-size: clamp(30px, 5vw, 44px);
+      margin: 0 0 12px;
+    }
+
+    .intro {
+      color: var(--muted);
+      line-height: 1.7;
+      max-width: 650px;
+      font-size: 14px;
+    }
+
+    .filters {
+      display: flex;
+      gap: 9px;
+      overflow-x: auto;
+      padding: 24px 0;
+      scrollbar-width: thin;
+    }
+
+    .filter {
+      flex: 0 0 auto;
+      border: 1px solid var(--border);
+      background: var(--panel);
+      color: var(--text);
+      padding: 11px 16px;
+      border-radius: 25px;
+      cursor: pointer;
+      font-size: 13px;
+    }
+
+    .filter.active {
+      background: var(--gold);
+      color: #17130b;
+      border-color: var(--gold);
+      font-weight: 700;
+    }
+
+    .toolbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      margin: 8px 0 18px;
+    }
+
+    .count {
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .refresh {
+      color: var(--gold);
+      background: transparent;
+      border: 1px solid var(--border);
+      border-radius: 9px;
+      padding: 9px 12px;
+      cursor: pointer;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .profile-card {
+      min-width: 0;
+      overflow: hidden;
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 17px;
+    }
+
+    .photo-wrap {
+      height: 270px;
+      background: linear-gradient(145deg, #29231a, #121214);
+      position: relative;
+    }
+
+    .photo {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .photo-placeholder {
+      width: 100%;
+      height: 100%;
+      display: grid;
+      place-items: center;
+      color: #796641;
+      font-size: 48px;
+    }
+
+    .category-tag {
+      position: absolute;
+      left: 12px;
+      bottom: 12px;
+      background: #0b0b0de8;
+      border: 1px solid #6d5934;
+      color: var(--gold);
+      border-radius: 20px;
+      padding: 7px 10px;
+      font-size: 11px;
+    }
+
+    .profile-info {
+      padding: 17px;
+    }
+
+    .profile-info h2 {
+      font-size: 18px;
+      margin: 0 0 7px;
+      overflow-wrap: anywhere;
+    }
+
+    .location {
+      color: var(--muted);
+      font-size: 12px;
+      margin-bottom: 12px;
+    }
+
+    .bio {
+      color: #c9c4ba;
+      font-size: 13px;
+      line-height: 1.6;
+      min-height: 42px;
+      overflow-wrap: anywhere;
+    }
+
+    .view-btn {
+      display: block;
+      width: 100%;
+      text-align: center;
+      margin-top: 15px;
+      padding: 12px;
+      border-radius: 10px;
+      background: var(--gold);
+      color: #17130b;
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .state {
+      grid-column: 1 / -1;
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 35px 20px;
+      text-align: center;
+      background: var(--panel);
+    }
+
+    .state-icon {
+      font-size: 30px;
+      margin-bottom: 13px;
+    }
+
+    .state h2 {
+      font-size: 19px;
+      margin: 0 0 10px;
+    }
+
+    .state p {
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.7;
+      max-width: 480px;
+      margin: 0 auto;
+    }
+
+    .state a {
+      display: inline-block;
+      margin-top: 18px;
+      padding: 11px 16px;
+      background: var(--gold);
+      color: #17130b;
+      border-radius: 9px;
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .footer {
+      color: #77736b;
+      font-size: 12px;
+      line-height: 1.8;
+      text-align: center;
+      margin-top: 40px;
+    }
+
+    .bottom-nav { display: none; }
+
+    @media (max-width: 800px) {
+      .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .photo-wrap { height: 240px; }
+    }
+
+    @media (max-width: 520px) {
+      .header-inner { padding: 14px; }
+      .logo { font-size: 22px; }
+      main { padding: 28px 14px 95px; }
+      .grid { grid-template-columns: 1fr 1fr; gap: 10px; }
+      .photo-wrap { height: 185px; }
+      .profile-info { padding: 12px; }
+      .profile-info h2 { font-size: 15px; }
+      .bio { font-size: 12px; min-height: 55px; }
+      .view-btn { font-size: 12px; padding: 11px 6px; }
+      .category-tag { font-size: 10px; left: 7px; bottom: 7px; }
+      .bottom-nav {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        z-index: 20;
+        display: flex;
+        justify-content: space-around;
+        background: #111114f5;
+        border-top: 1px solid var(--border);
+        padding: 12px 5px calc(12px + env(safe-area-inset-bottom));
+      }
+      .bottom-nav a {
+        color: var(--muted);
+        text-align: center;
+        font-size: 11px;
+      }
+      .bottom-nav a.active { color: var(--gold); }
+    }
+  </style>
+</head>
+
+<body>
+  <header class="header">
+    <div class="header-inner">
+      <a href="index.html" class="logo">VELORA</a>
+      <a href="profile.html" class="header-link">My Account ↗</a>
+    </div>
+  </header>
+
+  <main>
+    <p class="eyebrow">Discover your circle</p>
+    <h1>Explore Velora</h1>
+    <p class="intro">
+      Discover approved public profiles across dating, companionship,
+      modeling and entertainment. Only profiles explicitly published for
+      public discovery should appear here.
+    </p>
+
+    <nav class="filters" aria-label="Profile categories">
+      <button class="filter active" data-category="all">All</button>
+      <button class="filter" data-category="dating">Dating</button>
+      <button class="filter" data-category="companionship">Companionship</button>
+      <button class="filter" data-category="modeling">Modeling</button>
+      <button class="filter" data-category="entertainment">Entertainment</button>
+    </nav>
+
+    <div class="toolbar">
+      <span class="count" id="count">Loading profiles…</span>
+      <button class="refresh" id="refreshBtn" type="button">↻ Refresh</button>
+    </div>
+
+    <section class="grid" id="profileGrid" aria-live="polite">
+      <div class="state">
+        <div class="state-icon">✦</div>
+        <h2>Loading profiles</h2>
+        <p>Please wait while we check approved public profiles.</p>
+      </div>
+    </section>
+
+    <p class="footer">
+      Velora · Respect · Consent · Privacy<br>
+      Public listings are intended for adults aged 18 and over.
+      Never share sensitive personal or financial information with strangers.
+    </p>
+  </main>
+
+  <nav class="bottom-nav" aria-label="Main navigation">
+    <a href="index.html">⌂<br>Home</a>
+    <a href="explore.html" class="active">◉<br>Explore</a>
+    <a href="bookings.html">▣<br>Bookings</a>
+    <a href="profile.html">○<br>Account</a>
+  </nav>
+
+  <script type="module">
+    import { ref, get, query, orderByChild, equalTo }
+      from "https://www.gstatic.com/firebasejs/11.10.0/firebase-database.js";
+
+    import { db } from "./js/firebase.js";
+
+    const grid = document.getElementById("profileGrid");
+    const count = document.getElementById("count");
+    const refreshBtn = document.getElementById("refreshBtn");
+    const filterButtons = [...document.querySelectorAll(".filter")];
+
+    let allProfiles = [];
+    let currentCategory = "all";
+    let loading = false;
+
+    function showState(title, description, icon = "✦", link = "") {
+      grid.replaceChildren();
+
+      const box = document.createElement("div");
+      box.className = "state";
+
+      const symbol = document.createElement("div");
+      symbol.className = "state-icon";
+      symbol.textContent = icon;
+
+      const heading = document.createElement("h2");
+      heading.textContent = title;
+
+      const paragraph = document.createElement("p");
+      paragraph.textContent = description;
+
+      box.append(symbol, heading, paragraph);
+
+      if (link) {
+        const anchor = document.createElement("a");
+        anchor.href = link;
+        anchor.textContent = "Go to my account";
+        box.appendChild(anchor);
+      }
+
+      grid.appendChild(box);
+    }
+
+    function safeText(value, maxLength = 300) {
+      return typeof value === "string"
+        ? value.trim().slice(0, maxLength)
+        : "";
+    }
+
+    function makeProfileCard(profile) {
+      const card = document.createElement("article");
+      card.className = "profile-card";
+
+      const photoWrap = document.createElement("div");
+      photoWrap.className = "photo-wrap";
+
+      const photoUrl = safeText(profile.photoUrl, 1000);
+
+      if (/^https:\/\//i.test(photoUrl)) {
+        const image = document.createElement("img");
+        image.className = "photo";
+        image.src = photoUrl;
+        image.alt = "Public profile photo";
+        image.loading = "lazy";
+        image.referrerPolicy = "no-referrer";
+
+        image.addEventListener("error", () => {
+          const placeholder = document.createElement("div");
+          placeholder.className = "photo-placeholder";
+          placeholder.textContent = "✦";
+          image.replaceWith(placeholder);
+        }, { once: true });
+
+        photoWrap.appendChild(image);
+      } else {
+        const placeholder = document.createElement("div");
+        placeholder.className = "photo-placeholder";
+        placeholder.textContent = "✦";
+        photoWrap.appendChild(placeholder);
+      }
+
+      const tag = document.createElement("span");
+      tag.className = "category-tag";
+      tag.textContent = safeText(profile.category, 35) || "Velora";
+      photoWrap.appendChild(tag);
+
+      const info = document.createElement("div");
+      info.className = "profile-info";
+
+      const name = document.createElement("h2");
+      name.textContent = safeText(profile.displayName, 70) || "Velora member";
+
+      const location = document.createElement("div");
+      location.className = "location";
+      location.textContent = safeText(profile.city, 80) || "Location not shared";
+
+      const bio = document.createElement("p");
+      bio.className = "bio";
+      bio.textContent = safeText(profile.bio, 180) || "View this public profile for more information.";
+
+      const link = document.createElement("a");
+      link.className = "view-btn";
+      link.href = "public-profile.html?id=" + encodeURIComponent(profile.id);
+      link.textContent = "View profile";
+
+      info.append(name, location, bio, link);
+      card.append(photoWrap, info);
+
+      return card;
+    }
+
+    function renderProfiles() {
+      grid.replaceChildren();
+
+      const visible = allProfiles.filter(profile =>
+        currentCategory === "all" ||
+        safeText(profile.category).toLowerCase() === currentCategory
+      );
+
+      count.textContent =
+        visible.length + (visible.length === 1 ? " profile" : " profiles");
+
+      if (!visible.length) {
+        showState(
+          "No profiles available yet",
+          "There are currently no approved public profiles in this category. New profiles will appear here after they are created and approved.",
+          "✦"
+        );
+        count.textContent = "0 profiles";
+        return;
+      }
+
+      visible.forEach(profile => grid.appendChild(makeProfileCard(profile)));
+    }
+
+    async function loadProfiles() {
+      if (loading) return;
+      loading = true;
+      refreshBtn.disabled = true;
+      count.textContent = "Loading profiles…";
+
+      showState(
+        "Loading profiles",
+        "Checking the approved public listings…",
+        "✦"
+      );
+
+      try {
+        const approvedQuery = query(
+          ref(db, "publicProfiles"),
+          orderByChild("status"),
+          equalTo("approved")
+        );
+
+        const snapshot = await get(approvedQuery);
+
+        allProfiles = [];
+
+        if (snapshot.exists()) {
+          snapshot.forEach(child => {
+            const profile = child.val();
+
+            // Only render approved, explicitly public listings.
+            if (
+              profile &&
+              profile.status === "approved" &&
+              profile.isPublic === true
+            ) {
+              allProfiles.push({
+                id: child.key,
+                displayName: profile.displayName,
+                category: profile.category,
+                city: profile.city,
+                bio: profile.bio,
+                photoUrl: profile.photoUrl
+              });
+            }
+          });
+        }
+
+        renderProfiles();
+      } catch (error) {
+        console.error("Public profiles load error:", error);
+
+        allProfiles = [];
+        count.textContent = "Unable to load";
+
+        showState(
+          "Profiles could not be loaded",
+          "The publicProfiles database path or its read rules may not be configured yet. Check the browser console and Firebase Realtime Database rules.",
+          "!"
+        );
+      } finally {
+        loading = false;
+        refreshBtn.disabled = false;
+      }
+    }
+
+    filterButtons.forEach(button => {
+      button.addEventListener("click", () => {
+        currentCategory = button.dataset.category;
+
+        filterButtons.forEach(item => {
+          item.classList.toggle("active", item === button);
+        });
+
+        renderProfiles();
+      });
+    });
+
+    refreshBtn.addEventListener("click", loadProfiles);
+
+    loadProfiles();
+  </script>
+</body>
+</html>
