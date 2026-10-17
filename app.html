@@ -343,13 +343,14 @@
     const S = window._state;
     S.currentUser = user;
 
-    // Online status — silent fail if rules block
-    try {
-      await update(ref(db, 'users/' + user.uid), { online: true });
-      console.log('✅ Online status set');
-    } catch (e) {
-      console.warn('⚠️ Online status skip:', e.message);
-    }
+    // ✅ Token refresh wait karo pehle
+try {
+  await user.getIdToken(true);
+  await update(ref(db, 'users/' + user.uid), { online: true });
+  console.log('✅ Online status set');
+} catch (e) {
+  console.warn('⚠️ Online status skip:', e.message);
+}
 
     // Load profile
     try {
@@ -361,10 +362,15 @@
       S.currentProfile = { name: user.displayName || 'User', email: user.email };
     }
 
-    // Update UI after profile load
-    if (typeof window.updateProfileUI === 'function') {
-      window.updateProfileUI();
-    }
+   // ✅ Wait karo jab tak UI script load ho jaye
+const tryUpdate = () => {
+  if (typeof window.updateProfileUI === 'function') {
+    window.updateProfileUI();
+  } else {
+    setTimeout(tryUpdate, 50);
+  }
+};
+tryUpdate();
 
     const av = document.getElementById('topAvatar');
     if (S.currentProfile.photo) av.innerHTML = `<img src="${S.currentProfile.photo}">`;
