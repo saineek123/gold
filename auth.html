@@ -6,185 +6,57 @@
 <title>Login / Sign Up — Velora</title>
 <style>
   * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins','Segoe UI',Tahoma,sans-serif; }
-  body {
-    min-height: 100vh; background: #0a0410;
-    display: flex; align-items: center; justify-content: center;
-    padding: 24px; overflow-x: hidden; position: relative;
-    color: #fff;
-  }
+  body { min-height: 100vh; background: #0a0410; display: flex; align-items: center; justify-content: center; padding: 24px; color: #fff; position: relative; overflow-x: hidden; }
   a { text-decoration: none; }
-
-  /* Background effects */
   .bg-orb { position: fixed; border-radius: 50%; filter: blur(100px); opacity: 0.5; z-index: 0; pointer-events: none; }
   .orb-1 { width: 500px; height: 500px; background: radial-gradient(circle, #ff3d6e, transparent 70%); top: -150px; left: -150px; }
   .orb-2 { width: 500px; height: 500px; background: radial-gradient(circle, #a855f7, transparent 70%); bottom: -150px; right: -150px; }
-  .bg-grid {
-    position: fixed; inset: 0; z-index: 0;
-    background-image:
-      linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
-    background-size: 50px 50px;
-    mask-image: radial-gradient(ellipse at center, black 30%, transparent 80%);
-    -webkit-mask-image: radial-gradient(ellipse at center, black 30%, transparent 80%);
-  }
-
-  /* Container */
-  .auth-container { position: relative; z-index: 1; width: 100%; max-width: 460px; }
+  .bg-grid { position: fixed; inset: 0; z-index: 0; background-image: linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px); background-size: 50px 50px; mask-image: radial-gradient(ellipse at center, black 30%, transparent 80%); -webkit-mask-image: radial-gradient(ellipse at center, black 30%, transparent 80%); }
+  .auth-container { position: relative; z-index: 1; width: 100%; max-width: 480px; }
   .auth-logo { text-align: center; margin-bottom: 30px; }
-  .auth-logo a {
-    display: inline-flex; align-items: center; gap: 10px;
-    font-size: 32px; font-weight: 800; color: #ff3d6e;
-    letter-spacing: -1px;
-  }
-  .logo-icon {
-    width: 42px; height: 42px;
-    background: linear-gradient(135deg, #ff3d6e, #ff8fa3);
-    border-radius: 50% 50% 50% 0;
-    transform: rotate(-45deg);
-    display: flex; align-items: center; justify-content: center;
-    box-shadow: 0 4px 20px rgba(255,61,110,0.5);
-  }
-  .logo-icon::after {
-    content: '♥'; transform: rotate(45deg);
-    color: white; font-size: 20px;
-  }
-
-  /* Card */
-  .auth-card {
-    background: linear-gradient(160deg, rgba(255,255,255,0.08), rgba(255,255,255,0.02));
-    backdrop-filter: blur(20px);
-    border: 1px solid rgba(255,255,255,0.12);
-    border-radius: 24px;
-    padding: 40px;
-    box-shadow: 0 30px 80px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.1);
-  }
-
-  /* Tabs */
-  .auth-tabs {
-    display: flex; background: rgba(255,255,255,0.05);
-    border-radius: 12px; padding: 4px; margin-bottom: 28px;
-    border: 1px solid rgba(255,255,255,0.08);
-  }
-  .auth-tab {
-    flex: 1; padding: 12px; text-align: center;
-    background: transparent; border: none;
-    color: rgba(255,255,255,0.6);
-    font-weight: 600; font-size: 14px; cursor: pointer;
-    border-radius: 8px; transition: all 0.3s;
-  }
-  .auth-tab.active {
-    background: linear-gradient(135deg, #ff3d6e, #ff6b8a);
-    color: white;
-    box-shadow: 0 4px 15px rgba(255,61,110,0.4);
-  }
-
-  /* Forms */
+  .auth-logo a { display: inline-flex; align-items: center; gap: 10px; font-size: 32px; font-weight: 800; color: #ff3d6e; letter-spacing: -1px; }
+  .logo-icon { width: 42px; height: 42px; background: linear-gradient(135deg, #ff3d6e, #ff8fa3); border-radius: 50% 50% 50% 0; transform: rotate(-45deg); display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 20px rgba(255,61,110,0.5); }
+  .logo-icon::after { content: '♥'; transform: rotate(45deg); color: white; font-size: 20px; }
+  .auth-card { background: linear-gradient(160deg, rgba(255,255,255,0.08), rgba(255,255,255,0.02)); backdrop-filter: blur(20px); border: 1px solid rgba(255,255,255,0.12); border-radius: 24px; padding: 40px; box-shadow: 0 30px 80px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.1); }
+  .auth-tabs { display: flex; background: rgba(255,255,255,0.05); border-radius: 12px; padding: 4px; margin-bottom: 28px; border: 1px solid rgba(255,255,255,0.08); }
+  .auth-tab { flex: 1; padding: 12px; text-align: center; background: transparent; border: none; color: rgba(255,255,255,0.6); font-weight: 600; font-size: 14px; cursor: pointer; border-radius: 8px; transition: all 0.3s; }
+  .auth-tab.active { background: linear-gradient(135deg, #ff3d6e, #ff6b8a); color: white; box-shadow: 0 4px 15px rgba(255,61,110,0.4); }
   .auth-form { display: none; }
   .auth-form.active { display: block; animation: fadeIn 0.4s ease; }
   @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
   .auth-form h2 { font-size: 24px; color: white; margin-bottom: 6px; font-weight: 700; }
   .auth-subtitle { color: rgba(255,255,255,0.55); font-size: 14px; margin-bottom: 24px; }
-
-  /* Message */
-  .form-message {
-    padding: 12px 16px; border-radius: 10px;
-    font-size: 13px; margin-bottom: 16px;
-    display: none; font-weight: 500; line-height: 1.5;
-  }
-  .form-message.error {
-    background: rgba(255, 61, 110, 0.15); color: #ff8fa3;
-    border: 1px solid rgba(255, 61, 110, 0.3); display: block;
-  }
-  .form-message.success {
-    background: rgba(34, 197, 94, 0.15); color: #22c55e;
-    border: 1px solid rgba(34, 197, 94, 0.3); display: block;
-  }
-
-  /* Inputs */
+  .form-message { padding: 12px 16px; border-radius: 10px; font-size: 13px; margin-bottom: 16px; display: none; font-weight: 500; line-height: 1.5; }
+  .form-message.error { background: rgba(255, 61, 110, 0.15); color: #ff8fa3; border: 1px solid rgba(255, 61, 110, 0.3); display: block; }
+  .form-message.success { background: rgba(34, 197, 94, 0.15); color: #22c55e; border: 1px solid rgba(34, 197, 94, 0.3); display: block; }
+  .photo-upload { display: flex; flex-direction: column; align-items: center; margin-bottom: 20px; }
+  .photo-preview { width: 110px; height: 110px; border-radius: 50%; background: linear-gradient(135deg, rgba(255,61,110,0.2), rgba(255,143,163,0.1)); border: 2px dashed rgba(255,61,110,0.5); display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.3s; overflow: hidden; }
+  .photo-preview:hover { border-color: #ff3d6e; background: rgba(255,61,110,0.15); }
+  .photo-preview img { width: 100%; height: 100%; object-fit: cover; }
+  .photo-preview .placeholder { font-size: 32px; color: rgba(255,143,163,0.6); }
+  .photo-label { color: rgba(255,255,255,0.6); font-size: 12px; margin-top: 8px; }
+  .photo-hint { color: rgba(255,255,255,0.4); font-size: 11px; margin-top: 2px; }
   .form-group { margin-bottom: 16px; }
-  .form-group label {
-    display: block; color: rgba(255,255,255,0.75);
-    font-size: 13px; font-weight: 600; margin-bottom: 8px;
-  }
-  .form-group input,
-  .form-group select {
-    width: 100%; padding: 13px 16px;
-    background: rgba(255,255,255,0.05);
-    border: 1px solid rgba(255,255,255,0.1);
-    border-radius: 12px;
-    color: white; font-size: 14px;
-    font-family: inherit; transition: all 0.3s;
-  }
-  .form-group input:focus,
-  .form-group select:focus {
-    outline: none;
-    border-color: #ff3d6e;
-    background: rgba(255, 61, 110, 0.08);
-    box-shadow: 0 0 0 4px rgba(255,61,110,0.1);
-  }
-  .form-group input::placeholder { color: rgba(255,255,255,0.35); }
+  .form-group label { display: block; color: rgba(255,255,255,0.75); font-size: 13px; font-weight: 600; margin-bottom: 8px; }
+  .form-group input, .form-group select, .form-group textarea { width: 100%; padding: 13px 16px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; color: white; font-size: 14px; font-family: inherit; transition: all 0.3s; }
+  .form-group input:focus, .form-group select:focus, .form-group textarea:focus { outline: none; border-color: #ff3d6e; background: rgba(255,61,110,0.08); box-shadow: 0 0 0 4px rgba(255,61,110,0.1); }
+  .form-group input::placeholder, .form-group textarea::placeholder { color: rgba(255,255,255,0.35); }
   .form-group select option { background: #1a0510; color: white; }
   .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-
-  .forgot-link {
-    display: block; text-align: right;
-    color: #ff8fa3; font-size: 13px;
-    margin-bottom: 20px; cursor: pointer;
-    font-weight: 500; transition: color 0.3s;
-  }
+  .forgot-link { display: block; text-align: right; color: #ff8fa3; font-size: 13px; margin-bottom: 20px; cursor: pointer; font-weight: 500; }
   .forgot-link:hover { color: #ff3d6e; text-decoration: underline; }
-
-  /* Submit */
-  .btn-submit {
-    width: 100%; padding: 15px;
-    background: linear-gradient(135deg, #ff3d6e, #ff6b8a);
-    color: white; border: none; border-radius: 12px;
-    font-size: 15px; font-weight: 700;
-    cursor: pointer; transition: all 0.3s;
-    box-shadow: 0 8px 25px rgba(255,61,110,0.4);
-    display: flex; align-items: center; justify-content: center; gap: 8px;
-  }
-  .btn-submit:hover:not(:disabled) {
-    transform: translateY(-2px);
-    box-shadow: 0 12px 35px rgba(255,61,110,0.6);
-  }
+  .btn-submit { width: 100%; padding: 15px; background: linear-gradient(135deg, #ff3d6e, #ff6b8a); color: white; border: none; border-radius: 12px; font-size: 15px; font-weight: 700; cursor: pointer; transition: all 0.3s; box-shadow: 0 8px 25px rgba(255,61,110,0.4); display: flex; align-items: center; justify-content: center; gap: 8px; }
+  .btn-submit:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 12px 35px rgba(255,61,110,0.6); }
   .btn-submit:disabled { opacity: 0.6; cursor: not-allowed; }
-
-  /* Spinner */
-  .spinner {
-    width: 16px; height: 16px;
-    border: 2px solid rgba(255,255,255,0.3);
-    border-top-color: white;
-    border-radius: 50%;
-    animation: spin 0.8s linear infinite;
-    display: none;
-  }
+  .spinner { width: 16px; height: 16px; border: 2px solid rgba(255,255,255,0.3); border-top-color: white; border-radius: 50%; animation: spin 0.8s linear infinite; display: none; }
   @keyframes spin { to { transform: rotate(360deg); } }
-
-  /* Back link */
+  .progress-bar { height: 4px; background: rgba(255,255,255,0.1); border-radius: 4px; overflow: hidden; margin-top: 10px; display: none; }
+  .progress-bar.active { display: block; }
+  .progress-fill { height: 100%; width: 0%; background: linear-gradient(90deg, #ff3d6e, #ff8fa3); transition: width 0.3s; }
   .back-home { text-align: center; margin-top: 24px; }
-  .back-home a {
-    color: rgba(255,255,255,0.5);
-    font-size: 13px; transition: color 0.3s;
-  }
+  .back-home a { color: rgba(255,255,255,0.5); font-size: 13px; }
   .back-home a:hover { color: #ff8fa3; }
-
-  /* Divider */
-  .divider {
-    display: flex; align-items: center; gap: 12px;
-    margin: 20px 0; color: rgba(255,255,255,0.3);
-    font-size: 12px; text-transform: uppercase; letter-spacing: 1px;
-  }
-  .divider::before, .divider::after {
-    content: ''; flex: 1; height: 1px;
-    background: rgba(255,255,255,0.1);
-  }
-
-  @media (max-width: 480px) {
-    .auth-card { padding: 28px 22px; }
-    .form-row { grid-template-columns: 1fr; }
-    .auth-logo a { font-size: 28px; }
-  }
+  @media (max-width: 480px) { .auth-card { padding: 28px 22px; } .form-row { grid-template-columns: 1fr; } .auth-logo a { font-size: 28px; } }
 </style>
 </head>
 <body>
@@ -194,9 +66,7 @@
 <div class="bg-grid"></div>
 
 <div class="auth-container">
-  <div class="auth-logo">
-    <a href="index.html"><div class="logo-icon"></div>Velora</a>
-  </div>
+  <div class="auth-logo"><a href="index.html"><div class="logo-icon"></div>Velora</a></div>
 
   <div class="auth-card">
     <div class="auth-tabs">
@@ -204,46 +74,35 @@
       <button class="auth-tab" data-tab="signup" onclick="switchTab('signup')">Sign Up</button>
     </div>
 
-    <!-- ============ LOGIN ============ -->
     <form class="auth-form active" id="loginForm" onsubmit="handleLogin(event)">
       <h2>Welcome Back 💕</h2>
       <p class="auth-subtitle">Login to continue your love story</p>
       <div class="form-message" id="loginMsg"></div>
-      <div class="form-group">
-        <label>Email</label>
-        <input type="email" id="loginEmail" placeholder="you@example.com" autocomplete="email" required>
-      </div>
-      <div class="form-group">
-        <label>Password</label>
-        <input type="password" id="loginPassword" placeholder="••••••••" autocomplete="current-password" required>
-      </div>
+      <div class="form-group"><label>Email</label><input type="email" id="loginEmail" placeholder="you@example.com" required></div>
+      <div class="form-group"><label>Password</label><input type="password" id="loginPassword" placeholder="••••••••" required></div>
       <a class="forgot-link" onclick="handleForgotPassword()">Forgot Password?</a>
-      <button type="submit" class="btn-submit" id="loginBtn">
-        <span class="spinner" id="loginSpinner"></span>
-        <span id="loginBtnText">Login</span>
-      </button>
+      <button type="submit" class="btn-submit" id="loginBtn"><span class="spinner" id="loginSpinner"></span><span id="loginBtnText">Login</span></button>
     </form>
 
-    <!-- ============ SIGNUP ============ -->
     <form class="auth-form" id="signupForm" onsubmit="handleSignup(event)">
       <h2>Join Velora 💖</h2>
       <p class="auth-subtitle">Create your free account</p>
       <div class="form-message" id="signupMsg"></div>
-      <div class="form-group">
-        <label>Full Name</label>
-        <input type="text" id="signupName" placeholder="Your name" autocomplete="name" required minlength="2">
-      </div>
-      <div class="form-group">
-        <label>Email</label>
-        <input type="email" id="signupEmail" placeholder="you@example.com" autocomplete="email" required>
-      </div>
-      <div class="form-row">
-        <div class="form-group">
-          <label>Age</label>
-          <input type="number" id="signupAge" placeholder="18+" min="18" max="100" required>
+
+      <div class="photo-upload">
+        <div class="photo-preview" id="photoPreview" onclick="document.getElementById('photoInput').click()">
+          <span class="placeholder">📷</span>
         </div>
-        <div class="form-group">
-          <label>Gender</label>
+        <span class="photo-label">Tap to upload your photo</span>
+        <span class="photo-hint">JPG/PNG · max 5MB</span>
+        <input type="file" id="photoInput" accept="image/*" style="display:none;" onchange="handlePhotoSelect(event)">
+      </div>
+
+      <div class="form-group"><label>Full Name</label><input type="text" id="signupName" placeholder="Your name" required minlength="2"></div>
+      <div class="form-group"><label>Email</label><input type="email" id="signupEmail" placeholder="you@example.com" required></div>
+      <div class="form-row">
+        <div class="form-group"><label>Age</label><input type="number" id="signupAge" placeholder="18+" min="18" max="100" required></div>
+        <div class="form-group"><label>Gender</label>
           <select id="signupGender" required>
             <option value="">Select</option>
             <option value="male">Male</option>
@@ -252,34 +111,23 @@
           </select>
         </div>
       </div>
-      <div class="form-group">
-        <label>City</label>
-        <input type="text" id="signupCity" placeholder="Mumbai" autocomplete="address-level2" required>
-      </div>
-      <div class="form-group">
-        <label>Password</label>
-        <input type="password" id="signupPassword" placeholder="Min 6 characters" autocomplete="new-password" required minlength="6">
-      </div>
-      <button type="submit" class="btn-submit" id="signupBtn">
-        <span class="spinner" id="signupSpinner"></span>
-        <span id="signupBtnText">Create Account</span>
-      </button>
+      <div class="form-group"><label>City</label><input type="text" id="signupCity" placeholder="Mumbai" required></div>
+      <div class="form-group"><label>Interests (comma separated)</label><input type="text" id="signupInterests" placeholder="Music, Travel, Movies"></div>
+      <div class="form-group"><label>Bio</label><textarea id="signupBio" rows="2" placeholder="Tell people about yourself..."></textarea></div>
+      <div class="form-group"><label>Password</label><input type="password" id="signupPassword" placeholder="Min 6 characters" required minlength="6"></div>
+      <button type="submit" class="btn-submit" id="signupBtn"><span class="spinner" id="signupSpinner"></span><span id="signupBtnText">Create Account</span></button>
+      <div class="progress-bar" id="uploadProgress"><div class="progress-fill" id="uploadProgressFill"></div></div>
     </form>
   </div>
 
   <div class="back-home"><a href="index.html">← Back to Home</a></div>
 </div>
 
-<!-- ============ FIREBASE (inline) ============ -->
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-  import {
-    getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword,
-    signOut, onAuthStateChanged, updateProfile, sendPasswordResetEmail
-  } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
-  import {
-    getDatabase, ref, set, update, get
-  } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+  import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, updateProfile, sendPasswordResetEmail } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+  import { getDatabase, ref, set, update } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+  import { getStorage, ref as storageRef, uploadBytesResumable, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-storage.js";
 
   const firebaseConfig = {
     apiKey: "AIzaSyDeXdYVYPzysn55sMNkj-tXYZJzBv7VFD4",
@@ -294,33 +142,19 @@
   const app = initializeApp(firebaseConfig);
   const auth = getAuth(app);
   const db = getDatabase(app);
+  const storage = getStorage(app);
 
-  // ---- Check if already logged in ----
-  onAuthStateChanged(auth, (user) => {
-    if (user) {
-      window.location.href = 'app.html';
-    }
-  });
+  window._fb = { auth, db, storage, createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfile, sendPasswordResetEmail, ref, set, update, storageRef, uploadBytesResumable, getDownloadURL };
+  window.selectedPhotoFile = null;
 
-  // ---- Load mode from URL ----
+  onAuthStateChanged(auth, (user) => { if (user) window.location.href = 'app.html'; });
   const urlParams = new URLSearchParams(window.location.search);
-  const mode = urlParams.get('mode');
-  if (mode === 'signup') switchTab('signup');
-  else if (mode === 'login') switchTab('login');
-
-  // ---- Global helpers for inline handlers ----
-  window._fb = {
-    createUserWithEmailAndPassword, signInWithEmailAndPassword,
-    signOut, updateProfile, sendPasswordResetEmail,
-    ref, set, update, get, db, auth
-  };
-
-  console.log('✅ Firebase ready for auth.html');
+  if (urlParams.get('mode') === 'signup') switchTab('signup');
 </script>
 
-<!-- ============ UI LOGIC ============ -->
 <script>
-  // Tab switching
+  let selectedPhotoFile = null;
+
   function switchTab(tab) {
     document.querySelectorAll('.auth-tab').forEach(t => t.classList.remove('active'));
     document.querySelectorAll('.auth-form').forEach(f => f.classList.remove('active'));
@@ -328,28 +162,52 @@
     document.getElementById(tab === 'login' ? 'loginForm' : 'signupForm').classList.add('active');
     clearMessages();
   }
-
-  // Show message
   function showMsg(form, text, type) {
     const el = document.getElementById(form === 'login' ? 'loginMsg' : 'signupMsg');
     el.textContent = text;
     el.className = 'form-message ' + type;
   }
   function clearMessages() {
-    ['loginMsg', 'signupMsg'].forEach(id => {
-      const el = document.getElementById(id);
-      if (el) { el.textContent = ''; el.className = 'form-message'; }
-    });
+    ['loginMsg', 'signupMsg'].forEach(id => { const el = document.getElementById(id); if (el) { el.textContent = ''; el.className = 'form-message'; } });
   }
-
-  // Loading state
   function setLoading(btnId, spinnerId, textId, loading, loadingText) {
     document.getElementById(btnId).disabled = loading;
     document.getElementById(spinnerId).style.display = loading ? 'inline-block' : 'none';
-    if (loadingText) document.getElementById(textId).textContent = loading ? loadingText : (btnId === 'loginBtn' ? 'Login' : 'Create Account');
+    if (loadingText !== undefined) document.getElementById(textId).textContent = loading ? loadingText : (btnId === 'loginBtn' ? 'Login' : 'Create Account');
+  }
+  function handlePhotoSelect(e) {
+    const file = e.target.files[0];
+    if (!file) return;
+    if (file.size > 5 * 1024 * 1024) { showMsg('signup', 'Photo must be under 5MB', 'error'); return; }
+    if (!file.type.startsWith('image/')) { showMsg('signup', 'Please select an image file', 'error'); return; }
+    selectedPhotoFile = file;
+    const reader = new FileReader();
+    reader.onload = (ev) => {
+      document.getElementById('photoPreview').innerHTML = `<img src="${ev.target.result}" alt="preview">`;
+    };
+    reader.readAsDataURL(file);
+  }
+  function uploadPhoto(file, uid) {
+    return new Promise((resolve, reject) => {
+      const { storage, storageRef, uploadBytesResumable, getDownloadURL } = window._fb;
+      const sRef = storageRef(storage, `profiles/${uid}/${Date.now()}_${file.name}`);
+      const task = uploadBytesResumable(sRef, file);
+      const progressBar = document.getElementById('uploadProgress');
+      const fill = document.getElementById('uploadProgressFill');
+      progressBar.classList.add('active');
+      task.on('state_changed',
+        (snapshot) => { fill.style.width = ((snapshot.bytesTransferred / snapshot.totalBytes) * 100) + '%'; },
+        (err) => reject(err),
+        async () => {
+          const url = await getDownloadURL(task.snapshot.ref);
+          progressBar.classList.remove('active');
+          fill.style.width = '0%';
+          resolve(url);
+        }
+      );
+    });
   }
 
-  // ---- Signup ----
   async function handleSignup(e) {
     e.preventDefault();
     const name = document.getElementById('signupName').value.trim();
@@ -357,39 +215,30 @@
     const age = parseInt(document.getElementById('signupAge').value);
     const gender = document.getElementById('signupGender').value;
     const city = document.getElementById('signupCity').value.trim();
+    const interests = document.getElementById('signupInterests').value.split(',').map(s => s.trim()).filter(Boolean);
+    const bio = document.getElementById('signupBio').value.trim();
     const password = document.getElementById('signupPassword').value;
 
-    if (!name || !email || !age || !gender || !city || !password) {
-      return showMsg('signup', 'Please fill all fields.', 'error');
-    }
-    if (age < 18) {
-      return showMsg('signup', 'You must be 18 or older to join.', 'error');
-    }
-    if (password.length < 6) {
-      return showMsg('signup', 'Password must be at least 6 characters.', 'error');
-    }
+    if (!name || !email || !age || !gender || !city || !password) return showMsg('signup', 'Please fill all required fields.', 'error');
+    if (age < 18) return showMsg('signup', 'You must be 18 or older.', 'error');
+    if (password.length < 6) return showMsg('signup', 'Password must be at least 6 characters.', 'error');
+    if (!selectedPhotoFile) return showMsg('signup', 'Please upload a profile photo.', 'error');
 
     setLoading('signupBtn', 'signupSpinner', 'signupBtnText', true, 'Creating account...');
 
     try {
-      const { createUserWithEmailAndPassword, updateProfile, ref, set, db } = window._fb;
-      const cred = await createUserWithEmailAndPassword(window._fb.auth, email, password);
-
-      // Update display name
+      const { auth, createUserWithEmailAndPassword, updateProfile, ref, set, db } = window._fb;
+      const cred = await createUserWithEmailAndPassword(auth, email, password);
       await updateProfile(cred.user, { displayName: name });
 
-      // Save user profile to Realtime DB
+      let photoURL = '';
+      try { photoURL = await uploadPhoto(selectedPhotoFile, cred.user.uid); }
+      catch (err) { console.warn('Photo upload failed:', err); }
+
       await set(ref(db, 'users/' + cred.user.uid), {
-        uid: cred.user.uid,
-        name: name,
-        email: email,
-        age: age,
-        gender: gender,
-        city: city,
-        bio: '',
-        photo: '',
-        online: true,
-        createdAt: Date.now()
+        uid: cred.user.uid, name, email, age, gender, city, bio, interests,
+        photo: photoURL, photos: photoURL ? [photoURL] : [],
+        online: true, verified: false, createdAt: Date.now()
       });
 
       showMsg('signup', 'Account created! Redirecting... 💖', 'success');
@@ -400,26 +249,17 @@
     }
   }
 
-  // ---- Login ----
   async function handleLogin(e) {
     e.preventDefault();
     const email = document.getElementById('loginEmail').value.trim();
     const password = document.getElementById('loginPassword').value;
-
-    if (!email || !password) {
-      return showMsg('login', 'Please enter email and password.', 'error');
-    }
-
+    if (!email || !password) return showMsg('login', 'Please enter email and password.', 'error');
     setLoading('loginBtn', 'loginSpinner', 'loginBtnText', true, 'Logging in...');
-
     try {
-      const { signInWithEmailAndPassword, ref, update, db } = window._fb;
-      const cred = await signInWithEmailAndPassword(window._fb.auth, email, password);
-
-      // Mark online
+      const { auth, signInWithEmailAndPassword, ref, update, db } = window._fb;
+      const cred = await signInWithEmailAndPassword(auth, email, password);
       await update(ref(db, 'users/' + cred.user.uid), { online: true });
-
-      showMsg('login', 'Login successful! Redirecting... 💕', 'success');
+      showMsg('login', 'Login successful! 💕', 'success');
       setTimeout(() => { window.location.href = 'app.html'; }, 800);
     } catch (err) {
       showMsg('login', friendlyError(err), 'error');
@@ -427,45 +267,37 @@
     }
   }
 
-  // ---- Forgot password ----
   async function handleForgotPassword() {
     const email = document.getElementById('loginEmail').value.trim();
-    if (!email) {
-      return showMsg('login', 'Enter your email above, then click Forgot Password.', 'error');
-    }
+    if (!email) return showMsg('login', 'Enter your email above first.', 'error');
     try {
-      const { sendPasswordResetEmail } = window._fb;
-      await sendPasswordResetEmail(window._fb.auth, email);
+      const { auth, sendPasswordResetEmail } = window._fb;
+      await sendPasswordResetEmail(auth, email);
       showMsg('login', '✅ Password reset link sent to your email.', 'success');
-    } catch (err) {
-      showMsg('login', friendlyError(err), 'error');
-    }
+    } catch (err) { showMsg('login', friendlyError(err), 'error'); }
   }
 
-  // ---- Error messages ----
   function friendlyError(err) {
     const code = err.code || '';
     const map = {
-      'auth/email-already-in-use': 'This email is already registered. Try logging in.',
+      'auth/email-already-in-use': 'This email is already registered.',
       'auth/invalid-email': 'Invalid email address.',
-      'auth/weak-password': 'Password too weak. Use at least 6 characters.',
-      'auth/user-not-found': 'No account found with this email.',
+      'auth/weak-password': 'Password too weak. Use 6+ characters.',
+      'auth/user-not-found': 'No account with this email.',
       'auth/wrong-password': 'Incorrect password.',
       'auth/invalid-credential': 'Invalid email or password.',
-      'auth/too-many-requests': 'Too many attempts. Try again later.',
-      'auth/network-request-failed': 'Network error. Check internet.',
-      'auth/operation-not-allowed': 'Email/Password login not enabled in Firebase Console.',
-      'auth/missing-password': 'Please enter a password.',
+      'auth/too-many-requests': 'Too many attempts. Try later.',
+      'auth/network-request-failed': 'Network error.',
+      'auth/operation-not-allowed': 'Email/Password not enabled in Firebase.',
     };
     return map[code] || (err.message || 'Something went wrong.');
   }
 
-  // Expose
   window.switchTab = switchTab;
   window.handleLogin = handleLogin;
   window.handleSignup = handleSignup;
   window.handleForgotPassword = handleForgotPassword;
+  window.handlePhotoSelect = handlePhotoSelect;
 </script>
-
 </body>
 </html>
