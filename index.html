@@ -3,120 +3,209 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Velora - Find Your Perfect Match</title>
+<title>Velora — Find Your Perfect Match</title>
 <style>
-  * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, sans-serif; }
-  body { background: #fff5f7; color: #333; overflow-x: hidden; }
+  * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins','Segoe UI',Tahoma,sans-serif; }
+  body { background: #0a0410; color: #fff; overflow-x: hidden; }
+  a { text-decoration: none; color: inherit; }
+  button { font-family: inherit; }
 
   /* NAVBAR */
-  .navbar { position: fixed; top: 0; left: 0; width: 100%; background: rgba(255,255,255,0.95); backdrop-filter: blur(10px); box-shadow: 0 2px 20px rgba(255,105,135,0.15); z-index: 1000; padding: 0 40px; }
+  .navbar { position: fixed; top: 0; left: 0; width: 100%; background: rgba(10,4,16,0.75); backdrop-filter: blur(20px); border-bottom: 1px solid rgba(255,255,255,0.06); z-index: 1000; padding: 0 40px; }
   .nav-container { max-width: 1200px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; height: 75px; }
-  .logo { display: flex; align-items: center; gap: 8px; font-size: 28px; font-weight: 800; color: #ff3d6e; cursor: pointer; letter-spacing: -0.5px; }
-  .logo-icon { width: 38px; height: 38px; background: linear-gradient(135deg,#ff3d6e,#ff8fa3); border-radius: 50% 50% 50% 0; transform: rotate(-45deg); display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 15px rgba(255,61,110,0.4); }
-  .logo-icon::after { content: '♥'; transform: rotate(45deg); color: white; font-size: 18px; }
-  .nav-links { display: flex; align-items: center; gap: 35px; list-style: none; }
-  .nav-links a { text-decoration: none; color: #555; font-weight: 500; font-size: 16px; transition: color 0.3s; position: relative; }
-  .nav-links a::after { content: ''; position: absolute; bottom: -6px; left: 0; width: 0; height: 2px; background: #ff3d6e; transition: width 0.3s; }
-  .nav-links a:hover { color: #ff3d6e; }
+  .logo { display: flex; align-items: center; gap: 10px; font-size: 26px; font-weight: 800; color: #ff3d6e; letter-spacing: -0.5px; }
+  .logo-icon { width: 36px; height: 36px; background: linear-gradient(135deg, #ff3d6e, #ff8fa3); border-radius: 50% 50% 50% 0; transform: rotate(-45deg); display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 15px rgba(255,61,110,0.5); }
+  .logo-icon::after { content: '♥'; transform: rotate(45deg); color: white; font-size: 17px; }
+  .nav-links { display: flex; gap: 35px; list-style: none; }
+  .nav-links a { color: rgba(255,255,255,0.75); font-weight: 500; font-size: 15px; transition: color 0.3s; position: relative; }
+  .nav-links a::after { content: ''; position: absolute; bottom: -6px; left: 0; width: 0; height: 2px; background: linear-gradient(90deg, #ff3d6e, #ff8fa3); transition: width 0.3s; }
+  .nav-links a:hover { color: #ff8fa3; }
   .nav-links a:hover::after { width: 100%; }
   .nav-buttons { display: flex; gap: 12px; align-items: center; }
-  .btn-login { padding: 9px 22px; border: 2px solid #ff3d6e; background: transparent; color: #ff3d6e; border-radius: 50px; font-weight: 600; font-size: 15px; cursor: pointer; transition: all 0.3s; }
-  .btn-login:hover { background: #ff3d6e; color: white; transform: translateY(-2px); }
-  .btn-signup { padding: 11px 26px; border: none; background: linear-gradient(135deg,#ff3d6e,#ff6b8a); color: white; border-radius: 50px; font-weight: 600; font-size: 15px; cursor: pointer; transition: all 0.3s; box-shadow: 0 4px 15px rgba(255,61,110,0.35); }
-  .btn-signup:hover { transform: translateY(-2px); box-shadow: 0 6px 22px rgba(255,61,110,0.5); }
-  .user-badge { display: none; align-items: center; gap: 10px; }
-  .user-avatar { width: 40px; height: 40px; border-radius: 50%; background: linear-gradient(135deg,#ff3d6e,#ff8fa3); color: white; display: flex; align-items: center; justify-content: center; font-weight: 700; }
-  .btn-logout { padding: 8px 18px; border: 2px solid #ff3d6e; background: transparent; color: #ff3d6e; border-radius: 50px; font-weight: 600; font-size: 14px; cursor: pointer; transition: all 0.3s; }
-  .btn-logout:hover { background: #ff3d6e; color: white; }
-
-  .menu-btn { display: none; flex-direction: column; gap: 5px; background: none; border: none; cursor: pointer; padding: 8px; z-index: 1100; }
+  .btn-login { padding: 10px 24px; border: 1.5px solid rgba(255,143,163,0.5); background: transparent; color: #ff8fa3; border-radius: 50px; font-weight: 600; font-size: 14px; cursor: pointer; transition: all 0.3s; }
+  .btn-login:hover { background: rgba(255,143,163,0.1); border-color: #ff3d6e; }
+  .btn-signup { padding: 11px 26px; background: linear-gradient(135deg, #ff3d6e, #ff6b8a); color: white; border: none; border-radius: 50px; font-weight: 600; font-size: 14px; cursor: pointer; transition: all 0.3s; box-shadow: 0 4px 15px rgba(255,61,110,0.4); }
+  .btn-signup:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(255,61,110,0.6); }
+  .menu-btn { display: none; flex-direction: column; gap: 5px; background: none; border: none; cursor: pointer; padding: 8px; }
   .menu-btn span { width: 26px; height: 3px; background: #ff3d6e; border-radius: 3px; transition: all 0.3s; }
   .menu-btn.active span:nth-child(1) { transform: rotate(45deg) translate(6px, 6px); }
   .menu-btn.active span:nth-child(2) { opacity: 0; }
   .menu-btn.active span:nth-child(3) { transform: rotate(-45deg) translate(6px, -6px); }
-  .mobile-menu { position: fixed; top: 0; right: -100%; width: 280px; height: 100vh; background: white; box-shadow: -5px 0 30px rgba(0,0,0,0.1); z-index: 1050; padding: 100px 30px 30px; transition: right 0.4s ease; display: flex; flex-direction: column; gap: 20px; }
+  .mobile-menu { position: fixed; top: 0; right: -100%; width: 280px; height: 100vh; background: #150815; border-left: 1px solid rgba(255,255,255,0.08); z-index: 1050; padding: 100px 30px 30px; transition: right 0.4s ease; display: flex; flex-direction: column; gap: 8px; }
   .mobile-menu.active { right: 0; }
-  .mobile-menu a { text-decoration: none; color: #333; font-size: 18px; font-weight: 500; padding: 10px 0; border-bottom: 1px solid #ffe0e6; transition: color 0.3s; }
-  .mobile-menu a:hover { color: #ff3d6e; }
-  .mobile-menu .mobile-btns { display: flex; flex-direction: column; gap: 12px; margin-top: 20px; }
-  .overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.4); z-index: 1040; opacity: 0; visibility: hidden; transition: all 0.3s; }
+  .mobile-menu a { color: rgba(255,255,255,0.85); padding: 14px 0; font-size: 16px; font-weight: 500; border-bottom: 1px solid rgba(255,255,255,0.06); transition: color 0.3s; }
+  .mobile-menu a:hover { color: #ff8fa3; }
+  .mobile-menu .mobile-login, .mobile-menu .mobile-signup { text-align: center; padding: 14px; border-radius: 50px; border: none; font-weight: 600; margin-top: 10px; }
+  .mobile-menu .mobile-login { background: transparent; border: 1.5px solid rgba(255,143,163,0.5); color: #ff8fa3; }
+  .mobile-menu .mobile-signup { background: linear-gradient(135deg, #ff3d6e, #ff6b8a); color: white; }
+  .overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.6); z-index: 1040; opacity: 0; visibility: hidden; transition: all 0.3s; }
   .overlay.active { opacity: 1; visibility: visible; }
 
   /* HERO */
-  .hero { min-height: 100vh; padding: 120px 40px 60px; display: flex; align-items: center; justify-content: center; background: linear-gradient(135deg,#fff5f7 0%,#ffe4ec 100%); position: relative; overflow: hidden; }
-  .hero::before { content: '♥'; position: absolute; font-size: 300px; color: rgba(255,61,110,0.05); top: 10%; left: -50px; }
-  .hero::after { content: '♥'; position: absolute; font-size: 200px; color: rgba(255,61,110,0.05); bottom: 5%; right: 5%; }
-  .hero-container { max-width: 1200px; width: 100%; display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; position: relative; z-index: 1; }
-  .hero-text h1 { font-size: 58px; font-weight: 800; line-height: 1.15; color: #2d1b2e; margin-bottom: 25px; }
-  .hero-text h1 span { background: linear-gradient(135deg,#ff3d6e,#ff8fa3); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
-  .hero-text p { font-size: 18px; color: #666; line-height: 1.7; margin-bottom: 35px; max-width: 480px; }
-  .hero-buttons { display: flex; gap: 15px; flex-wrap: wrap; }
-  .btn-primary { padding: 15px 38px; border: none; background: linear-gradient(135deg,#ff3d6e,#ff6b8a); color: white; border-radius: 50px; font-weight: 600; font-size: 16px; cursor: pointer; transition: all 0.3s; box-shadow: 0 6px 25px rgba(255,61,110,0.4); }
-  .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 10px 35px rgba(255,61,110,0.55); }
-  .btn-secondary { padding: 15px 38px; border: 2px solid #ff3d6e; background: white; color: #ff3d6e; border-radius: 50px; font-weight: 600; font-size: 16px; cursor: pointer; transition: all 0.3s; }
-  .btn-secondary:hover { background: #ff3d6e; color: white; transform: translateY(-3px); }
-  .hero-stats { display: flex; gap: 40px; margin-top: 45px; }
-  .stat h3 { font-size: 32px; color: #ff3d6e; font-weight: 800; }
-  .stat p { font-size: 14px; color: #888; margin: 0; }
+  .hero { position: relative; min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 120px 40px 80px; overflow: hidden; background: #0a0410; isolation: isolate; }
+  .hero-bg { position: absolute; inset: 0; z-index: -3; background: linear-gradient(-45deg, #1a0510, #2d0a1f, #4a0e2e, #1a0510); background-size: 400% 400%; animation: meshGradient 15s ease infinite; }
+  @keyframes meshGradient { 0%{background-position:0% 50%;} 50%{background-position:100% 50%;} 100%{background-position:0% 50%;} }
+  .orb { position: absolute; border-radius: 50%; filter: blur(90px); z-index: -2; opacity: 0.6; pointer-events: none; }
+  .orb-1 { width: 500px; height: 500px; background: radial-gradient(circle, #ff3d6e, transparent 70%); top: -120px; left: -100px; animation: orbFloat1 18s ease-in-out infinite; }
+  .orb-2 { width: 600px; height: 600px; background: radial-gradient(circle, #ff6b8a, transparent 70%); bottom: -200px; right: -150px; animation: orbFloat2 22s ease-in-out infinite; }
+  .orb-3 { width: 400px; height: 400px; background: radial-gradient(circle, #a855f7, transparent 70%); top: 40%; left: 45%; animation: orbFloat3 20s ease-in-out infinite; }
+  @keyframes orbFloat1 { 0%,100%{transform:translate(0,0) scale(1);} 50%{transform:translate(80px,60px) scale(1.15);} }
+  @keyframes orbFloat2 { 0%,100%{transform:translate(0,0) scale(1);} 50%{transform:translate(-70px,-50px) scale(1.2);} }
+  @keyframes orbFloat3 { 0%,100%{transform:translate(0,0) scale(1);} 50%{transform:translate(50px,-60px) scale(0.9);} }
+  .hero-grid { position: absolute; inset: 0; z-index: -1; background-image: linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px); background-size: 60px 60px; mask-image: radial-gradient(ellipse at center, black 30%, transparent 75%); -webkit-mask-image: radial-gradient(ellipse at center, black 30%, transparent 75%); }
+  .particles { position: absolute; inset: 0; z-index: -1; overflow: hidden; pointer-events: none; }
+  .particle { position: absolute; font-size: 20px; opacity: 0; animation: particleFloat 12s linear infinite; }
+  @keyframes particleFloat { 0%{transform:translateY(100vh) rotate(0deg);opacity:0;} 10%{opacity:0.6;} 90%{opacity:0.6;} 100%{transform:translateY(-100px) rotate(360deg);opacity:0;} }
+  .hero-container { max-width: 1200px; width: 100%; display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 60px; align-items: center; position: relative; z-index: 2; }
+  .hero-content { animation: fadeSlideUp 1s ease 0.2s backwards; }
+  @keyframes fadeSlideUp { from{opacity:0;transform:translateY(40px);} to{opacity:1;transform:translateY(0);} }
+  .hero-badge { display: inline-flex; align-items: center; gap: 8px; padding: 8px 18px; background: rgba(255,61,110,0.12); border: 1px solid rgba(255,61,110,0.35); border-radius: 50px; color: #ff8fa3; font-size: 13px; font-weight: 600; letter-spacing: 0.5px; margin-bottom: 28px; backdrop-filter: blur(10px); }
+  .hero-badge .dot { width: 8px; height: 8px; background: #ff3d6e; border-radius: 50%; box-shadow: 0 0 10px #ff3d6e; animation: pulse 2s infinite; }
+  @keyframes pulse { 0%,100%{opacity:1;transform:scale(1);} 50%{opacity:0.5;transform:scale(1.3);} }
+  .hero-heading { font-size: 64px; font-weight: 800; line-height: 1.1; letter-spacing: -1.5px; color: #fff; margin-bottom: 28px; }
+  .gradient-text { background: linear-gradient(135deg, #ff3d6e 0%, #ff8fa3 50%, #ffb3c6 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+  .hero-heading .gradient-text { position: relative; display: inline-block; }
+  .hero-heading .gradient-text::after { content: ''; position: absolute; bottom: -8px; left: 0; width: 100%; height: 4px; background: linear-gradient(90deg, transparent, #ff3d6e, transparent); border-radius: 4px; opacity: 0.6; }
+  .hero-description { font-size: 18px; line-height: 1.75; color: rgba(255,255,255,0.72); max-width: 520px; margin-bottom: 42px; }
+  .hero-description strong { color: #ff8fa3; font-weight: 600; }
+  .hero-buttons { display: flex; gap: 16px; flex-wrap: wrap; margin-bottom: 50px; }
+  .btn-get-started { position: relative; padding: 17px 42px; border-radius: 50px; border: none; background: linear-gradient(135deg, #ff3d6e 0%, #ff6b8a 100%); color: white; font-size: 16px; font-weight: 700; cursor: pointer; overflow: hidden; transition: all 0.4s cubic-bezier(0.4,0,0.2,1); box-shadow: 0 8px 30px rgba(255,61,110,0.45), inset 0 1px 0 rgba(255,255,255,0.2); display: inline-flex; align-items: center; gap: 10px; }
+  .btn-get-started::before { content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent); transition: left 0.6s; }
+  .btn-get-started:hover::before { left: 100%; }
+  .btn-get-started:hover { transform: translateY(-4px) scale(1.02); box-shadow: 0 14px 40px rgba(255,61,110,0.65); }
+  .btn-explore { padding: 17px 42px; border-radius: 50px; background: rgba(255,255,255,0.06); border: 1.5px solid rgba(255,255,255,0.18); color: white; font-size: 16px; font-weight: 600; cursor: pointer; backdrop-filter: blur(15px); transition: all 0.4s; display: inline-flex; align-items: center; gap: 10px; }
+  .btn-explore:hover { background: rgba(255,255,255,0.12); border-color: rgba(255,143,163,0.6); transform: translateY(-4px); box-shadow: 0 12px 32px rgba(255,61,110,0.25); }
+  .hero-stats { display: flex; gap: 45px; padding-top: 35px; border-top: 1px solid rgba(255,255,255,0.08); }
+  .stat-item h3 { font-size: 30px; font-weight: 800; background: linear-gradient(135deg, #ffffff, #ff8fa3); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; margin-bottom: 4px; }
+  .stat-item p { font-size: 13px; color: rgba(255,255,255,0.55); font-weight: 500; }
+  .hero-visual { position: relative; display: flex; justify-content: center; align-items: center; }
+  .visual-wrapper { position: relative; width: 100%; max-width: 440px; aspect-ratio: 4/5; }
+  .visual-glow { position: absolute; inset: -40px; background: radial-gradient(circle, rgba(255,61,110,0.4), transparent 65%); filter: blur(40px); z-index: 0; animation: glowPulse 4s ease-in-out infinite; }
+  @keyframes glowPulse { 0%,100%{opacity:0.6;transform:scale(1);} 50%{opacity:1;transform:scale(1.08);} }
+  .glass-card { position: relative; width: 100%; height: 100%; border-radius: 32px; background: linear-gradient(160deg, rgba(255,255,255,0.1), rgba(255,255,255,0.03)); border: 1px solid rgba(255,255,255,0.18); backdrop-filter: blur(20px); overflow: hidden; z-index: 1; box-shadow: 0 30px 80px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.15); animation: cardFloat 6s ease-in-out infinite; }
+  @keyframes cardFloat { 0%,100%{transform:translateY(0) rotate(-0.5deg);} 50%{transform:translateY(-15px) rotate(0.5deg);} }
+  .card-photo { width: 100%; height: 68%; background: radial-gradient(circle at 50% 40%, rgba(255,143,163,0.4), transparent 60%), linear-gradient(135deg, #4a0e2e, #2d0a1f); display: flex; align-items: center; justify-content: center; }
+  .card-photo::after { content: '💑'; font-size: 140px; filter: drop-shadow(0 15px 30px rgba(0,0,0,0.4)); animation: heartbeat 2s ease-in-out infinite; }
+  @keyframes heartbeat { 0%,100%{transform:scale(1);} 25%{transform:scale(1.08);} 50%{transform:scale(1);} 75%{transform:scale(1.05);} }
+  .card-info { padding: 24px 28px; height: 32%; display: flex; flex-direction: column; justify-content: center; gap: 6px; }
+  .card-info .name-row { display: flex; align-items: center; gap: 10px; }
+  .card-info .name { font-size: 22px; font-weight: 700; color: white; }
+  .verified-badge { width: 20px; height: 20px; background: linear-gradient(135deg, #3b82f6, #6366f1); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 11px; color: white; }
+  .card-info .meta { font-size: 13px; color: rgba(255,255,255,0.6); display: flex; align-items: center; gap: 6px; }
+  .card-info .meta .online { width: 8px; height: 8px; background: #22c55e; border-radius: 50%; box-shadow: 0 0 8px #22c55e; }
+  .card-actions { display: flex; gap: 12px; margin-top: 12px; }
+  .action-btn { flex: 1; padding: 10px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.15); background: rgba(255,255,255,0.06); color: white; font-size: 18px; cursor: pointer; transition: all 0.3s; }
+  .action-btn.like { background: linear-gradient(135deg, #ff3d6e, #ff6b8a); border-color: transparent; }
+  .float-card { position: absolute; padding: 12px 18px; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15); border-radius: 16px; backdrop-filter: blur(20px); display: flex; align-items: center; gap: 10px; z-index: 3; box-shadow: 0 10px 30px rgba(0,0,0,0.3); white-space: nowrap; }
+  .float-card .icon { width: 34px; height: 34px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 18px; }
+  .float-card .text h5 { color: white; font-size: 13px; font-weight: 700; margin-bottom: 2px; }
+  .float-card .text p { color: rgba(255,255,255,0.55); font-size: 11px; }
+  .float-card.card-1 { top: 8%; left: -18%; animation: floatCard1 5s ease-in-out infinite; }
+  .float-card.card-1 .icon { background: linear-gradient(135deg, #ff3d6e, #ff6b8a); }
+  .float-card.card-2 { bottom: 15%; right: -18%; animation: floatCard2 6s ease-in-out infinite; }
+  .float-card.card-2 .icon { background: linear-gradient(135deg, #a855f7, #6366f1); }
+  @keyframes floatCard1 { 0%,100%{transform:translate(0,0) rotate(-2deg);} 50%{transform:translate(-10px,-15px) rotate(-2deg);} }
+  @keyframes floatCard2 { 0%,100%{transform:translate(0,0) rotate(2deg);} 50%{transform:translate(10px,15px) rotate(2deg);} }
 
-  .hero-image { display: flex; justify-content: center; position: relative; }
-  .couple-card { width: 380px; height: 460px; background: linear-gradient(135deg,#ff3d6e,#ff8fa3); border-radius: 30px; position: relative; box-shadow: 0 20px 60px rgba(255,61,110,0.35); overflow: hidden; display: flex; align-items: flex-end; justify-content: center; }
-  .couple-card::before { content: '💑'; position: absolute; font-size: 200px; top: 30px; filter: drop-shadow(0 10px 20px rgba(0,0,0,0.2)); }
-  .couple-card-info { background: rgba(255,255,255,0.95); padding: 20px; border-radius: 20px; margin-bottom: 20px; width: 85%; text-align: center; }
-  .couple-card-info h3 { color: #ff3d6e; font-size: 20px; margin-bottom: 5px; }
-  .couple-card-info p { color: #888; font-size: 14px; }
-  .floating-heart { position: absolute; font-size: 28px; animation: float 3s ease-in-out infinite; }
-  .fh1 { top: 40px; right: -20px; animation-delay: 0s; }
-  .fh2 { top: 200px; left: -30px; animation-delay: 0.5s; }
-  .fh3 { bottom: 100px; right: -25px; animation-delay: 1s; }
-  @keyframes float { 0%,100% { transform: translateY(0) rotate(-5deg); } 50% { transform: translateY(-20px) rotate(5deg); } }
+  /* SECTIONS */
+  .section-container { max-width: 1200px; margin: 0 auto; }
+  .section-header { text-align: center; margin-bottom: 60px; }
+  .section-tag { display: inline-block; padding: 6px 16px; background: rgba(255,61,110,0.12); border: 1px solid rgba(255,61,110,0.35); border-radius: 50px; color: #ff8fa3; font-size: 12px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 18px; }
+  .section-header h2 { font-size: 44px; font-weight: 800; color: white; letter-spacing: -1px; margin-bottom: 16px; }
+  .section-header p { color: rgba(255,255,255,0.65); font-size: 17px; max-width: 600px; margin: 0 auto; line-height: 1.6; }
 
-  /* ============ MODAL (Auth) ============ */
-  .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); backdrop-filter: blur(5px); z-index: 2000; display: none; align-items: center; justify-content: center; padding: 20px; }
-  .modal-overlay.active { display: flex; }
-  .modal { background: white; border-radius: 24px; padding: 40px; width: 100%; max-width: 420px; position: relative; box-shadow: 0 25px 70px rgba(0,0,0,0.3); animation: modalIn 0.4s ease; }
-  @keyframes modalIn { from { transform: scale(0.9); opacity: 0; } to { transform: scale(1); opacity: 1; } }
-  .modal-close { position: absolute; top: 15px; right: 20px; background: none; border: none; font-size: 28px; color: #999; cursor: pointer; transition: color 0.3s; }
-  .modal-close:hover { color: #ff3d6e; }
-  .modal h2 { color: #2d1b2e; font-size: 28px; margin-bottom: 8px; }
-  .modal-subtitle { color: #888; font-size: 15px; margin-bottom: 25px; }
-  .form-group { margin-bottom: 18px; }
-  .form-group label { display: block; font-size: 14px; font-weight: 600; color: #555; margin-bottom: 6px; }
-  .form-group input { width: 100%; padding: 13px 16px; border: 2px solid #ffe0e6; border-radius: 12px; font-size: 15px; outline: none; transition: border-color 0.3s; font-family: inherit; }
-  .form-group input:focus { border-color: #ff3d6e; }
-  .btn-submit { width: 100%; padding: 14px; border: none; background: linear-gradient(135deg,#ff3d6e,#ff6b8a); color: white; border-radius: 12px; font-weight: 700; font-size: 16px; cursor: pointer; transition: all 0.3s; margin-top: 8px; }
-  .btn-submit:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(255,61,110,0.4); }
-  .btn-submit:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
-  .modal-switch { text-align: center; margin-top: 20px; font-size: 14px; color: #888; }
-  .modal-switch a { color: #ff3d6e; font-weight: 600; cursor: pointer; text-decoration: none; }
-  .form-message { padding: 12px; border-radius: 10px; font-size: 14px; margin-bottom: 18px; display: none; }
-  .form-message.error { background: #ffe5ea; color: #d6335c; display: block; }
-  .form-message.success { background: #e5fff0; color: #1a8f4b; display: block; }
+  /* FEATURES */
+  .features { padding: 100px 40px; background: linear-gradient(180deg, #0a0410, #12061c); }
+  .features-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+  .feature-card { padding: 32px 28px; background: linear-gradient(160deg, rgba(255,255,255,0.05), rgba(255,255,255,0.02)); border: 1px solid rgba(255,255,255,0.08); border-radius: 20px; transition: all 0.4s; }
+  .feature-card:hover { transform: translateY(-6px); border-color: rgba(255,61,110,0.3); box-shadow: 0 20px 50px rgba(255,61,110,0.15); }
+  .feature-icon { width: 56px; height: 56px; background: linear-gradient(135deg, rgba(255,61,110,0.2), rgba(255,143,163,0.1)); border: 1px solid rgba(255,61,110,0.3); border-radius: 16px; display: flex; align-items: center; justify-content: center; font-size: 28px; margin-bottom: 20px; }
+  .feature-card h3 { color: white; font-size: 20px; font-weight: 700; margin-bottom: 10px; }
+  .feature-card p { color: rgba(255,255,255,0.6); font-size: 15px; line-height: 1.65; }
 
-  .hidden { display: none !important; }
+  /* ABOUT */
+  .about { padding: 100px 40px; background: #0a0410; }
+  .about-container { display: grid; grid-template-columns: 1fr 1.2fr; gap: 60px; align-items: center; }
+  .about-visual { display: flex; justify-content: center; }
+  .about-card { width: 100%; max-width: 380px; aspect-ratio: 1; background: linear-gradient(135deg, #ff3d6e, #a855f7); border-radius: 32px; padding: 3px; box-shadow: 0 30px 80px rgba(255,61,110,0.3); animation: cardFloat 6s ease-in-out infinite; }
+  .about-card-inner { width: 100%; height: 100%; background: #150815; border-radius: 30px; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 40px; text-align: center; }
+  .about-emoji { font-size: 100px; margin-bottom: 20px; display: block; }
+  .about-card-inner h4 { color: white; font-size: 24px; font-weight: 700; margin-bottom: 8px; }
+  .about-card-inner p { color: rgba(255,255,255,0.6); font-size: 14px; }
+  .about-text h2 { margin-bottom: 24px; font-size: 40px; }
+  .about-text p { color: rgba(255,255,255,0.7); font-size: 16px; line-height: 1.75; margin-bottom: 18px; }
+  .about-text strong { color: #ff8fa3; }
+  .about-values { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 28px 0 32px; }
+  .value-item { display: flex; align-items: center; gap: 10px; color: rgba(255,255,255,0.85); font-size: 14px; font-weight: 500; }
 
-  @media (max-width: 992px) {
-    .hero-container { grid-template-columns: 1fr; text-align: center; }
-    .hero-text p { margin: 0 auto 35px; }
-    .hero-buttons, .hero-stats { justify-content: center; }
-    .hero-text h1 { font-size: 44px; }
+  /* CONTACT */
+  .contact { padding: 100px 40px; background: linear-gradient(180deg, #0a0410, #12061c); }
+  .contact-container { display: grid; grid-template-columns: 1fr 1.4fr; gap: 60px; align-items: start; }
+  .contact-info { display: flex; flex-direction: column; gap: 24px; }
+  .contact-item { display: flex; gap: 16px; padding: 20px; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); border-radius: 16px; transition: all 0.3s; }
+  .contact-item:hover { border-color: rgba(255,61,110,0.3); }
+  .contact-icon { width: 48px; height: 48px; background: linear-gradient(135deg, rgba(255,61,110,0.2), rgba(255,143,163,0.1)); border: 1px solid rgba(255,61,110,0.3); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 22px; flex-shrink: 0; }
+  .contact-item h4 { color: white; font-size: 16px; font-weight: 700; margin-bottom: 4px; }
+  .contact-item p { color: rgba(255,255,255,0.6); font-size: 14px; }
+  .contact-form { padding: 36px; background: linear-gradient(160deg, rgba(255,255,255,0.05), rgba(255,255,255,0.02)); border: 1px solid rgba(255,255,255,0.08); border-radius: 24px; display: flex; flex-direction: column; gap: 14px; }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .contact-form input, .contact-form textarea { width: 100%; padding: 14px 18px; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; color: white; font-size: 14px; font-family: inherit; transition: border-color 0.3s; }
+  .contact-form input:focus, .contact-form textarea:focus { outline: none; border-color: rgba(255,61,110,0.5); }
+  .contact-form input::placeholder, .contact-form textarea::placeholder { color: rgba(255,255,255,0.4); }
+  .contact-form .btn-get-started { justify-content: center; }
+  .form-success { color: #22c55e; font-size: 14px; text-align: center; padding: 10px; background: rgba(34,197,94,0.1); border-radius: 10px; border: 1px solid rgba(34,197,94,0.3); }
+
+  /* FOOTER */
+  .footer { background: #05010a; border-top: 1px solid rgba(255,255,255,0.06); padding: 60px 40px 30px; }
+  .footer-container { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 40px; margin-bottom: 40px; }
+  .footer-brand p { color: rgba(255,255,255,0.55); font-size: 14px; line-height: 1.7; margin: 18px 0 22px; max-width: 320px; }
+  .footer-socials { display: flex; gap: 10px; }
+  .footer-socials a { width: 38px; height: 38px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.08); border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 16px; transition: all 0.3s; }
+  .footer-socials a:hover { background: rgba(255,61,110,0.15); border-color: rgba(255,61,110,0.4); transform: translateY(-3px); }
+  .footer-col { display: flex; flex-direction: column; gap: 12px; }
+  .footer-col h4 { color: white; font-size: 14px; font-weight: 700; margin-bottom: 4px; }
+  .footer-col a { color: rgba(255,255,255,0.55); font-size: 14px; transition: color 0.3s; }
+  .footer-col a:hover { color: #ff8fa3; }
+  .footer-bottom { max-width: 1200px; margin: 0 auto; padding-top: 30px; border-top: 1px solid rgba(255,255,255,0.06); text-align: center; }
+  .footer-bottom p { color: rgba(255,255,255,0.4); font-size: 13px; }
+
+  /* RESPONSIVE */
+  @media (max-width: 1024px) {
+    .hero-heading { font-size: 52px; }
+    .features-grid { grid-template-columns: repeat(2, 1fr); }
   }
-  @media (max-width: 768px) {
-    .navbar { padding: 0 20px; }
+  @media (max-width: 900px) {
+    .hero { padding: 100px 24px 60px; min-height: auto; }
+    .hero-container { grid-template-columns: 1fr; text-align: center; gap: 60px; }
+    .hero-content { display: flex; flex-direction: column; align-items: center; }
+    .hero-heading { font-size: 44px; }
+    .hero-buttons, .hero-stats { justify-content: center; }
+    .visual-wrapper { max-width: 340px; }
+    .about-container, .contact-container { grid-template-columns: 1fr; gap: 40px; }
+    .section-header h2 { font-size: 34px; }
+    .about-text h2 { font-size: 32px; }
+    .features, .about, .contact { padding: 70px 24px; }
     .nav-links, .nav-buttons { display: none; }
     .menu-btn { display: flex; }
-    .hero { padding: 110px 20px 50px; }
-    .hero-text h1 { font-size: 36px; }
-    .hero-text p { font-size: 16px; }
-    .hero-stats { gap: 25px; }
-    .stat h3 { font-size: 26px; }
-    .couple-card { width: 300px; height: 380px; }
-    .couple-card::before { font-size: 150px; }
-    .modal { padding: 30px 25px; }
+    .navbar { padding: 0 20px; }
+    .footer-container { grid-template-columns: 1.5fr 1fr 1fr; }
   }
-  @media (max-width: 480px) {
-    .hero-text h1 { font-size: 30px; }
-    .btn-primary, .btn-secondary { padding: 13px 28px; font-size: 15px; }
+  @media (max-width: 600px) {
+    .hero-heading { font-size: 34px; }
+    .hero-description { font-size: 15px; }
+    .hero-buttons { flex-direction: column; width: 100%; }
+    .btn-get-started, .btn-explore { width: 100%; justify-content: center; padding: 15px 24px; font-size: 15px; }
+    .hero-stats { gap: 25px; }
+    .stat-item h3 { font-size: 22px; }
+    .visual-wrapper { max-width: 280px; }
+    .float-card { padding: 10px 14px; }
+    .features-grid { grid-template-columns: 1fr; }
+    .section-header h2 { font-size: 28px; }
+    .form-row { grid-template-columns: 1fr; }
+    .contact-form { padding: 24px; }
+    .footer-container { grid-template-columns: 1fr; gap: 30px; }
+    .about-values { grid-template-columns: 1fr; }
+    .footer { padding: 50px 24px 24px; }
   }
 </style>
 </head>
@@ -125,125 +214,211 @@
 <!-- NAVBAR -->
 <nav class="navbar">
   <div class="nav-container">
-    <div class="logo"><div class="logo-icon"></div>Velora</div>
+    <a href="index.html" class="logo"><div class="logo-icon"></div>Velora</a>
     <ul class="nav-links">
       <li><a href="#home">Home</a></li>
       <li><a href="#explore">Explore</a></li>
       <li><a href="#about">About Us</a></li>
       <li><a href="#contact">Contact</a></li>
     </ul>
-    <div class="nav-buttons" id="navButtons">
-      <button class="btn-login" onclick="openAuth('login')">Login</button>
-      <button class="btn-signup" onclick="openAuth('signup')">Sign Up</button>
-    </div>
-    <div class="user-badge" id="userBadge">
-      <div class="user-avatar" id="userAvatar">?</div>
-      <button class="btn-logout" onclick="handleLogout()">Logout</button>
+    <div class="nav-buttons">
+      <a href="auth.html?mode=login" class="btn-login">Login</a>
+      <a href="auth.html?mode=signup" class="btn-signup">Sign Up</a>
     </div>
     <button class="menu-btn" id="menuBtn"><span></span><span></span><span></span></button>
   </div>
 </nav>
 
-<!-- MOBILE MENU -->
 <div class="overlay" id="overlay"></div>
 <div class="mobile-menu" id="mobileMenu">
   <a href="#home">Home</a>
   <a href="#explore">Explore</a>
   <a href="#about">About Us</a>
   <a href="#contact">Contact</a>
-  <div class="mobile-btns" id="mobileBtns">
-    <button class="btn-login" onclick="openAuth('login'); toggleMenu();">Login</button>
-    <button class="btn-signup" onclick="openAuth('signup'); toggleMenu();">Sign Up</button>
-  </div>
+  <a href="auth.html?mode=login" class="mobile-login">Login</a>
+  <a href="auth.html?mode=signup" class="mobile-signup">Sign Up</a>
 </div>
 
 <!-- HERO -->
 <section class="hero" id="home">
+  <div class="hero-bg"></div>
+  <div class="orb orb-1"></div>
+  <div class="orb orb-2"></div>
+  <div class="orb orb-3"></div>
+  <div class="hero-grid"></div>
+  <div class="particles" id="particles"></div>
+
   <div class="hero-container">
-    <div class="hero-text">
-      <h1>Find Your <span>Perfect Match</span> & Fall in Love</h1>
-      <p>Welcome to Velora — where real connections begin. Meet genuine people, share beautiful moments, and let your love story unfold.</p>
+    <div class="hero-content">
+      <div class="hero-badge"><span class="dot"></span>Trusted by 2 Million+ Singles Worldwide</div>
+      <h1 class="hero-heading">Find Your <br><span class="gradient-text">Perfect Match</span></h1>
+      <p class="hero-description"><strong>Velora</strong> is a modern dating platform built for genuine connections. Share your story, discover meaningful relationships, and let love find its way to you — safely, privately, and beautifully.</p>
       <div class="hero-buttons">
-        <button class="btn-primary" onclick="openAuth('signup')">Get Started Free</button>
-        <button class="btn-secondary" onclick="document.getElementById('explore').scrollIntoView({behavior:'smooth'})">Learn More</button>
+        <a href="auth.html?mode=signup" class="btn-get-started">Get Started <span>→</span></a>
+        <a href="#explore" class="btn-explore">Explore Now ✨</a>
       </div>
       <div class="hero-stats">
-        <div class="stat"><h3 id="statUsers">0</h3><p>Active Users</p></div>
-        <div class="stat"><h3 id="statMatches">0</h3><p>Matches Made</p></div>
-        <div class="stat"><h3>4.9★</h3><p>User Rating</p></div>
+        <div class="stat-item"><h3 id="liveUsers">0</h3><p>Active Members</p></div>
+        <div class="stat-item"><h3>50K+</h3><p>Matches Made</p></div>
+        <div class="stat-item"><h3>4.9★</h3><p>User Rating</p></div>
       </div>
     </div>
-    <div class="hero-image">
-      <div class="couple-card">
-        <div class="couple-card-info">
-          <h3>Start Your Story 💖</h3>
-          <p>Join Velora Today</p>
+
+    <div class="hero-visual">
+      <div class="visual-wrapper">
+        <div class="visual-glow"></div>
+        <div class="float-card card-1"><div class="icon">💘</div><div class="text"><h5>New Match!</h5><p>Just now</p></div></div>
+        <div class="glass-card">
+          <div class="card-photo"></div>
+          <div class="card-info">
+            <div class="name-row"><span class="name">Aanya, 24</span><span class="verified-badge">✓</span></div>
+            <div class="meta"><span class="online"></span>Online now · Mumbai</div>
+            <div class="card-actions">
+              <button class="action-btn pass">✕</button>
+              <button class="action-btn like">♥</button>
+            </div>
+          </div>
         </div>
+        <div class="float-card card-2"><div class="icon">💬</div><div class="text"><h5>New Message</h5><p>From Riya</p></div></div>
       </div>
-      <div class="floating-heart fh1">💕</div>
-      <div class="floating-heart fh2">💘</div>
-      <div class="floating-heart fh3">💖</div>
     </div>
   </div>
 </section>
 
-<!-- AUTH MODAL -->
-<div class="modal-overlay" id="authModal">
-  <div class="modal">
-    <button class="modal-close" onclick="closeAuth()">&times;</button>
-
-    <!-- LOGIN FORM -->
-    <div id="loginForm">
-      <h2>Welcome Back 💕</h2>
-      <p class="modal-subtitle">Login to continue your love story</p>
-      <div class="form-message" id="loginMsg"></div>
-      <div class="form-group">
-        <label>Email</label>
-        <input type="email" id="loginEmail" placeholder="you@example.com">
-      </div>
-      <div class="form-group">
-        <label>Password</label>
-        <input type="password" id="loginPassword" placeholder="••••••••">
-      </div>
-      <button class="btn-submit" id="loginBtn" onclick="handleLogin()">Login</button>
-      <div class="modal-switch">Don't have an account? <a onclick="switchForm('signup')">Sign Up</a></div>
+<!-- FEATURES -->
+<section class="features" id="explore">
+  <div class="section-container">
+    <div class="section-header">
+      <span class="section-tag">Explore Velora</span>
+      <h2>Why Choose <span class="gradient-text">Velora?</span></h2>
+      <p>Everything you need to find love — beautifully designed, thoughtfully built.</p>
     </div>
-
-    <!-- SIGNUP FORM -->
-    <div id="signupForm" class="hidden">
-      <h2>Join Velora 💖</h2>
-      <p class="modal-subtitle">Create your free account</p>
-      <div class="form-message" id="signupMsg"></div>
-      <div class="form-group">
-        <label>Full Name</label>
-        <input type="text" id="signupName" placeholder="Your name">
-      </div>
-      <div class="form-group">
-        <label>Email</label>
-        <input type="email" id="signupEmail" placeholder="you@example.com">
-      </div>
-      <div class="form-group">
-        <label>Password</label>
-        <input type="password" id="signupPassword" placeholder="Min 6 characters">
-      </div>
-      <button class="btn-submit" id="signupBtn" onclick="handleSignup()">Create Account</button>
-      <div class="modal-switch">Already have an account? <a onclick="switchForm('login')">Login</a></div>
+    <div class="features-grid">
+      <div class="feature-card"><div class="feature-icon">💘</div><h3>Smart Matching</h3><p>Our algorithm connects you with people who share your interests, values, and vibe.</p></div>
+      <div class="feature-card"><div class="feature-icon">🔒</div><h3>100% Private</h3><p>Your data is encrypted and secure. You control who sees what, always.</p></div>
+      <div class="feature-card"><div class="feature-icon">💬</div><h3>Real Conversations</h3><p>Chat instantly with your matches. No bots, no fake profiles — just real people.</p></div>
+      <div class="feature-card"><div class="feature-icon">✅</div><h3>Verified Profiles</h3><p>Every profile is verified. Meet genuine people looking for real connections.</p></div>
+      <div class="feature-card"><div class="feature-icon">🌍</div><h3>Global Reach</h3><p>Connect with singles from your city or across the world. Love knows no bounds.</p></div>
+      <div class="feature-card"><div class="feature-icon">⭐</div><h3>Premium Experience</h3><p>Beautiful UI, fast performance, and features designed for a world-class dating experience.</p></div>
     </div>
   </div>
-</div>
+</section>
 
-<!-- ============ FIREBASE SDK (MODULE SCRIPTS) ============ -->
+<!-- ABOUT -->
+<section class="about" id="about">
+  <div class="section-container about-container">
+    <div class="about-visual">
+      <div class="about-card">
+        <div class="about-card-inner">
+          <span class="about-emoji">💑</span>
+          <h4>Made with ❤️</h4>
+          <p>Every feature crafted with care</p>
+        </div>
+      </div>
+    </div>
+    <div class="about-text">
+      <span class="section-tag">About Us</span>
+      <h2>We're Building <span class="gradient-text">Real Connections</span></h2>
+      <p>Velora was born from a simple idea: dating apps should feel <strong>human again</strong>. We're not about endless swiping — we're about meaningful conversations that lead to real relationships.</p>
+      <p>Built by a small team of dreamers and developers, Velora combines cutting-edge technology with a warm, human touch.</p>
+      <div class="about-values">
+        <div class="value-item">✅ Genuine Profiles</div>
+        <div class="value-item">✅ Privacy First</div>
+        <div class="value-item">✅ No Hidden Fees</div>
+        <div class="value-item">✅ Human Support</div>
+      </div>
+      <a href="auth.html?mode=signup" class="btn-get-started">Join Velora Free →</a>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact" id="contact">
+  <div class="section-container">
+    <div class="section-header">
+      <span class="section-tag">Contact Us</span>
+      <h2>Let's <span class="gradient-text">Talk</span></h2>
+      <p>Questions, feedback, or just want to say hi? We're all ears.</p>
+    </div>
+    <div class="contact-container">
+      <div class="contact-info">
+        <div class="contact-item"><div class="contact-icon">📧</div><div><h4>Email Us</h4><p>hello@velora.app</p></div></div>
+        <div class="contact-item"><div class="contact-icon">💬</div><div><h4>Live Chat</h4><p>Available 24/7 in the app</p></div></div>
+        <div class="contact-item"><div class="contact-icon">📍</div><div><h4>Headquarters</h4><p>Mumbai, India</p></div></div>
+      </div>
+      <form class="contact-form" onsubmit="handleContact(event)">
+        <div class="form-row">
+          <input type="text" placeholder="Your Name" required>
+          <input type="email" placeholder="Your Email" required>
+        </div>
+        <input type="text" placeholder="Subject" required>
+        <textarea rows="5" placeholder="Your message..." required></textarea>
+        <button type="submit" class="btn-get-started">Send Message →</button>
+        <p class="form-success" id="contactSuccess" style="display:none;">✅ Thanks! We'll get back to you soon.</p>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer-container">
+    <div class="footer-brand">
+      <a href="index.html" class="logo"><div class="logo-icon"></div>Velora</a>
+      <p>Where real connections begin. Find your perfect match and start your love story today.</p>
+      <div class="footer-socials"><a href="#">📘</a><a href="#">📸</a><a href="#">🐦</a><a href="#">💼</a></div>
+    </div>
+    <div class="footer-col"><h4>Product</h4><a href="#home">Home</a><a href="#explore">Features</a><a href="auth.html?mode=signup">Sign Up</a><a href="auth.html?mode=login">Login</a></div>
+    <div class="footer-col"><h4>Company</h4><a href="#about">About Us</a><a href="#contact">Contact</a><a href="#">Careers</a><a href="#">Blog</a></div>
+    <div class="footer-col"><h4>Legal</h4><a href="#">Privacy</a><a href="#">Terms</a><a href="#">Cookies</a><a href="#">Guidelines</a></div>
+  </div>
+  <div class="footer-bottom"><p>© 2025 Velora. Made with 💖 in India.</p></div>
+</footer>
+
+<script>
+  // Mobile menu
+  const menuBtn = document.getElementById('menuBtn');
+  const mobileMenu = document.getElementById('mobileMenu');
+  const overlay = document.getElementById('overlay');
+  menuBtn.addEventListener('click', () => {
+    menuBtn.classList.toggle('active');
+    mobileMenu.classList.toggle('active');
+    overlay.classList.toggle('active');
+  });
+  overlay.addEventListener('click', () => {
+    menuBtn.classList.remove('active');
+    mobileMenu.classList.remove('active');
+    overlay.classList.remove('active');
+  });
+
+  // Floating particles
+  const particlesBox = document.getElementById('particles');
+  const hearts = ['💕', '💖', '💘', '💝', '♥'];
+  for (let i = 0; i < 15; i++) {
+    const p = document.createElement('div');
+    p.className = 'particle';
+    p.textContent = hearts[Math.floor(Math.random() * hearts.length)];
+    p.style.left = Math.random() * 100 + '%';
+    p.style.fontSize = (14 + Math.random() * 18) + 'px';
+    p.style.animationDuration = (10 + Math.random() * 8) + 's';
+    p.style.animationDelay = (Math.random() * 12) + 's';
+    particlesBox.appendChild(p);
+  }
+
+  // Contact form
+  function handleContact(e) {
+    e.preventDefault();
+    document.getElementById('contactSuccess').style.display = 'block';
+    e.target.reset();
+    setTimeout(() => { document.getElementById('contactSuccess').style.display = 'none'; }, 4000);
+  }
+</script>
+
+<!-- FIREBASE: live user count (module script inline) -->
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-  import {
-    getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword,
-    signOut, onAuthStateChanged, updateProfile
-  } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
-  import {
-    getDatabase, ref, set, get, child, onValue
-  } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+  import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
 
-  // ---------- Firebase Config (TUMHARA) ----------
   const firebaseConfig = {
     apiKey: "AIzaSyDeXdYVYPzysn55sMNkj-tXYZJzBv7VFD4",
     authDomain: "bigwin-29967.firebaseapp.com",
@@ -251,243 +426,26 @@
     projectId: "bigwin-29967",
     storageBucket: "bigwin-29967.firebasestorage.app",
     messagingSenderId: "628333876092",
-    appId: "1:628333876092:web:8e36daac959c0f42154af9",
-    measurementId: "G-654JHXWMEL"
+    appId: "1:628333876092:web:8e36daac959c0f42154af9"
   };
-
   const app = initializeApp(firebaseConfig);
-  const auth = getAuth(app);
   const db = getDatabase(app);
 
-  // ---------- Global refs ----------
-  window._auth = auth;
-  window._db = db;
-  window._fbFuncs = {
-    createUserWithEmailAndPassword, signInWithEmailAndPassword,
-    signOut, updateProfile, ref, set, get, child, onValue
-  };
-
-  // ---------- Track user state ----------
-  onAuthStateChanged(auth, (user) => {
-    const navButtons = document.getElementById('navButtons');
-    const userBadge = document.getElementById('userBadge');
-    const mobileBtns = document.getElementById('mobileBtns');
-    const userAvatar = document.getElementById('userAvatar');
-
-    if (user) {
-      navButtons.style.display = 'none';
-      userBadge.style.display = 'flex';
-      mobileBtns.style.display = 'none';
-      const name = user.displayName || user.email.split('@')[0];
-      userAvatar.textContent = name.charAt(0).toUpperCase();
-      userAvatar.title = name;
-    } else {
-      navButtons.style.display = 'flex';
-      userBadge.style.display = 'none';
-      mobileBtns.style.display = 'flex';
-    }
-  });
-
-  // ---------- Live stats from Firebase Realtime DB ----------
-  const usersRef = ref(db, 'users');
-  onValue(usersRef, (snap) => {
+  onValue(ref(db, 'users'), (snap) => {
     const data = snap.val() || {};
     const count = Object.keys(data).length;
-    animateNumber('statUsers', count, 'M+');
-    animateNumber('statMatches', Math.floor(count * 0.6), 'K+');
-  }, (err) => {
-    console.error("Stats read error:", err);
-    document.getElementById('statUsers').textContent = "0";
-    document.getElementById('statMatches').textContent = "0";
-  });
-
-  function animateNumber(id, target, suffix) {
-    const el = document.getElementById(id);
-    if (!target) { el.textContent = "0" + suffix; return; }
-    const start = 0;
-    const duration = 1200;
-    const startTime = performance.now();
-    function step(now) {
-      const progress = Math.min((now - startTime) / duration, 1);
-      const current = Math.floor(start + (target - start) * progress);
-      el.textContent = current.toLocaleString() + (suffix === 'M+' ? '+' : suffix === 'K+' ? '+' : '');
-      if (progress < 1) requestAnimationFrame(step);
-      else el.textContent = target >= 1000 ? (target/1000).toFixed(1) + 'K+' : target + '+';
+    const el = document.getElementById('liveUsers');
+    if (el) {
+      let current = 0;
+      const target = count;
+      const step = Math.max(1, Math.floor(target / 40));
+      const timer = setInterval(() => {
+        current += step;
+        if (current >= target) { current = target; clearInterval(timer); }
+        el.textContent = current.toLocaleString() + (current === target ? '+' : '');
+      }, 25);
     }
-    requestAnimationFrame(step);
-  }
-
-  // Expose auth functions to global (for inline handlers)
-  window.fbAuth = {
-    async signup(name, email, password) {
-      const cred = await createUserWithEmailAndPassword(auth, email, password);
-      await updateProfile(cred.user, { displayName: name });
-      // Save user data to Realtime DB
-      await set(ref(db, 'users/' + cred.user.uid), {
-        name: name,
-        email: email,
-        createdAt: Date.now(),
-        uid: cred.user.uid
-      });
-      return cred.user;
-    },
-    async login(email, password) {
-      return await signInWithEmailAndPassword(auth, email, password);
-    },
-    async logout() {
-      return await signOut(auth);
-    }
-  };
-
-  console.log("✅ Firebase initialized:", app.name);
-</script>
-
-<!-- ============ UI LOGIC (non-module) ============ -->
-<script>
-  // ---- Mobile menu ----
-  const menuBtn = document.getElementById('menuBtn');
-  const mobileMenu = document.getElementById('mobileMenu');
-  const overlay = document.getElementById('overlay');
-  function toggleMenu() {
-    menuBtn.classList.toggle('active');
-    mobileMenu.classList.toggle('active');
-    overlay.classList.toggle('active');
-  }
-  menuBtn.addEventListener('click', toggleMenu);
-  overlay.addEventListener('click', toggleMenu);
-  document.querySelectorAll('.mobile-menu a').forEach(l => l.addEventListener('click', toggleMenu));
-
-  // ---- Auth modal ----
-  function openAuth(mode) {
-    document.getElementById('authModal').classList.add('active');
-    switchForm(mode);
-  }
-  function closeAuth() {
-    document.getElementById('authModal').classList.remove('active');
-    clearMessages();
-  }
-  function switchForm(mode) {
-    const loginForm = document.getElementById('loginForm');
-    const signupForm = document.getElementById('signupForm');
-    if (mode === 'login') {
-      loginForm.classList.remove('hidden');
-      signupForm.classList.add('hidden');
-    } else {
-      loginForm.classList.add('hidden');
-      signupForm.classList.remove('hidden');
-    }
-    clearMessages();
-  }
-  function clearMessages() {
-    document.getElementById('loginMsg').className = 'form-message';
-    document.getElementById('signupMsg').className = 'form-message';
-    document.getElementById('loginMsg').textContent = '';
-    document.getElementById('signupMsg').textContent = '';
-  }
-  function showMsg(id, text, type) {
-    const el = document.getElementById(id);
-    el.textContent = text;
-    el.className = 'form-message ' + type;
-  }
-
-  // Close modal on overlay click
-  document.getElementById('authModal').addEventListener('click', (e) => {
-    if (e.target.id === 'authModal') closeAuth();
-  });
-
-  // ---- Signup handler ----
-  async function handleSignup() {
-    const name = document.getElementById('signupName').value.trim();
-    const email = document.getElementById('signupEmail').value.trim();
-    const password = document.getElementById('signupPassword').value;
-    const btn = document.getElementById('signupBtn');
-
-    if (!name || !email || !password) {
-      return showMsg('signupMsg', 'Please fill all fields.', 'error');
-    }
-    if (password.length < 6) {
-      return showMsg('signupMsg', 'Password must be at least 6 characters.', 'error');
-    }
-
-    btn.disabled = true;
-    btn.textContent = 'Creating account...';
-    try {
-      await window.fbAuth.signup(name, email, password);
-      showMsg('signupMsg', 'Account created! Welcome to Velora 💖', 'success');
-      setTimeout(() => { closeAuth(); resetForms(); }, 1500);
-    } catch (err) {
-      showMsg('signupMsg', friendlyError(err), 'error');
-    } finally {
-      btn.disabled = false;
-      btn.textContent = 'Create Account';
-    }
-  }
-
-  // ---- Login handler ----
-  async function handleLogin() {
-    const email = document.getElementById('loginEmail').value.trim();
-    const password = document.getElementById('loginPassword').value;
-    const btn = document.getElementById('loginBtn');
-
-    if (!email || !password) {
-      return showMsg('loginMsg', 'Please enter email and password.', 'error');
-    }
-
-    btn.disabled = true;
-    btn.textContent = 'Logging in...';
-    try {
-      await window.fbAuth.login(email, password);
-      showMsg('loginMsg', 'Login successful! 💕', 'success');
-      setTimeout(() => { closeAuth(); resetForms(); }, 1000);
-    } catch (err) {
-      showMsg('loginMsg', friendlyError(err), 'error');
-    } finally {
-      btn.disabled = false;
-      btn.textContent = 'Login';
-    }
-  }
-
-  // ---- Logout ----
-  async function handleLogout() {
-    try {
-      await window.fbAuth.logout();
-    } catch (err) {
-      console.error(err);
-    }
-  }
-
-  // ---- Reset ----
-  function resetForms() {
-    ['signupName','signupEmail','signupPassword','loginEmail','loginPassword']
-      .forEach(id => document.getElementById(id).value = '');
-    clearMessages();
-  }
-
-  // ---- Friendly Firebase error messages ----
-  function friendlyError(err) {
-    const code = err.code || '';
-    const map = {
-      'auth/email-already-in-use': 'This email is already registered. Try logging in.',
-      'auth/invalid-email': 'Invalid email address format.',
-      'auth/weak-password': 'Password too weak. Use at least 6 characters.',
-      'auth/user-not-found': 'No account found with this email.',
-      'auth/wrong-password': 'Incorrect password. Try again.',
-      'auth/invalid-credential': 'Invalid email or password.',
-      'auth/too-many-requests': 'Too many attempts. Please try again later.',
-      'auth/network-request-failed': 'Network error. Check your internet.',
-      'auth/operation-not-allowed': 'Email/Password login is not enabled in Firebase Console.',
-    };
-    return map[code] || (err.message || 'Something went wrong. Try again.');
-  }
-
-  // Expose handlers to inline
-  window.openAuth = openAuth;
-  window.closeAuth = closeAuth;
-  window.switchForm = switchForm;
-  window.handleLogin = handleLogin;
-  window.handleSignup = handleSignup;
-  window.handleLogout = handleLogout;
-  window.toggleMenu = toggleMenu;
+  }, (err) => console.error('DB read error:', err));
 </script>
 
 </body>
