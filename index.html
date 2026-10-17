@@ -10,7 +10,6 @@
   a { text-decoration: none; color: inherit; }
   button { font-family: inherit; }
 
-  /* NAVBAR */
   .navbar { position: fixed; top: 0; left: 0; width: 100%; background: rgba(10,4,16,0.75); backdrop-filter: blur(20px); border-bottom: 1px solid rgba(255,255,255,0.06); z-index: 1000; padding: 0 40px; }
   .nav-container { max-width: 1200px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; height: 75px; }
   .logo { display: flex; align-items: center; gap: 10px; font-size: 26px; font-weight: 800; color: #ff3d6e; letter-spacing: -0.5px; }
@@ -41,7 +40,6 @@
   .overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.6); z-index: 1040; opacity: 0; visibility: hidden; transition: all 0.3s; }
   .overlay.active { opacity: 1; visibility: visible; }
 
-  /* HERO */
   .hero { position: relative; min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 120px 40px 80px; overflow: hidden; background: #0a0410; isolation: isolate; }
   .hero-bg { position: absolute; inset: 0; z-index: -3; background: linear-gradient(-45deg, #1a0510, #2d0a1f, #4a0e2e, #1a0510); background-size: 400% 400%; animation: meshGradient 15s ease infinite; }
   @keyframes meshGradient { 0%{background-position:0% 50%;} 50%{background-position:100% 50%;} 100%{background-position:0% 50%;} }
@@ -107,14 +105,12 @@
   @keyframes floatCard1 { 0%,100%{transform:translate(0,0) rotate(-2deg);} 50%{transform:translate(-10px,-15px) rotate(-2deg);} }
   @keyframes floatCard2 { 0%,100%{transform:translate(0,0) rotate(2deg);} 50%{transform:translate(10px,15px) rotate(2deg);} }
 
-  /* SECTIONS */
   .section-container { max-width: 1200px; margin: 0 auto; }
   .section-header { text-align: center; margin-bottom: 60px; }
   .section-tag { display: inline-block; padding: 6px 16px; background: rgba(255,61,110,0.12); border: 1px solid rgba(255,61,110,0.35); border-radius: 50px; color: #ff8fa3; font-size: 12px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 18px; }
   .section-header h2 { font-size: 44px; font-weight: 800; color: white; letter-spacing: -1px; margin-bottom: 16px; }
   .section-header p { color: rgba(255,255,255,0.65); font-size: 17px; max-width: 600px; margin: 0 auto; line-height: 1.6; }
 
-  /* FEATURES */
   .features { padding: 100px 40px; background: linear-gradient(180deg, #0a0410, #12061c); }
   .features-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
   .feature-card { padding: 32px 28px; background: linear-gradient(160deg, rgba(255,255,255,0.05), rgba(255,255,255,0.02)); border: 1px solid rgba(255,255,255,0.08); border-radius: 20px; transition: all 0.4s; }
@@ -123,7 +119,6 @@
   .feature-card h3 { color: white; font-size: 20px; font-weight: 700; margin-bottom: 10px; }
   .feature-card p { color: rgba(255,255,255,0.6); font-size: 15px; line-height: 1.65; }
 
-  /* ABOUT */
   .about { padding: 100px 40px; background: #0a0410; }
   .about-container { display: grid; grid-template-columns: 1fr 1.2fr; gap: 60px; align-items: center; }
   .about-visual { display: flex; justify-content: center; }
@@ -138,7 +133,6 @@
   .about-values { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 28px 0 32px; }
   .value-item { display: flex; align-items: center; gap: 10px; color: rgba(255,255,255,0.85); font-size: 14px; font-weight: 500; }
 
-  /* CONTACT */
   .contact { padding: 100px 40px; background: linear-gradient(180deg, #0a0410, #12061c); }
   .contact-container { display: grid; grid-template-columns: 1fr 1.4fr; gap: 60px; align-items: start; }
   .contact-info { display: flex; flex-direction: column; gap: 24px; }
@@ -155,7 +149,6 @@
   .contact-form .btn-get-started { justify-content: center; }
   .form-success { color: #22c55e; font-size: 14px; text-align: center; padding: 10px; background: rgba(34,197,94,0.1); border-radius: 10px; border: 1px solid rgba(34,197,94,0.3); }
 
-  /* FOOTER */
   .footer { background: #05010a; border-top: 1px solid rgba(255,255,255,0.06); padding: 60px 40px 30px; }
   .footer-container { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 40px; margin-bottom: 40px; }
   .footer-brand p { color: rgba(255,255,255,0.55); font-size: 14px; line-height: 1.7; margin: 18px 0 22px; max-width: 320px; }
@@ -169,11 +162,7 @@
   .footer-bottom { max-width: 1200px; margin: 0 auto; padding-top: 30px; border-top: 1px solid rgba(255,255,255,0.06); text-align: center; }
   .footer-bottom p { color: rgba(255,255,255,0.4); font-size: 13px; }
 
-  /* RESPONSIVE */
-  @media (max-width: 1024px) {
-    .hero-heading { font-size: 52px; }
-    .features-grid { grid-template-columns: repeat(2, 1fr); }
-  }
+  @media (max-width: 1024px) { .hero-heading { font-size: 52px; } .features-grid { grid-template-columns: repeat(2, 1fr); } }
   @media (max-width: 900px) {
     .hero { padding: 100px 24px 60px; min-height: auto; }
     .hero-container { grid-template-columns: 1fr; text-align: center; gap: 60px; }
@@ -211,7 +200,6 @@
 </head>
 <body>
 
-<!-- NAVBAR -->
 <nav class="navbar">
   <div class="nav-container">
     <a href="index.html" class="logo"><div class="logo-icon"></div>Velora</a>
@@ -239,7 +227,6 @@
   <a href="auth.html?mode=signup" class="mobile-signup">Sign Up</a>
 </div>
 
-<!-- HERO -->
 <section class="hero" id="home">
   <div class="hero-bg"></div>
   <div class="orb orb-1"></div>
@@ -263,7 +250,6 @@
         <div class="stat-item"><h3>4.9★</h3><p>User Rating</p></div>
       </div>
     </div>
-
     <div class="hero-visual">
       <div class="visual-wrapper">
         <div class="visual-glow"></div>
@@ -285,7 +271,6 @@
   </div>
 </section>
 
-<!-- FEATURES -->
 <section class="features" id="explore">
   <div class="section-container">
     <div class="section-header">
@@ -304,7 +289,6 @@
   </div>
 </section>
 
-<!-- ABOUT -->
 <section class="about" id="about">
   <div class="section-container about-container">
     <div class="about-visual">
@@ -332,7 +316,6 @@
   </div>
 </section>
 
-<!-- CONTACT -->
 <section class="contact" id="contact">
   <div class="section-container">
     <div class="section-header">
@@ -360,7 +343,6 @@
   </div>
 </section>
 
-<!-- FOOTER -->
 <footer class="footer">
   <div class="footer-container">
     <div class="footer-brand">
@@ -376,7 +358,6 @@
 </footer>
 
 <script>
-  // Mobile menu
   const menuBtn = document.getElementById('menuBtn');
   const mobileMenu = document.getElementById('mobileMenu');
   const overlay = document.getElementById('overlay');
@@ -390,8 +371,6 @@
     mobileMenu.classList.remove('active');
     overlay.classList.remove('active');
   });
-
-  // Floating particles
   const particlesBox = document.getElementById('particles');
   const hearts = ['💕', '💖', '💘', '💝', '♥'];
   for (let i = 0; i < 15; i++) {
@@ -404,8 +383,6 @@
     p.style.animationDelay = (Math.random() * 12) + 's';
     particlesBox.appendChild(p);
   }
-
-  // Contact form
   function handleContact(e) {
     e.preventDefault();
     document.getElementById('contactSuccess').style.display = 'block';
@@ -414,11 +391,9 @@
   }
 </script>
 
-<!-- FIREBASE: live user count (module script inline) -->
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
   import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
-
   const firebaseConfig = {
     apiKey: "AIzaSyDeXdYVYPzysn55sMNkj-tXYZJzBv7VFD4",
     authDomain: "bigwin-29967.firebaseapp.com",
@@ -430,7 +405,6 @@
   };
   const app = initializeApp(firebaseConfig);
   const db = getDatabase(app);
-
   onValue(ref(db, 'users'), (snap) => {
     const data = snap.val() || {};
     const count = Object.keys(data).length;
@@ -445,8 +419,7 @@
         el.textContent = current.toLocaleString() + (current === target ? '+' : '');
       }, 25);
     }
-  }, (err) => console.error('DB read error:', err));
+  }, (err) => console.log('Live count skip:', err.message));
 </script>
-
 </body>
 </html>
