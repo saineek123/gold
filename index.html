@@ -1,547 +1,494 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#100e0c">
-  <meta name="description" content="Discover dating, social companionship, modeling and entertainment opportunities.">
-  <title>Velora — Discover Your Circle</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Velora - Find Your Perfect Match</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, sans-serif; }
+  body { background: #fff5f7; color: #333; overflow-x: hidden; }
 
-  <style>
-    :root {
-      --bg: #100e0c;
-      --panel: #191613;
-      --gold: #d8b477;
-      --gold-light: #f3d9a4;
-      --text: #f7f2e9;
-      --muted: #aaa198;
-      --border: #342b20;
-    }
+  /* NAVBAR */
+  .navbar { position: fixed; top: 0; left: 0; width: 100%; background: rgba(255,255,255,0.95); backdrop-filter: blur(10px); box-shadow: 0 2px 20px rgba(255,105,135,0.15); z-index: 1000; padding: 0 40px; }
+  .nav-container { max-width: 1200px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; height: 75px; }
+  .logo { display: flex; align-items: center; gap: 8px; font-size: 28px; font-weight: 800; color: #ff3d6e; cursor: pointer; letter-spacing: -0.5px; }
+  .logo-icon { width: 38px; height: 38px; background: linear-gradient(135deg,#ff3d6e,#ff8fa3); border-radius: 50% 50% 50% 0; transform: rotate(-45deg); display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 15px rgba(255,61,110,0.4); }
+  .logo-icon::after { content: '♥'; transform: rotate(45deg); color: white; font-size: 18px; }
+  .nav-links { display: flex; align-items: center; gap: 35px; list-style: none; }
+  .nav-links a { text-decoration: none; color: #555; font-weight: 500; font-size: 16px; transition: color 0.3s; position: relative; }
+  .nav-links a::after { content: ''; position: absolute; bottom: -6px; left: 0; width: 0; height: 2px; background: #ff3d6e; transition: width 0.3s; }
+  .nav-links a:hover { color: #ff3d6e; }
+  .nav-links a:hover::after { width: 100%; }
+  .nav-buttons { display: flex; gap: 12px; align-items: center; }
+  .btn-login { padding: 9px 22px; border: 2px solid #ff3d6e; background: transparent; color: #ff3d6e; border-radius: 50px; font-weight: 600; font-size: 15px; cursor: pointer; transition: all 0.3s; }
+  .btn-login:hover { background: #ff3d6e; color: white; transform: translateY(-2px); }
+  .btn-signup { padding: 11px 26px; border: none; background: linear-gradient(135deg,#ff3d6e,#ff6b8a); color: white; border-radius: 50px; font-weight: 600; font-size: 15px; cursor: pointer; transition: all 0.3s; box-shadow: 0 4px 15px rgba(255,61,110,0.35); }
+  .btn-signup:hover { transform: translateY(-2px); box-shadow: 0 6px 22px rgba(255,61,110,0.5); }
+  .user-badge { display: none; align-items: center; gap: 10px; }
+  .user-avatar { width: 40px; height: 40px; border-radius: 50%; background: linear-gradient(135deg,#ff3d6e,#ff8fa3); color: white; display: flex; align-items: center; justify-content: center; font-weight: 700; }
+  .btn-logout { padding: 8px 18px; border: 2px solid #ff3d6e; background: transparent; color: #ff3d6e; border-radius: 50px; font-weight: 600; font-size: 14px; cursor: pointer; transition: all 0.3s; }
+  .btn-logout:hover { background: #ff3d6e; color: white; }
 
-    * { box-sizing: border-box; }
+  .menu-btn { display: none; flex-direction: column; gap: 5px; background: none; border: none; cursor: pointer; padding: 8px; z-index: 1100; }
+  .menu-btn span { width: 26px; height: 3px; background: #ff3d6e; border-radius: 3px; transition: all 0.3s; }
+  .menu-btn.active span:nth-child(1) { transform: rotate(45deg) translate(6px, 6px); }
+  .menu-btn.active span:nth-child(2) { opacity: 0; }
+  .menu-btn.active span:nth-child(3) { transform: rotate(-45deg) translate(6px, -6px); }
+  .mobile-menu { position: fixed; top: 0; right: -100%; width: 280px; height: 100vh; background: white; box-shadow: -5px 0 30px rgba(0,0,0,0.1); z-index: 1050; padding: 100px 30px 30px; transition: right 0.4s ease; display: flex; flex-direction: column; gap: 20px; }
+  .mobile-menu.active { right: 0; }
+  .mobile-menu a { text-decoration: none; color: #333; font-size: 18px; font-weight: 500; padding: 10px 0; border-bottom: 1px solid #ffe0e6; transition: color 0.3s; }
+  .mobile-menu a:hover { color: #ff3d6e; }
+  .mobile-menu .mobile-btns { display: flex; flex-direction: column; gap: 12px; margin-top: 20px; }
+  .overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.4); z-index: 1040; opacity: 0; visibility: hidden; transition: all 0.3s; }
+  .overlay.active { opacity: 1; visibility: visible; }
 
-    html { scroll-behavior: smooth; }
+  /* HERO */
+  .hero { min-height: 100vh; padding: 120px 40px 60px; display: flex; align-items: center; justify-content: center; background: linear-gradient(135deg,#fff5f7 0%,#ffe4ec 100%); position: relative; overflow: hidden; }
+  .hero::before { content: '♥'; position: absolute; font-size: 300px; color: rgba(255,61,110,0.05); top: 10%; left: -50px; }
+  .hero::after { content: '♥'; position: absolute; font-size: 200px; color: rgba(255,61,110,0.05); bottom: 5%; right: 5%; }
+  .hero-container { max-width: 1200px; width: 100%; display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; position: relative; z-index: 1; }
+  .hero-text h1 { font-size: 58px; font-weight: 800; line-height: 1.15; color: #2d1b2e; margin-bottom: 25px; }
+  .hero-text h1 span { background: linear-gradient(135deg,#ff3d6e,#ff8fa3); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+  .hero-text p { font-size: 18px; color: #666; line-height: 1.7; margin-bottom: 35px; max-width: 480px; }
+  .hero-buttons { display: flex; gap: 15px; flex-wrap: wrap; }
+  .btn-primary { padding: 15px 38px; border: none; background: linear-gradient(135deg,#ff3d6e,#ff6b8a); color: white; border-radius: 50px; font-weight: 600; font-size: 16px; cursor: pointer; transition: all 0.3s; box-shadow: 0 6px 25px rgba(255,61,110,0.4); }
+  .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 10px 35px rgba(255,61,110,0.55); }
+  .btn-secondary { padding: 15px 38px; border: 2px solid #ff3d6e; background: white; color: #ff3d6e; border-radius: 50px; font-weight: 600; font-size: 16px; cursor: pointer; transition: all 0.3s; }
+  .btn-secondary:hover { background: #ff3d6e; color: white; transform: translateY(-3px); }
+  .hero-stats { display: flex; gap: 40px; margin-top: 45px; }
+  .stat h3 { font-size: 32px; color: #ff3d6e; font-weight: 800; }
+  .stat p { font-size: 14px; color: #888; margin: 0; }
 
-    body {
-      margin: 0;
-      background: var(--bg);
-      color: var(--text);
-      font-family: Inter, system-ui, -apple-system, sans-serif;
-      line-height: 1.6;
-    }
+  .hero-image { display: flex; justify-content: center; position: relative; }
+  .couple-card { width: 380px; height: 460px; background: linear-gradient(135deg,#ff3d6e,#ff8fa3); border-radius: 30px; position: relative; box-shadow: 0 20px 60px rgba(255,61,110,0.35); overflow: hidden; display: flex; align-items: flex-end; justify-content: center; }
+  .couple-card::before { content: '💑'; position: absolute; font-size: 200px; top: 30px; filter: drop-shadow(0 10px 20px rgba(0,0,0,0.2)); }
+  .couple-card-info { background: rgba(255,255,255,0.95); padding: 20px; border-radius: 20px; margin-bottom: 20px; width: 85%; text-align: center; }
+  .couple-card-info h3 { color: #ff3d6e; font-size: 20px; margin-bottom: 5px; }
+  .couple-card-info p { color: #888; font-size: 14px; }
+  .floating-heart { position: absolute; font-size: 28px; animation: float 3s ease-in-out infinite; }
+  .fh1 { top: 40px; right: -20px; animation-delay: 0s; }
+  .fh2 { top: 200px; left: -30px; animation-delay: 0.5s; }
+  .fh3 { bottom: 100px; right: -25px; animation-delay: 1s; }
+  @keyframes float { 0%,100% { transform: translateY(0) rotate(-5deg); } 50% { transform: translateY(-20px) rotate(5deg); } }
 
-    a { color: inherit; text-decoration: none; }
+  /* ============ MODAL (Auth) ============ */
+  .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); backdrop-filter: blur(5px); z-index: 2000; display: none; align-items: center; justify-content: center; padding: 20px; }
+  .modal-overlay.active { display: flex; }
+  .modal { background: white; border-radius: 24px; padding: 40px; width: 100%; max-width: 420px; position: relative; box-shadow: 0 25px 70px rgba(0,0,0,0.3); animation: modalIn 0.4s ease; }
+  @keyframes modalIn { from { transform: scale(0.9); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+  .modal-close { position: absolute; top: 15px; right: 20px; background: none; border: none; font-size: 28px; color: #999; cursor: pointer; transition: color 0.3s; }
+  .modal-close:hover { color: #ff3d6e; }
+  .modal h2 { color: #2d1b2e; font-size: 28px; margin-bottom: 8px; }
+  .modal-subtitle { color: #888; font-size: 15px; margin-bottom: 25px; }
+  .form-group { margin-bottom: 18px; }
+  .form-group label { display: block; font-size: 14px; font-weight: 600; color: #555; margin-bottom: 6px; }
+  .form-group input { width: 100%; padding: 13px 16px; border: 2px solid #ffe0e6; border-radius: 12px; font-size: 15px; outline: none; transition: border-color 0.3s; font-family: inherit; }
+  .form-group input:focus { border-color: #ff3d6e; }
+  .btn-submit { width: 100%; padding: 14px; border: none; background: linear-gradient(135deg,#ff3d6e,#ff6b8a); color: white; border-radius: 12px; font-weight: 700; font-size: 16px; cursor: pointer; transition: all 0.3s; margin-top: 8px; }
+  .btn-submit:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(255,61,110,0.4); }
+  .btn-submit:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+  .modal-switch { text-align: center; margin-top: 20px; font-size: 14px; color: #888; }
+  .modal-switch a { color: #ff3d6e; font-weight: 600; cursor: pointer; text-decoration: none; }
+  .form-message { padding: 12px; border-radius: 10px; font-size: 14px; margin-bottom: 18px; display: none; }
+  .form-message.error { background: #ffe5ea; color: #d6335c; display: block; }
+  .form-message.success { background: #e5fff0; color: #1a8f4b; display: block; }
 
-    button, a { -webkit-tap-highlight-color: transparent; }
+  .hidden { display: none !important; }
 
-    button { font: inherit; cursor: pointer; }
-
-    .container {
-      width: min(1120px, 92%);
-      margin: auto;
-    }
-
-    header {
-      position: sticky;
-      top: 0;
-      z-index: 10;
-      background: rgba(16,14,12,.94);
-      border-bottom: 1px solid var(--border);
-      backdrop-filter: blur(14px);
-    }
-
-    .navbar {
-      min-height: 72px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 18px;
-    }
-
-    .brand {
-      font-family: Georgia, serif;
-      font-size: 27px;
-      letter-spacing: 1px;
-      color: var(--gold-light);
-      font-weight: bold;
-    }
-
-    .nav-links {
-      display: flex;
-      align-items: center;
-      gap: 23px;
-      font-size: 13px;
-      color: #d5cdc2;
-    }
-
-    .nav-links a:hover { color: var(--gold); }
-
-    .btn {
-      display: inline-flex;
-      justify-content: center;
-      align-items: center;
-      border: 1px solid var(--gold);
-      border-radius: 9px;
-      padding: 11px 17px;
-      font-weight: 700;
-      font-size: 13px;
-      transition: .2s;
-    }
-
-    .btn-primary {
-      background: var(--gold);
-      color: #17110a;
-    }
-
-    .btn-primary:hover { background: var(--gold-light); }
-
-    .btn-outline { color: var(--gold-light); }
-
-    .hero {
-      padding: 75px 0 60px;
-      text-align: center;
-      background:
-        radial-gradient(ellipse at 50% 0%, #49351d 0%, transparent 55%);
-    }
-
-    .eyebrow {
-      color: var(--gold);
-      text-transform: uppercase;
-      letter-spacing: 3px;
-      font-size: 11px;
-      font-weight: 800;
-    }
-
-    h1 {
-      font-family: Georgia, serif;
-      font-size: clamp(42px, 7vw, 76px);
-      line-height: 1.08;
-      font-weight: 500;
-      margin: 20px auto;
-      max-width: 850px;
-    }
-
-    h1 span { color: var(--gold-light); font-style: italic; }
-
-    .hero p {
-      color: var(--muted);
-      max-width: 570px;
-      margin: 0 auto 28px;
-      font-size: 15px;
-    }
-
-    .hero-actions {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 12px;
-      justify-content: center;
-    }
-
-    .notice {
-      margin: 28px auto 0;
-      color: var(--muted);
-      font-size: 11px;
-    }
-
-    section { padding: 54px 0; }
-
-    .section-head {
-      display: flex;
-      align-items: end;
-      justify-content: space-between;
-      gap: 20px;
-      margin-bottom: 25px;
-    }
-
-    h2 {
-      margin: 5px 0;
-      font-family: Georgia, serif;
-      font-size: clamp(28px, 4vw, 39px);
-      font-weight: 500;
-    }
-
-    .section-head p, .muted { color: var(--muted); }
-
-    .section-head p {
-      margin: 5px 0 0;
-      font-size: 13px;
-    }
-
-    .category-grid {
-      display: grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-      gap: 14px;
-    }
-
-    .category {
-      background: linear-gradient(145deg, #211b14, #171411);
-      border: 1px solid var(--border);
-      border-radius: 15px;
-      padding: 23px 17px;
-      min-height: 190px;
-      transition: transform .2s, border-color .2s;
-    }
-
-    .category:hover {
-      transform: translateY(-3px);
-      border-color: #927347;
-    }
-
-    .category-icon {
-      width: 44px;
-      height: 44px;
-      display: grid;
-      place-items: center;
-      border-radius: 12px;
-      background: #332719;
-      color: var(--gold-light);
-      font-size: 22px;
-      margin-bottom: 17px;
-    }
-
-    .category h3 { font-size: 16px; margin: 0 0 8px; }
-
-    .category p {
-      color: var(--muted);
-      font-size: 12px;
-      margin: 0 0 16px;
-    }
-
-    .category .arrow { color: var(--gold); font-size: 12px; }
-
-    .empty-state {
-      background: var(--panel);
-      border: 1px dashed #50412d;
-      padding: 28px 18px;
-      border-radius: 14px;
-      text-align: center;
-    }
-
-    .empty-state h3 { margin: 5px 0 8px; font-size: 17px; }
-
-    .empty-state p {
-      max-width: 480px;
-      margin: 0 auto 16px;
-      font-size: 13px;
-      color: var(--muted);
-    }
-
-    .steps {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 14px;
-    }
-
-    .step {
-      padding: 20px;
-      background: var(--panel);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-    }
-
-    .step-number { color: var(--gold); font-size: 12px; }
-
-    .step h3 { margin: 9px 0 5px; font-size: 15px; }
-
-    .step p { color: var(--muted); font-size: 13px; margin: 0; }
-
-    .safety {
-      background: #18140f;
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      padding: 25px;
-    }
-
-    .safety ul {
-      color: var(--muted);
-      padding-left: 20px;
-      font-size: 13px;
-    }
-
-    .safety li { margin: 8px 0; }
-
-    footer {
-      padding: 30px 0 100px;
-      border-top: 1px solid var(--border);
-      color: var(--muted);
-      font-size: 12px;
-    }
-
-    .footer-row {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: space-between;
-      gap: 16px;
-    }
-
-    .footer-links { display: flex; flex-wrap: wrap; gap: 16px; }
-
-    .status {
-      color: var(--muted);
-      font-size: 12px;
-      padding: 8px 0;
-    }
-
-    .bottom-nav { display: none; }
-
-    @media (max-width: 760px) {
-      .nav-links { display: none; }
-      .navbar { min-height: 64px; }
-      .brand { font-size: 24px; }
-      .navbar > .btn { padding: 9px 12px; }
-      .hero { padding: 57px 0 43px; }
-      .hero p { font-size: 14px; }
-      section { padding: 39px 0; }
-      .category-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
-      .category { padding: 17px 13px; min-height: 180px; }
-      .steps { grid-template-columns: 1fr; }
-      .section-head { align-items: start; flex-direction: column; }
-      .bottom-nav {
-        position: fixed;
-        z-index: 20;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        display: flex;
-        justify-content: space-around;
-        background: #17130f;
-        border-top: 1px solid var(--border);
-        padding: 11px 4px calc(11px + env(safe-area-inset-bottom));
-      }
-      .bottom-nav a {
-        text-align: center;
-        color: #d2c6b5;
-        font-size: 10px;
-      }
-      .bottom-nav span { display: block; font-size: 19px; }
-    }
-
-    @media (max-width: 360px) {
-      .category-grid { grid-template-columns: 1fr; }
-      .hero-actions .btn { width: 100%; }
-    }
-  </style>
+  @media (max-width: 992px) {
+    .hero-container { grid-template-columns: 1fr; text-align: center; }
+    .hero-text p { margin: 0 auto 35px; }
+    .hero-buttons, .hero-stats { justify-content: center; }
+    .hero-text h1 { font-size: 44px; }
+  }
+  @media (max-width: 768px) {
+    .navbar { padding: 0 20px; }
+    .nav-links, .nav-buttons { display: none; }
+    .menu-btn { display: flex; }
+    .hero { padding: 110px 20px 50px; }
+    .hero-text h1 { font-size: 36px; }
+    .hero-text p { font-size: 16px; }
+    .hero-stats { gap: 25px; }
+    .stat h3 { font-size: 26px; }
+    .couple-card { width: 300px; height: 380px; }
+    .couple-card::before { font-size: 150px; }
+    .modal { padding: 30px 25px; }
+  }
+  @media (max-width: 480px) {
+    .hero-text h1 { font-size: 30px; }
+    .btn-primary, .btn-secondary { padding: 13px 28px; font-size: 15px; }
+  }
+</style>
 </head>
-
 <body>
-  <header>
-    <div class="container navbar">
-      <a class="brand" href="index.html">VELORA<span>®</span></a>
 
-      <nav class="nav-links" aria-label="Main navigation">
-        <a href="#categories">Explore</a>
-        <a href="#how">How it works</a>
-        <a href="#safety">Safety</a>
-      </nav>
-
-      <a class="btn btn-primary" id="accountBtn" href="login.html">
-        Sign in
-      </a>
+<!-- NAVBAR -->
+<nav class="navbar">
+  <div class="nav-container">
+    <div class="logo"><div class="logo-icon"></div>Velora</div>
+    <ul class="nav-links">
+      <li><a href="#home">Home</a></li>
+      <li><a href="#explore">Explore</a></li>
+      <li><a href="#about">About Us</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <div class="nav-buttons" id="navButtons">
+      <button class="btn-login" onclick="openAuth('login')">Login</button>
+      <button class="btn-signup" onclick="openAuth('signup')">Sign Up</button>
     </div>
-  </header>
-
-  <main>
-    <section class="hero">
-      <div class="container">
-        <div class="eyebrow">Your circle. Your choice.</div>
-        <h1>Meet people.<br><span>Discover possibilities.</span></h1>
-        <p>
-          A modern space for meaningful connections, social companionship,
-          creative talent and entertainment opportunities.
-        </p>
-
-        <div class="hero-actions">
-          <a class="btn btn-primary" href="#categories">Explore categories ↗</a>
-          <a class="btn btn-outline" href="login.html">Create an account</a>
-        </div>
-
-        <div class="notice">
-          Intended for adults aged 18 and above. Please act respectfully.
-        </div>
-        <div id="firebaseStatus" class="status" role="status">
-          Connecting to account service…
-        </div>
-      </div>
-    </section>
-
-    <section id="categories">
-      <div class="container">
-        <div class="section-head">
-          <div>
-            <div class="eyebrow">Explore Velora</div>
-            <h2>Find your space</h2>
-            <p>Choose the experience that fits your interests.</p>
-          </div>
-        </div>
-
-        <div class="category-grid">
-          <a class="category" href="explore.html?type=dating">
-            <div class="category-icon">♡</div>
-            <h3>Dating</h3>
-            <p>Meet adults who share your interests and values.</p>
-            <span class="arrow">Explore dating ↗</span>
-          </a>
-
-          <a class="category" href="explore.html?type=companionship">
-            <div class="category-icon">✧</div>
-            <h3>Companionship</h3>
-            <p>Discover lawful social and event companionship.</p>
-            <span class="arrow">Discover more ↗</span>
-          </a>
-
-          <a class="category" href="explore.html?type=modeling">
-            <div class="category-icon">◈</div>
-            <h3>Modeling</h3>
-            <p>Showcase portfolios and explore creative opportunities.</p>
-            <span class="arrow">View opportunities ↗</span>
-          </a>
-
-          <a class="category" href="explore.html?type=entertainment">
-            <div class="category-icon">✦</div>
-            <h3>Entertainment</h3>
-            <p>Find lawful events, auditions and collaborations.</p>
-            <span class="arrow">Explore events ↗</span>
-          </a>
-        </div>
-      </div>
-    </section>
-
-    <section id="featured">
-      <div class="container">
-        <div class="section-head">
-          <div>
-            <div class="eyebrow">Discover</div>
-            <h2>Explore real profiles</h2>
-            <p>Only verified, published profiles should appear here.</p>
-          </div>
-        </div>
-
-        <div class="empty-state">
-          <h3 id="profileTitle">Profiles are not available yet</h3>
-          <p id="profileMessage">
-            No public profiles have been loaded. Once profile publishing
-            and database access are configured, eligible profiles can appear here.
-          </p>
-          <a class="btn btn-outline" href="login.html">Create your profile</a>
-        </div>
-      </div>
-    </section>
-
-    <section id="how">
-      <div class="container">
-        <div class="section-head">
-          <div>
-            <div class="eyebrow">Simple and transparent</div>
-            <h2>How it works</h2>
-          </div>
-        </div>
-
-        <div class="steps">
-          <div class="step">
-            <div class="step-number">STEP 01</div>
-            <h3>Create your account</h3>
-            <p>Register as an adult and complete the required checks.</p>
-          </div>
-          <div class="step">
-            <div class="step-number">STEP 02</div>
-            <h3>Build your profile</h3>
-            <p>Add permitted information and choose what you want to explore.</p>
-          </div>
-          <div class="step">
-            <div class="step-number">STEP 03</div>
-            <h3>Connect respectfully</h3>
-            <p>Send requests and communicate with consent and clear expectations.</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section id="safety">
-      <div class="container">
-        <div class="safety">
-          <div class="eyebrow">Safety comes first</div>
-          <h2>Respect. Consent. Privacy.</h2>
-          <ul>
-            <li>This platform is intended for adults aged 18 and above.</li>
-            <li>Respect boundaries and obtain clear consent for interactions.</li>
-            <li>Never upload another person's images or information without permission.</li>
-            <li>Report suspected scams, harassment, impersonation or exploitation.</li>
-            <li>Illegal services and unlawful content are not permitted.</li>
-          </ul>
-          <p class="muted">
-            Platform access and features are subject to verification, moderation
-            and applicable Indian law.
-          </p>
-        </div>
-      </div>
-    </section>
-  </main>
-
-  <footer>
-    <div class="container footer-row">
-      <div>
-        <a class="brand" href="index.html">VELORA</a>
-        <p>Connections built on respect.</p>
-        <p id="footerStatus">Account service status: checking…</p>
-      </div>
-      <div class="footer-links">
-        <a href="terms.html">Terms</a>
-        <a href="privacy.html">Privacy</a>
-        <a href="safety.html">Safety</a>
-      </div>
-      <p>© <span id="year"></span> Velora. All rights reserved.</p>
+    <div class="user-badge" id="userBadge">
+      <div class="user-avatar" id="userAvatar">?</div>
+      <button class="btn-logout" onclick="handleLogout()">Logout</button>
     </div>
-  </footer>
+    <button class="menu-btn" id="menuBtn"><span></span><span></span><span></span></button>
+  </div>
+</nav>
 
-  <nav class="bottom-nav" aria-label="Mobile navigation">
-    <a href="index.html"><span>⌂</span>Home</a>
-    <a href="#categories"><span>⌕</span>Explore</a>
-    <a href="bookings.html"><span>▣</span>Bookings</a>
-    <a href="login.html" id="mobileAccount"><span>♙</span>Account</a>
-  </nav>
+<!-- MOBILE MENU -->
+<div class="overlay" id="overlay"></div>
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#home">Home</a>
+  <a href="#explore">Explore</a>
+  <a href="#about">About Us</a>
+  <a href="#contact">Contact</a>
+  <div class="mobile-btns" id="mobileBtns">
+    <button class="btn-login" onclick="openAuth('login'); toggleMenu();">Login</button>
+    <button class="btn-signup" onclick="openAuth('signup'); toggleMenu();">Sign Up</button>
+  </div>
+</div>
 
-  <script type="module">
-    const status = document.getElementById("firebaseStatus");
-    const footerStatus = document.getElementById("footerStatus");
-    const accountBtn = document.getElementById("accountBtn");
-    const mobileAccount = document.getElementById("mobileAccount");
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="hero-container">
+    <div class="hero-text">
+      <h1>Find Your <span>Perfect Match</span> & Fall in Love</h1>
+      <p>Welcome to Velora — where real connections begin. Meet genuine people, share beautiful moments, and let your love story unfold.</p>
+      <div class="hero-buttons">
+        <button class="btn-primary" onclick="openAuth('signup')">Get Started Free</button>
+        <button class="btn-secondary" onclick="document.getElementById('explore').scrollIntoView({behavior:'smooth'})">Learn More</button>
+      </div>
+      <div class="hero-stats">
+        <div class="stat"><h3 id="statUsers">0</h3><p>Active Users</p></div>
+        <div class="stat"><h3 id="statMatches">0</h3><p>Matches Made</p></div>
+        <div class="stat"><h3>4.9★</h3><p>User Rating</p></div>
+      </div>
+    </div>
+    <div class="hero-image">
+      <div class="couple-card">
+        <div class="couple-card-info">
+          <h3>Start Your Story 💖</h3>
+          <p>Join Velora Today</p>
+        </div>
+      </div>
+      <div class="floating-heart fh1">💕</div>
+      <div class="floating-heart fh2">💘</div>
+      <div class="floating-heart fh3">💖</div>
+    </div>
+  </div>
+</section>
 
-    document.getElementById("year").textContent =
-      new Date().getFullYear();
+<!-- AUTH MODAL -->
+<div class="modal-overlay" id="authModal">
+  <div class="modal">
+    <button class="modal-close" onclick="closeAuth()">&times;</button>
 
-    try {
-      const { auth } = await import("./js/firebase.js");
-      const { onAuthStateChanged } =
-        await import("https://www.gstatic.com/firebasejs/11.10.0/firebase-auth.js");
+    <!-- LOGIN FORM -->
+    <div id="loginForm">
+      <h2>Welcome Back 💕</h2>
+      <p class="modal-subtitle">Login to continue your love story</p>
+      <div class="form-message" id="loginMsg"></div>
+      <div class="form-group">
+        <label>Email</label>
+        <input type="email" id="loginEmail" placeholder="you@example.com">
+      </div>
+      <div class="form-group">
+        <label>Password</label>
+        <input type="password" id="loginPassword" placeholder="••••••••">
+      </div>
+      <button class="btn-submit" id="loginBtn" onclick="handleLogin()">Login</button>
+      <div class="modal-switch">Don't have an account? <a onclick="switchForm('signup')">Sign Up</a></div>
+    </div>
 
-      onAuthStateChanged(auth, (user) => {
-        if (user) {
-          status.textContent = "Signed in · " + (user.email || "Account active");
-          footerStatus.textContent = "Account service connected.";
+    <!-- SIGNUP FORM -->
+    <div id="signupForm" class="hidden">
+      <h2>Join Velora 💖</h2>
+      <p class="modal-subtitle">Create your free account</p>
+      <div class="form-message" id="signupMsg"></div>
+      <div class="form-group">
+        <label>Full Name</label>
+        <input type="text" id="signupName" placeholder="Your name">
+      </div>
+      <div class="form-group">
+        <label>Email</label>
+        <input type="email" id="signupEmail" placeholder="you@example.com">
+      </div>
+      <div class="form-group">
+        <label>Password</label>
+        <input type="password" id="signupPassword" placeholder="Min 6 characters">
+      </div>
+      <button class="btn-submit" id="signupBtn" onclick="handleSignup()">Create Account</button>
+      <div class="modal-switch">Already have an account? <a onclick="switchForm('login')">Login</a></div>
+    </div>
+  </div>
+</div>
 
-          accountBtn.textContent = "My account";
-          accountBtn.href = "profile.html";
+<!-- ============ FIREBASE SDK (MODULE SCRIPTS) ============ -->
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+  import {
+    getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword,
+    signOut, onAuthStateChanged, updateProfile
+  } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+  import {
+    getDatabase, ref, set, get, child, onValue
+  } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
 
-          mobileAccount.href = "profile.html";
-          mobileAccount.innerHTML = "<span>♙</span>My account";
-        } else {
-          status.textContent = "Account service connected · Not signed in";
-          footerStatus.textContent = "Account service connected.";
+  // ---------- Firebase Config (TUMHARA) ----------
+  const firebaseConfig = {
+    apiKey: "AIzaSyDeXdYVYPzysn55sMNkj-tXYZJzBv7VFD4",
+    authDomain: "bigwin-29967.firebaseapp.com",
+    databaseURL: "https://bigwin-29967-default-rtdb.firebaseio.com",
+    projectId: "bigwin-29967",
+    storageBucket: "bigwin-29967.firebasestorage.app",
+    messagingSenderId: "628333876092",
+    appId: "1:628333876092:web:8e36daac959c0f42154af9",
+    measurementId: "G-654JHXWMEL"
+  };
 
-          accountBtn.textContent = "Sign in";
-          accountBtn.href = "login.html";
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+  const db = getDatabase(app);
 
-          mobileAccount.href = "login.html";
-          mobileAccount.innerHTML = "<span>♙</span>Account";
-        }
-      });
-    } catch (error) {
-      console.error("Firebase initialization error:", error);
-      status.textContent =
-        "Account service unavailable. Check Firebase setup and connection.";
-      footerStatus.textContent = "Account service not connected.";
+  // ---------- Global refs ----------
+  window._auth = auth;
+  window._db = db;
+  window._fbFuncs = {
+    createUserWithEmailAndPassword, signInWithEmailAndPassword,
+    signOut, updateProfile, ref, set, get, child, onValue
+  };
+
+  // ---------- Track user state ----------
+  onAuthStateChanged(auth, (user) => {
+    const navButtons = document.getElementById('navButtons');
+    const userBadge = document.getElementById('userBadge');
+    const mobileBtns = document.getElementById('mobileBtns');
+    const userAvatar = document.getElementById('userAvatar');
+
+    if (user) {
+      navButtons.style.display = 'none';
+      userBadge.style.display = 'flex';
+      mobileBtns.style.display = 'none';
+      const name = user.displayName || user.email.split('@')[0];
+      userAvatar.textContent = name.charAt(0).toUpperCase();
+      userAvatar.title = name;
+    } else {
+      navButtons.style.display = 'flex';
+      userBadge.style.display = 'none';
+      mobileBtns.style.display = 'flex';
     }
-  </script>
+  });
+
+  // ---------- Live stats from Firebase Realtime DB ----------
+  const usersRef = ref(db, 'users');
+  onValue(usersRef, (snap) => {
+    const data = snap.val() || {};
+    const count = Object.keys(data).length;
+    animateNumber('statUsers', count, 'M+');
+    animateNumber('statMatches', Math.floor(count * 0.6), 'K+');
+  }, (err) => {
+    console.error("Stats read error:", err);
+    document.getElementById('statUsers').textContent = "0";
+    document.getElementById('statMatches').textContent = "0";
+  });
+
+  function animateNumber(id, target, suffix) {
+    const el = document.getElementById(id);
+    if (!target) { el.textContent = "0" + suffix; return; }
+    const start = 0;
+    const duration = 1200;
+    const startTime = performance.now();
+    function step(now) {
+      const progress = Math.min((now - startTime) / duration, 1);
+      const current = Math.floor(start + (target - start) * progress);
+      el.textContent = current.toLocaleString() + (suffix === 'M+' ? '+' : suffix === 'K+' ? '+' : '');
+      if (progress < 1) requestAnimationFrame(step);
+      else el.textContent = target >= 1000 ? (target/1000).toFixed(1) + 'K+' : target + '+';
+    }
+    requestAnimationFrame(step);
+  }
+
+  // Expose auth functions to global (for inline handlers)
+  window.fbAuth = {
+    async signup(name, email, password) {
+      const cred = await createUserWithEmailAndPassword(auth, email, password);
+      await updateProfile(cred.user, { displayName: name });
+      // Save user data to Realtime DB
+      await set(ref(db, 'users/' + cred.user.uid), {
+        name: name,
+        email: email,
+        createdAt: Date.now(),
+        uid: cred.user.uid
+      });
+      return cred.user;
+    },
+    async login(email, password) {
+      return await signInWithEmailAndPassword(auth, email, password);
+    },
+    async logout() {
+      return await signOut(auth);
+    }
+  };
+
+  console.log("✅ Firebase initialized:", app.name);
+</script>
+
+<!-- ============ UI LOGIC (non-module) ============ -->
+<script>
+  // ---- Mobile menu ----
+  const menuBtn = document.getElementById('menuBtn');
+  const mobileMenu = document.getElementById('mobileMenu');
+  const overlay = document.getElementById('overlay');
+  function toggleMenu() {
+    menuBtn.classList.toggle('active');
+    mobileMenu.classList.toggle('active');
+    overlay.classList.toggle('active');
+  }
+  menuBtn.addEventListener('click', toggleMenu);
+  overlay.addEventListener('click', toggleMenu);
+  document.querySelectorAll('.mobile-menu a').forEach(l => l.addEventListener('click', toggleMenu));
+
+  // ---- Auth modal ----
+  function openAuth(mode) {
+    document.getElementById('authModal').classList.add('active');
+    switchForm(mode);
+  }
+  function closeAuth() {
+    document.getElementById('authModal').classList.remove('active');
+    clearMessages();
+  }
+  function switchForm(mode) {
+    const loginForm = document.getElementById('loginForm');
+    const signupForm = document.getElementById('signupForm');
+    if (mode === 'login') {
+      loginForm.classList.remove('hidden');
+      signupForm.classList.add('hidden');
+    } else {
+      loginForm.classList.add('hidden');
+      signupForm.classList.remove('hidden');
+    }
+    clearMessages();
+  }
+  function clearMessages() {
+    document.getElementById('loginMsg').className = 'form-message';
+    document.getElementById('signupMsg').className = 'form-message';
+    document.getElementById('loginMsg').textContent = '';
+    document.getElementById('signupMsg').textContent = '';
+  }
+  function showMsg(id, text, type) {
+    const el = document.getElementById(id);
+    el.textContent = text;
+    el.className = 'form-message ' + type;
+  }
+
+  // Close modal on overlay click
+  document.getElementById('authModal').addEventListener('click', (e) => {
+    if (e.target.id === 'authModal') closeAuth();
+  });
+
+  // ---- Signup handler ----
+  async function handleSignup() {
+    const name = document.getElementById('signupName').value.trim();
+    const email = document.getElementById('signupEmail').value.trim();
+    const password = document.getElementById('signupPassword').value;
+    const btn = document.getElementById('signupBtn');
+
+    if (!name || !email || !password) {
+      return showMsg('signupMsg', 'Please fill all fields.', 'error');
+    }
+    if (password.length < 6) {
+      return showMsg('signupMsg', 'Password must be at least 6 characters.', 'error');
+    }
+
+    btn.disabled = true;
+    btn.textContent = 'Creating account...';
+    try {
+      await window.fbAuth.signup(name, email, password);
+      showMsg('signupMsg', 'Account created! Welcome to Velora 💖', 'success');
+      setTimeout(() => { closeAuth(); resetForms(); }, 1500);
+    } catch (err) {
+      showMsg('signupMsg', friendlyError(err), 'error');
+    } finally {
+      btn.disabled = false;
+      btn.textContent = 'Create Account';
+    }
+  }
+
+  // ---- Login handler ----
+  async function handleLogin() {
+    const email = document.getElementById('loginEmail').value.trim();
+    const password = document.getElementById('loginPassword').value;
+    const btn = document.getElementById('loginBtn');
+
+    if (!email || !password) {
+      return showMsg('loginMsg', 'Please enter email and password.', 'error');
+    }
+
+    btn.disabled = true;
+    btn.textContent = 'Logging in...';
+    try {
+      await window.fbAuth.login(email, password);
+      showMsg('loginMsg', 'Login successful! 💕', 'success');
+      setTimeout(() => { closeAuth(); resetForms(); }, 1000);
+    } catch (err) {
+      showMsg('loginMsg', friendlyError(err), 'error');
+    } finally {
+      btn.disabled = false;
+      btn.textContent = 'Login';
+    }
+  }
+
+  // ---- Logout ----
+  async function handleLogout() {
+    try {
+      await window.fbAuth.logout();
+    } catch (err) {
+      console.error(err);
+    }
+  }
+
+  // ---- Reset ----
+  function resetForms() {
+    ['signupName','signupEmail','signupPassword','loginEmail','loginPassword']
+      .forEach(id => document.getElementById(id).value = '');
+    clearMessages();
+  }
+
+  // ---- Friendly Firebase error messages ----
+  function friendlyError(err) {
+    const code = err.code || '';
+    const map = {
+      'auth/email-already-in-use': 'This email is already registered. Try logging in.',
+      'auth/invalid-email': 'Invalid email address format.',
+      'auth/weak-password': 'Password too weak. Use at least 6 characters.',
+      'auth/user-not-found': 'No account found with this email.',
+      'auth/wrong-password': 'Incorrect password. Try again.',
+      'auth/invalid-credential': 'Invalid email or password.',
+      'auth/too-many-requests': 'Too many attempts. Please try again later.',
+      'auth/network-request-failed': 'Network error. Check your internet.',
+      'auth/operation-not-allowed': 'Email/Password login is not enabled in Firebase Console.',
+    };
+    return map[code] || (err.message || 'Something went wrong. Try again.');
+  }
+
+  // Expose handlers to inline
+  window.openAuth = openAuth;
+  window.closeAuth = closeAuth;
+  window.switchForm = switchForm;
+  window.handleLogin = handleLogin;
+  window.handleSignup = handleSignup;
+  window.handleLogout = handleLogout;
+  window.toggleMenu = toggleMenu;
+</script>
+
 </body>
 </html>
