@@ -1,395 +1,471 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#100e0c">
-  <title>Sign In | Velora</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Login / Sign Up — Velora</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins','Segoe UI',Tahoma,sans-serif; }
+  body {
+    min-height: 100vh; background: #0a0410;
+    display: flex; align-items: center; justify-content: center;
+    padding: 24px; overflow-x: hidden; position: relative;
+    color: #fff;
+  }
+  a { text-decoration: none; }
 
-  <style>
-    * { box-sizing: border-box; }
+  /* Background effects */
+  .bg-orb { position: fixed; border-radius: 50%; filter: blur(100px); opacity: 0.5; z-index: 0; pointer-events: none; }
+  .orb-1 { width: 500px; height: 500px; background: radial-gradient(circle, #ff3d6e, transparent 70%); top: -150px; left: -150px; }
+  .orb-2 { width: 500px; height: 500px; background: radial-gradient(circle, #a855f7, transparent 70%); bottom: -150px; right: -150px; }
+  .bg-grid {
+    position: fixed; inset: 0; z-index: 0;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+    background-size: 50px 50px;
+    mask-image: radial-gradient(ellipse at center, black 30%, transparent 80%);
+    -webkit-mask-image: radial-gradient(ellipse at center, black 30%, transparent 80%);
+  }
 
-    body {
-      margin: 0;
-      min-height: 100vh;
-      padding: 24px 14px;
-      display: grid;
-      place-items: center;
-      background: radial-gradient(ellipse at top, #3d2b18, #100e0c 65%);
-      color: #f7f2e9;
-      font-family: system-ui, sans-serif;
-    }
+  /* Container */
+  .auth-container { position: relative; z-index: 1; width: 100%; max-width: 460px; }
+  .auth-logo { text-align: center; margin-bottom: 30px; }
+  .auth-logo a {
+    display: inline-flex; align-items: center; gap: 10px;
+    font-size: 32px; font-weight: 800; color: #ff3d6e;
+    letter-spacing: -1px;
+  }
+  .logo-icon {
+    width: 42px; height: 42px;
+    background: linear-gradient(135deg, #ff3d6e, #ff8fa3);
+    border-radius: 50% 50% 50% 0;
+    transform: rotate(-45deg);
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 4px 20px rgba(255,61,110,0.5);
+  }
+  .logo-icon::after {
+    content: '♥'; transform: rotate(45deg);
+    color: white; font-size: 20px;
+  }
 
-    .card {
-      width: 100%;
-      max-width: 430px;
-      padding: 28px;
-      background: #191613;
-      border: 1px solid #403323;
-      border-radius: 18px;
-      box-shadow: 0 20px 65px #0005;
-    }
+  /* Card */
+  .auth-card {
+    background: linear-gradient(160deg, rgba(255,255,255,0.08), rgba(255,255,255,0.02));
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 24px;
+    padding: 40px;
+    box-shadow: 0 30px 80px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.1);
+  }
 
-    .brand {
-      display: block;
-      text-align: center;
-      color: #f3d9a4;
-      font: bold 34px Georgia, serif;
-      letter-spacing: 2px;
-      text-decoration: none;
-    }
+  /* Tabs */
+  .auth-tabs {
+    display: flex; background: rgba(255,255,255,0.05);
+    border-radius: 12px; padding: 4px; margin-bottom: 28px;
+    border: 1px solid rgba(255,255,255,0.08);
+  }
+  .auth-tab {
+    flex: 1; padding: 12px; text-align: center;
+    background: transparent; border: none;
+    color: rgba(255,255,255,0.6);
+    font-weight: 600; font-size: 14px; cursor: pointer;
+    border-radius: 8px; transition: all 0.3s;
+  }
+  .auth-tab.active {
+    background: linear-gradient(135deg, #ff3d6e, #ff6b8a);
+    color: white;
+    box-shadow: 0 4px 15px rgba(255,61,110,0.4);
+  }
 
-    .subtitle {
-      text-align: center;
-      color: #aaa198;
-      font-size: 13px;
-      margin: 10px 0 25px;
-    }
+  /* Forms */
+  .auth-form { display: none; }
+  .auth-form.active { display: block; animation: fadeIn 0.4s ease; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+  .auth-form h2 { font-size: 24px; color: white; margin-bottom: 6px; font-weight: 700; }
+  .auth-subtitle { color: rgba(255,255,255,0.55); font-size: 14px; margin-bottom: 24px; }
 
-    .tabs {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 8px;
-      margin-bottom: 22px;
-    }
+  /* Message */
+  .form-message {
+    padding: 12px 16px; border-radius: 10px;
+    font-size: 13px; margin-bottom: 16px;
+    display: none; font-weight: 500; line-height: 1.5;
+  }
+  .form-message.error {
+    background: rgba(255, 61, 110, 0.15); color: #ff8fa3;
+    border: 1px solid rgba(255, 61, 110, 0.3); display: block;
+  }
+  .form-message.success {
+    background: rgba(34, 197, 94, 0.15); color: #22c55e;
+    border: 1px solid rgba(34, 197, 94, 0.3); display: block;
+  }
 
-    .tab {
-      padding: 11px;
-      border: 1px solid #403323;
-      border-radius: 9px;
-      background: transparent;
-      color: #c8bfb2;
-      cursor: pointer;
-    }
+  /* Inputs */
+  .form-group { margin-bottom: 16px; }
+  .form-group label {
+    display: block; color: rgba(255,255,255,0.75);
+    font-size: 13px; font-weight: 600; margin-bottom: 8px;
+  }
+  .form-group input,
+  .form-group select {
+    width: 100%; padding: 13px 16px;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 12px;
+    color: white; font-size: 14px;
+    font-family: inherit; transition: all 0.3s;
+  }
+  .form-group input:focus,
+  .form-group select:focus {
+    outline: none;
+    border-color: #ff3d6e;
+    background: rgba(255, 61, 110, 0.08);
+    box-shadow: 0 0 0 4px rgba(255,61,110,0.1);
+  }
+  .form-group input::placeholder { color: rgba(255,255,255,0.35); }
+  .form-group select option { background: #1a0510; color: white; }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
 
-    .tab.active {
-      background: #d8b477;
-      color: #17110a;
-      border-color: #d8b477;
-      font-weight: bold;
-    }
+  .forgot-link {
+    display: block; text-align: right;
+    color: #ff8fa3; font-size: 13px;
+    margin-bottom: 20px; cursor: pointer;
+    font-weight: 500; transition: color 0.3s;
+  }
+  .forgot-link:hover { color: #ff3d6e; text-decoration: underline; }
 
-    label {
-      display: block;
-      margin: 15px 0 6px;
-      font-size: 12px;
-      color: #e1d7c8;
-    }
+  /* Submit */
+  .btn-submit {
+    width: 100%; padding: 15px;
+    background: linear-gradient(135deg, #ff3d6e, #ff6b8a);
+    color: white; border: none; border-radius: 12px;
+    font-size: 15px; font-weight: 700;
+    cursor: pointer; transition: all 0.3s;
+    box-shadow: 0 8px 25px rgba(255,61,110,0.4);
+    display: flex; align-items: center; justify-content: center; gap: 8px;
+  }
+  .btn-submit:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 35px rgba(255,61,110,0.6);
+  }
+  .btn-submit:disabled { opacity: 0.6; cursor: not-allowed; }
 
-    input {
-      width: 100%;
-      padding: 13px;
-      border: 1px solid #40382d;
-      border-radius: 9px;
-      background: #100e0c;
-      color: white;
-      font: inherit;
-      outline: none;
-    }
+  /* Spinner */
+  .spinner {
+    width: 16px; height: 16px;
+    border: 2px solid rgba(255,255,255,0.3);
+    border-top-color: white;
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+    display: none;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
 
-    input:focus { border-color: #d8b477; }
+  /* Back link */
+  .back-home { text-align: center; margin-top: 24px; }
+  .back-home a {
+    color: rgba(255,255,255,0.5);
+    font-size: 13px; transition: color 0.3s;
+  }
+  .back-home a:hover { color: #ff8fa3; }
 
-    .check {
-      display: flex;
-      align-items: flex-start;
-      gap: 9px;
-      color: #c8bfb2;
-      font-size: 12px;
-      margin-top: 17px;
-    }
+  /* Divider */
+  .divider {
+    display: flex; align-items: center; gap: 12px;
+    margin: 20px 0; color: rgba(255,255,255,0.3);
+    font-size: 12px; text-transform: uppercase; letter-spacing: 1px;
+  }
+  .divider::before, .divider::after {
+    content: ''; flex: 1; height: 1px;
+    background: rgba(255,255,255,0.1);
+  }
 
-    .check input {
-      width: 16px;
-      margin-top: 3px;
-      accent-color: #d8b477;
-    }
-
-    .submit {
-      width: 100%;
-      margin-top: 20px;
-      padding: 13px;
-      border: 0;
-      border-radius: 9px;
-      background: #d8b477;
-      color: #17110a;
-      font-size: 14px;
-      font-weight: 800;
-      cursor: pointer;
-    }
-
-    .submit:disabled { opacity: .6; cursor: wait; }
-
-    .message {
-      display: none;
-      margin-top: 15px;
-      padding: 11px;
-      border-radius: 8px;
-      font-size: 12px;
-      overflow-wrap: anywhere;
-    }
-
-    .message.show { display: block; }
-    .message.error { background: #49231f; color: #ffd6d0; }
-    .message.success { background: #183c2b; color: #c8f5d9; }
-
-    .back {
-      display: block;
-      text-align: center;
-      margin-top: 20px;
-      color: #d8b477;
-      text-decoration: none;
-      font-size: 13px;
-    }
-
-    .hint {
-      color: #8f877d;
-      font-size: 11px;
-      line-height: 1.6;
-      margin-top: 20px;
-    }
-  </style>
+  @media (max-width: 480px) {
+    .auth-card { padding: 28px 22px; }
+    .form-row { grid-template-columns: 1fr; }
+    .auth-logo a { font-size: 28px; }
+  }
+</style>
 </head>
-
 <body>
-  <main class="card">
-    <a href="index.html" class="brand">VELORA</a>
-    <p class="subtitle">Discover connections. Build your circle.</p>
 
-    <div class="tabs">
-      <button class="tab active" id="loginTab" type="button">Sign in</button>
-      <button class="tab" id="registerTab" type="button">Create account</button>
+<div class="bg-orb orb-1"></div>
+<div class="bg-orb orb-2"></div>
+<div class="bg-grid"></div>
+
+<div class="auth-container">
+  <div class="auth-logo">
+    <a href="index.html"><div class="logo-icon"></div>Velora</a>
+  </div>
+
+  <div class="auth-card">
+    <div class="auth-tabs">
+      <button class="auth-tab active" data-tab="login" onclick="switchTab('login')">Login</button>
+      <button class="auth-tab" data-tab="signup" onclick="switchTab('signup')">Sign Up</button>
     </div>
 
-    <form id="authForm">
-      <div id="nameField" hidden>
-        <label for="name">Full name</label>
-        <input id="name" type="text" maxlength="70" autocomplete="name">
+    <!-- ============ LOGIN ============ -->
+    <form class="auth-form active" id="loginForm" onsubmit="handleLogin(event)">
+      <h2>Welcome Back 💕</h2>
+      <p class="auth-subtitle">Login to continue your love story</p>
+      <div class="form-message" id="loginMsg"></div>
+      <div class="form-group">
+        <label>Email</label>
+        <input type="email" id="loginEmail" placeholder="you@example.com" autocomplete="email" required>
       </div>
-
-      <label for="email">Email address</label>
-      <input id="email" type="email" autocomplete="email"
-             required maxlength="254" placeholder="you@example.com">
-
-      <label for="password">Password</label>
-      <input id="password" type="password" required minlength="8"
-             autocomplete="current-password" placeholder="At least 8 characters">
-
-      <div id="confirmField" hidden>
-        <label for="confirmPassword">Confirm password</label>
-        <input id="confirmPassword" type="password"
-               minlength="8" autocomplete="new-password">
+      <div class="form-group">
+        <label>Password</label>
+        <input type="password" id="loginPassword" placeholder="••••••••" autocomplete="current-password" required>
       </div>
-
-      <label class="check" id="ageField" hidden>
-        <input id="adult" type="checkbox">
-        <span>I confirm that I am 18 or older and agree to the
-          <a href="terms.html">Terms</a> and
-          <a href="privacy.html">Privacy Policy</a>.
-        </span>
-      </label>
-
-      <button class="submit" id="submitBtn" type="submit">Sign in</button>
-      <button class="back" id="resetBtn" type="button">
-        Forgot password?
+      <a class="forgot-link" onclick="handleForgotPassword()">Forgot Password?</a>
+      <button type="submit" class="btn-submit" id="loginBtn">
+        <span class="spinner" id="loginSpinner"></span>
+        <span id="loginBtnText">Login</span>
       </button>
-
-      <div class="message" id="message" role="status" aria-live="polite"></div>
     </form>
 
-    <p class="hint">
-      Use your own account. Never share your password or verification codes.
-      Age confirmation alone is not identity verification.
-    </p>
+    <!-- ============ SIGNUP ============ -->
+    <form class="auth-form" id="signupForm" onsubmit="handleSignup(event)">
+      <h2>Join Velora 💖</h2>
+      <p class="auth-subtitle">Create your free account</p>
+      <div class="form-message" id="signupMsg"></div>
+      <div class="form-group">
+        <label>Full Name</label>
+        <input type="text" id="signupName" placeholder="Your name" autocomplete="name" required minlength="2">
+      </div>
+      <div class="form-group">
+        <label>Email</label>
+        <input type="email" id="signupEmail" placeholder="you@example.com" autocomplete="email" required>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Age</label>
+          <input type="number" id="signupAge" placeholder="18+" min="18" max="100" required>
+        </div>
+        <div class="form-group">
+          <label>Gender</label>
+          <select id="signupGender" required>
+            <option value="">Select</option>
+            <option value="male">Male</option>
+            <option value="female">Female</option>
+            <option value="other">Other</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group">
+        <label>City</label>
+        <input type="text" id="signupCity" placeholder="Mumbai" autocomplete="address-level2" required>
+      </div>
+      <div class="form-group">
+        <label>Password</label>
+        <input type="password" id="signupPassword" placeholder="Min 6 characters" autocomplete="new-password" required minlength="6">
+      </div>
+      <button type="submit" class="btn-submit" id="signupBtn">
+        <span class="spinner" id="signupSpinner"></span>
+        <span id="signupBtnText">Create Account</span>
+      </button>
+    </form>
+  </div>
 
-    <a href="index.html" class="back">← Back to home</a>
-  </main>
+  <div class="back-home"><a href="index.html">← Back to Home</a></div>
+</div>
 
-  <script type="module">
-    import {
-      createUserWithEmailAndPassword,
-      signInWithEmailAndPassword,
-      sendPasswordResetEmail,
-      updateProfile,
-      onAuthStateChanged,
-      signOut
-    } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-auth.js";
+<!-- ============ FIREBASE (inline) ============ -->
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+  import {
+    getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword,
+    signOut, onAuthStateChanged, updateProfile, sendPasswordResetEmail
+  } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+  import {
+    getDatabase, ref, set, update, get
+  } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
 
-    import {
-      ref,
-      get,
-      set
-    } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-database.js";
+  const firebaseConfig = {
+    apiKey: "AIzaSyDeXdYVYPzysn55sMNkj-tXYZJzBv7VFD4",
+    authDomain: "bigwin-29967.firebaseapp.com",
+    databaseURL: "https://bigwin-29967-default-rtdb.firebaseio.com",
+    projectId: "bigwin-29967",
+    storageBucket: "bigwin-29967.firebasestorage.app",
+    messagingSenderId: "628333876092",
+    appId: "1:628333876092:web:8e36daac959c0f42154af9"
+  };
 
-    import { auth, db } from "./js/firebase.js";
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+  const db = getDatabase(app);
 
-    const form = document.getElementById("authForm");
-    const loginTab = document.getElementById("loginTab");
-    const registerTab = document.getElementById("registerTab");
-    const nameField = document.getElementById("nameField");
-    const confirmField = document.getElementById("confirmField");
-    const ageField = document.getElementById("ageField");
-    const adult = document.getElementById("adult");
-    const nameInput = document.getElementById("name");
-    const email = document.getElementById("email");
-    const password = document.getElementById("password");
-    const confirmPassword = document.getElementById("confirmPassword");
-    const submitBtn = document.getElementById("submitBtn");
-    const resetBtn = document.getElementById("resetBtn");
-    const message = document.getElementById("message");
+  // ---- Check if already logged in ----
+  onAuthStateChanged(auth, (user) => {
+    if (user) {
+      window.location.href = 'app.html';
+    }
+  });
 
-    let mode = "login";
-    let busy = false;
+  // ---- Load mode from URL ----
+  const urlParams = new URLSearchParams(window.location.search);
+  const mode = urlParams.get('mode');
+  if (mode === 'signup') switchTab('signup');
+  else if (mode === 'login') switchTab('login');
 
-    function showMessage(text, type = "error") {
-      message.textContent = text;
-      message.className = "message show " + type;
+  // ---- Global helpers for inline handlers ----
+  window._fb = {
+    createUserWithEmailAndPassword, signInWithEmailAndPassword,
+    signOut, updateProfile, sendPasswordResetEmail,
+    ref, set, update, get, db, auth
+  };
+
+  console.log('✅ Firebase ready for auth.html');
+</script>
+
+<!-- ============ UI LOGIC ============ -->
+<script>
+  // Tab switching
+  function switchTab(tab) {
+    document.querySelectorAll('.auth-tab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.auth-form').forEach(f => f.classList.remove('active'));
+    document.querySelector(`.auth-tab[data-tab="${tab}"]`).classList.add('active');
+    document.getElementById(tab === 'login' ? 'loginForm' : 'signupForm').classList.add('active');
+    clearMessages();
+  }
+
+  // Show message
+  function showMsg(form, text, type) {
+    const el = document.getElementById(form === 'login' ? 'loginMsg' : 'signupMsg');
+    el.textContent = text;
+    el.className = 'form-message ' + type;
+  }
+  function clearMessages() {
+    ['loginMsg', 'signupMsg'].forEach(id => {
+      const el = document.getElementById(id);
+      if (el) { el.textContent = ''; el.className = 'form-message'; }
+    });
+  }
+
+  // Loading state
+  function setLoading(btnId, spinnerId, textId, loading, loadingText) {
+    document.getElementById(btnId).disabled = loading;
+    document.getElementById(spinnerId).style.display = loading ? 'inline-block' : 'none';
+    if (loadingText) document.getElementById(textId).textContent = loading ? loadingText : (btnId === 'loginBtn' ? 'Login' : 'Create Account');
+  }
+
+  // ---- Signup ----
+  async function handleSignup(e) {
+    e.preventDefault();
+    const name = document.getElementById('signupName').value.trim();
+    const email = document.getElementById('signupEmail').value.trim();
+    const age = parseInt(document.getElementById('signupAge').value);
+    const gender = document.getElementById('signupGender').value;
+    const city = document.getElementById('signupCity').value.trim();
+    const password = document.getElementById('signupPassword').value;
+
+    if (!name || !email || !age || !gender || !city || !password) {
+      return showMsg('signup', 'Please fill all fields.', 'error');
+    }
+    if (age < 18) {
+      return showMsg('signup', 'You must be 18 or older to join.', 'error');
+    }
+    if (password.length < 6) {
+      return showMsg('signup', 'Password must be at least 6 characters.', 'error');
     }
 
-    function setMode(nextMode) {
-      mode = nextMode;
-      const registering = mode === "register";
+    setLoading('signupBtn', 'signupSpinner', 'signupBtnText', true, 'Creating account...');
 
-      loginTab.classList.toggle("active", !registering);
-      registerTab.classList.toggle("active", registering);
+    try {
+      const { createUserWithEmailAndPassword, updateProfile, ref, set, db } = window._fb;
+      const cred = await createUserWithEmailAndPassword(window._fb.auth, email, password);
 
-      nameField.hidden = !registering;
-      confirmField.hidden = !registering;
-      ageField.hidden = !registering;
+      // Update display name
+      await updateProfile(cred.user, { displayName: name });
 
-      nameInput.required = registering;
-      confirmPassword.required = registering;
-      adult.required = registering;
+      // Save user profile to Realtime DB
+      await set(ref(db, 'users/' + cred.user.uid), {
+        uid: cred.user.uid,
+        name: name,
+        email: email,
+        age: age,
+        gender: gender,
+        city: city,
+        bio: '',
+        photo: '',
+        online: true,
+        createdAt: Date.now()
+      });
 
-      password.autocomplete = registering ? "new-password" : "current-password";
-      submitBtn.textContent = registering ? "Create account" : "Sign in";
-      resetBtn.hidden = registering;
-      message.className = "message";
+      showMsg('signup', 'Account created! Redirecting... 💖', 'success');
+      setTimeout(() => { window.location.href = 'app.html'; }, 1200);
+    } catch (err) {
+      showMsg('signup', friendlyError(err), 'error');
+      setLoading('signupBtn', 'signupSpinner', 'signupBtnText', false, '');
+    }
+  }
+
+  // ---- Login ----
+  async function handleLogin(e) {
+    e.preventDefault();
+    const email = document.getElementById('loginEmail').value.trim();
+    const password = document.getElementById('loginPassword').value;
+
+    if (!email || !password) {
+      return showMsg('login', 'Please enter email and password.', 'error');
     }
 
-    loginTab.addEventListener("click", () => setMode("login"));
-    registerTab.addEventListener("click", () => setMode("register"));
+    setLoading('loginBtn', 'loginSpinner', 'loginBtnText', true, 'Logging in...');
 
-    onAuthStateChanged(auth, (user) => {
-      if (user) {
-        showMessage("You are signed in. Opening your profile…", "success");
-        window.location.replace("profile.html");
-      }
-    });
+    try {
+      const { signInWithEmailAndPassword, ref, update, db } = window._fb;
+      const cred = await signInWithEmailAndPassword(window._fb.auth, email, password);
 
-    form.addEventListener("submit", async (event) => {
-      event.preventDefault();
+      // Mark online
+      await update(ref(db, 'users/' + cred.user.uid), { online: true });
 
-      if (busy) return;
+      showMsg('login', 'Login successful! Redirecting... 💕', 'success');
+      setTimeout(() => { window.location.href = 'app.html'; }, 800);
+    } catch (err) {
+      showMsg('login', friendlyError(err), 'error');
+      setLoading('loginBtn', 'loginSpinner', 'loginBtnText', false, '');
+    }
+  }
 
-      const emailValue = email.value.trim().toLowerCase();
-      const passwordValue = password.value;
+  // ---- Forgot password ----
+  async function handleForgotPassword() {
+    const email = document.getElementById('loginEmail').value.trim();
+    if (!email) {
+      return showMsg('login', 'Enter your email above, then click Forgot Password.', 'error');
+    }
+    try {
+      const { sendPasswordResetEmail } = window._fb;
+      await sendPasswordResetEmail(window._fb.auth, email);
+      showMsg('login', '✅ Password reset link sent to your email.', 'success');
+    } catch (err) {
+      showMsg('login', friendlyError(err), 'error');
+    }
+  }
 
-      if (mode === "register") {
-        if (nameInput.value.trim().length < 2) {
-          showMessage("Please enter your full name.");
-          return;
-        }
+  // ---- Error messages ----
+  function friendlyError(err) {
+    const code = err.code || '';
+    const map = {
+      'auth/email-already-in-use': 'This email is already registered. Try logging in.',
+      'auth/invalid-email': 'Invalid email address.',
+      'auth/weak-password': 'Password too weak. Use at least 6 characters.',
+      'auth/user-not-found': 'No account found with this email.',
+      'auth/wrong-password': 'Incorrect password.',
+      'auth/invalid-credential': 'Invalid email or password.',
+      'auth/too-many-requests': 'Too many attempts. Try again later.',
+      'auth/network-request-failed': 'Network error. Check internet.',
+      'auth/operation-not-allowed': 'Email/Password login not enabled in Firebase Console.',
+      'auth/missing-password': 'Please enter a password.',
+    };
+    return map[code] || (err.message || 'Something went wrong.');
+  }
 
-        if (passwordValue !== confirmPassword.value) {
-          showMessage("Passwords do not match.");
-          return;
-        }
+  // Expose
+  window.switchTab = switchTab;
+  window.handleLogin = handleLogin;
+  window.handleSignup = handleSignup;
+  window.handleForgotPassword = handleForgotPassword;
+</script>
 
-        if (!adult.checked) {
-          showMessage("You must confirm that you are 18 or older.");
-          return;
-        }
-      }
-
-      busy = true;
-      submitBtn.disabled = true;
-      showMessage("Please wait…", "success");
-
-      try {
-        if (mode === "register") {
-          const credential = await createUserWithEmailAndPassword(
-            auth, emailValue, passwordValue
-          );
-
-          try {
-            await updateProfile(credential.user, {
-              displayName: nameInput.value.trim()
-            });
-
-            await set(ref(db, "users/" + credential.user.uid), {
-              uid: credential.user.uid,
-              name: nameInput.value.trim(),
-              email: emailValue,
-              createdAt: Date.now(),
-              role: "user",
-              status: "active",
-              adultDeclaration: true,
-              profileComplete: false
-            });
-          } catch (profileError) {
-            await signOut(auth);
-            throw new Error(
-              "Account was created, but profile setup failed. " +
-              "Check Database Rules before trying again."
-            );
-          }
-
-          showMessage("Account created successfully.", "success");
-          window.location.replace("profile.html");
-        } else {
-          await signInWithEmailAndPassword(auth, emailValue, passwordValue);
-          showMessage("Signed in successfully.", "success");
-          window.location.replace("profile.html");
-        }
-      } catch (error) {
-        console.error("Authentication error:", error.code, error.message);
-
-        const errors = {
-          "auth/email-already-in-use": "This email is already registered.",
-          "auth/invalid-email": "Enter a valid email address.",
-          "auth/weak-password": "Choose a stronger password.",
-          "auth/invalid-credential": "Email or password is incorrect.",
-          "auth/user-not-found": "Account not found. Please register.",
-          "auth/wrong-password": "Email or password is incorrect.",
-          "auth/network-request-failed": "Network error. Check your connection.",
-          "auth/too-many-requests": "Too many attempts. Try again later.",
-          "auth/operation-not-allowed": "Enable Email/Password in Firebase Authentication."
-        };
-
-        showMessage(
-          errors[error.code] ||
-          error.message ||
-          "Something went wrong. Check Firebase settings."
-        );
-      } finally {
-        busy = false;
-        submitBtn.disabled = false;
-      }
-    });
-
-    resetBtn.addEventListener("click", async () => {
-      const emailValue = email.value.trim().toLowerCase();
-
-      if (!emailValue) {
-        showMessage("Enter your email address first.");
-        email.focus();
-        return;
-      }
-
-      try {
-        await sendPasswordResetEmail(auth, emailValue);
-        showMessage(
-          "If this email is registered, a password reset email will be sent.",
-          "success"
-        );
-      } catch (error) {
-        console.error("Password reset error:", error.code);
-        showMessage("Could not request a reset. Check your email and try again.");
-      }
-    });
-
-    setMode("login");
-  </script>
 </body>
 </html>
