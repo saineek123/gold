@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<meta name="theme-color" content="#ff2e63">
+<title>Home — PlayBoy Rentals</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+:root{
+  --primary:#ff2e63; --primary-dark:#c70039; --gold:#ffd700;
+  --bg:#0f0f1a; --bg2:#1a1a2e; --bg3:#2a2a3e; --border:#2a2a3e;
+  --text:#fff; --muted:#888; --success:#00b894; --danger:#e74c3c;
+  --warning:#f39c12; --radius:14px;
+}
+html,body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
+  background:var(--bg);color:var(--text);min-height:100vh;font-size:15px;line-height:1.5;
+  padding-bottom:calc(80px + env(safe-area-inset-bottom))}
+.loader{position:fixed;inset:0;background:var(--bg);z-index:9999;
+  display:flex;align-items:center;justify-content:center;flex-direction:column;gap:16px}
+.spinner{width:44px;height:44px;border:4px solid var(--bg3);border-top-color:var(--primary);
+  border-radius:50%;animation:spin 1s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.loader p{color:var(--muted);font-size:13px}
+
+.topnav{position:sticky;top:0;z-index:50;
+  background:linear-gradient(135deg,var(--primary),var(--primary-dark));
+  padding:14px 18px;display:flex;align-items:center;justify-content:space-between;
+  padding-top:calc(14px + env(safe-area-inset-top))}
+.topnav h1{font-size:18px;font-weight:700}
+.topnav h1 span{color:var(--gold)}
+.topnav button{background:rgba(255,255,255,.2);border:none;color:#fff;
+  width:36px;height:36px;border-radius:50%;font-size:16px;cursor:pointer}
+
+.container{max-width:640px;margin:0 auto;padding:20px 16px}
+.section-title{font-size:18px;font-weight:700;margin-bottom:14px}
+.section-title span{color:var(--primary)}
+
+.pb-card{margin-bottom:14px;padding:16px;background:var(--bg2);border-radius:14px;
+  border:1px solid var(--border);display:flex;gap:14px;cursor:pointer;transition:.2s}
+.pb-card:active{transform:scale(.98)}
+.pb-avatar{width:70px;height:70px;border-radius:50%;flex-shrink:0;
+  background:linear-gradient(135deg,var(--primary),var(--primary-dark));
+  display:flex;align-items:center;justify-content:center;font-size:30px;
+  border:2px solid var(--gold);overflow:hidden}
+.pb-avatar img{width:100%;height:100%;object-fit:cover}
+.pb-info{flex:1;min-width:0}
+.pb-info h3{font-size:16px;margin-bottom:3px;display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.pb-info .rate{color:var(--gold);font-weight:700;font-size:15px}
+.pb-info .bio{color:var(--muted);font-size:12px;margin-top:4px;
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.badge{display:inline-block;padding:2px 8px;border-radius:10px;font-size:10px;font-weight:700;
+  background:var(--success);color:#fff}
+
+.empty{text-align:center;padding:60px 20px;color:#555;font-size:14px}
+.empty .big{font-size:52px;display:block;margin-bottom:12px;opacity:.5}
+
+.bottom-nav{position:fixed;bottom:0;left:0;right:0;background:var(--bg2);
+  border-top:1px solid var(--border);display:flex;
+  padding:8px 0 calc(8px + env(safe-area-inset-bottom));z-index:40}
+.bottom-nav a{flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;
+  text-decoration:none;color:var(--muted);font-size:11px;padding:6px 0;cursor:pointer}
+.bottom-nav a .icon{font-size:20px}
+.bottom-nav a.active{color:var(--primary)}
+
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:100;
+  display:none;align-items:flex-end;justify-content:center}
+.modal-overlay.active{display:flex}
+.modal{background:var(--bg2);width:100%;max-width:480px;
+  border-radius:20px 20px 0 0;padding:24px 20px calc(24px + env(safe-area-inset-bottom));
+  max-height:90vh;overflow-y:auto;animation:slideUp .3s ease}
+@keyframes slideUp{from{transform:translateY(100%)}to{transform:translateY(0)}}
+.modal-handle{width:40px;height:4px;background:#444;border-radius:2px;margin:0 auto 16px}
+.modal h3{font-size:18px;margin-bottom:16px;color:var(--primary)}
+
+.form-group{margin-bottom:12px}
+.form-group label{display:block;font-size:13px;color:var(--muted);margin-bottom:6px}
+input,textarea{width:100%;padding:13px 16px;background:var(--bg);border:1.5px solid var(--border);
+  color:#fff;border-radius:10px;font-size:15px;font-family:inherit;transition:.2s}
+input:focus,textarea:focus{outline:none;border-color:var(--primary)}
+textarea{resize:vertical;min-height:70px}
+
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;
+  padding:12px 20px;border:none;border-radius:10px;cursor:pointer;
+  font-size:15px;font-weight:600;transition:all .2s;text-decoration:none;
+  width:100%;font-family:inherit;color:#fff}
+.btn:active{transform:scale(.97)}
+.btn-primary{background:linear-gradient(135deg,var(--primary),var(--primary-dark));
+  box-shadow:0 4px 20px rgba(255,46,99,.35)}
+.btn-ghost{background:var(--bg3);color:#fff}
+.btn-lg{padding:15px 24px;font-size:16px}
+
+.toast{position:fixed;bottom:90px;left:50%;transform:translateX(-50%);
+  background:var(--bg3);color:#fff;padding:13px 24px;border-radius:30px;
+  font-size:14px;font-weight:500;z-index:9999;max-width:90vw;text-align:center;
+  box-shadow:0 8px 30px rgba(0,0,0,.4);animation:toastIn .3s;
+  border:1px solid var(--border)}
+@keyframes toastIn{from{opacity:0;transform:translate(-50%,20px)}to{opacity:1;transform:translate(-50%,0)}}
+.toast.success{border-color:var(--success)}
+.toast.error{border-color:var(--danger)}
+
+.hidden{display:none!important}
+</style>
+</head>
+<body>
+
+<div class="loader" id="loader">
+  <div class="spinner"></div>
+  <p>Loading...</p>
+</div>
+
+<div class="topnav">
+  <h1>Play<span>Boy</span> 💋</h1>
+  <button onclick="logout()">⏻</button>
+</div>
+
+<div class="container">
+  <div class="section-title">🔥 Available <span>Companions</span></div>
+  <div id="list"></div>
+</div>
+
+<div class="bottom-nav" id="nav"></div>
+
+<div class="modal-overlay" id="modal" onclick="if(event.target===this)closeModal()">
+  <div class="modal" id="modalContent"></div>
+</div>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+import { getDatabase, ref, get, push, set }
+  from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyDeXdYVYPzysn55sMNkj-tXYZJzBv7VFD4",
+  authDomain: "bigwin-29967.firebaseapp.com",
+  databaseURL: "https://bigwin-29967-default-rtdb.firebaseio.com",
+  projectId: "bigwin-29967",
+  storageBucket: "bigwin-29967.firebasestorage.app",
+  messagingSenderId: "628333876092",
+  appId: "1:628333876092:web:8e36daac959c0f42154af9",
+  measurementId: "G-654JHXWMEL"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
+
+let me = null;
+
+function toast(msg, type) {
+  const t = document.createElement('div');
+  t.className = 'toast ' + (type || '');
+  t.textContent = msg;
+  document.body.appendChild(t);
+  setTimeout(() => t.remove(), 2800);
+}
+
+function escapeHtml(s) {
+  return String(s || '').replace(/[&<>"']/g, c =>
+    ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+}
+
+function avatarHTML(user) {
+  if (user.photo) return `<img src="${user.photo}">`;
+  return user.role === 'playboy' ? '👨' : '👤';
+}
+
+window.logout = function() {
+  if (!confirm('Logout?')) return;
+  localStorage.removeItem('currentUser');
+  window.location.href = 'index.html';
+};
+
+window.closeModal = function() { document.getElementById('modal').classList.remove('active'); };
+
+// Setup nav
+function setupNav() {
+  document.getElementById('nav').innerHTML = `
+    <a class="active" onclick="location.href='home.html'">
+      <span class="icon">🏠</span><span>Home</span>
+    </a>
+    <a onclick="location.href='chat.html'">
+      <span class="icon">💬</span><span>Chat</span>
+    </a>
+    <a onclick="location.href='bookings.html'">
+      <span class="icon">📋</span><span>Bookings</span>
+    </a>
+    <a onclick="location.href='support.html'">
+      <span class="icon">🛟</span><span>Support</span>
+    </a>
+  `;
+}
+
+async function loadPlayboys() {
+  const box = document.getElementById('list');
+  try {
+    const snap = await get(ref(db, 'users'));
+    if (!snap.exists()) {
+      box.innerHTML = '<div class="empty"><span class="big">😕</span>No companions yet</div>';
+      return;
+    }
+    const list = Object.values(snap.val()).filter(u =>
+      u.role === 'playboy' && u.status === 'active' && u.kycDone
+    );
+    if (!list.length) {
+      box.innerHTML = '<div class="empty"><span class="big">😕</span>No verified companions available<br><small>Check back soon</small></div>';
+      return;
+    }
+    box.innerHTML = list.map(p => `
+      <div class="pb-card" onclick="openCard('${p.uid}')">
+        <div class="pb-avatar">${avatarHTML(p)}</div>
+        <div class="pb-info">
+          <h3>${escapeHtml(p.name)} <span class="badge">✓ VERIFIED</span></h3>
+          <div class="rate">₹${p.rate}/hour</div>
+          <div class="bio">${escapeHtml((p.bio || '').substring(0, 60))}</div>
+          <div style="font-size:11px;color:var(--muted);margin-top:4px">📍 ${escapeHtml(p.city || 'N/A')}</div>
+        </div>
+      </div>`).join('');
+  } catch (e) {
+    box.innerHTML = '<div class="empty">Failed to load: ' + e.message + '</div>';
+  }
+}
+
+window.openCard = async function(uid) {
+  const snap = await get(ref(db, 'users/' + uid));
+  if (!snap.exists()) return;
+  const p = snap.val();
+
+  document.getElementById('modalContent').innerHTML = `
+    <div class="modal-handle"></div>
+    <div style="text-align:center;margin-bottom:16px">
+      <div class="pb-avatar" style="margin:0 auto 12px;width:90px;height:90px;font-size:40px">${avatarHTML(p)}</div>
+      <h3 style="margin-bottom:4px">${escapeHtml(p.name)} ✓</h3>
+      <div style="color:var(--gold);font-weight:700;font-size:18px">₹${p.rate}/hour</div>
+      <div style="color:var(--muted);font-size:13px;margin-top:4px">📍 ${escapeHtml(p.city || 'N/A')} ${p.age ? '· ' + p.age + ' yrs' : ''}</div>
+    </div>
+    <div style="background:var(--bg3);padding:14px;border-radius:10px;margin-bottom:16px;font-size:13px">${escapeHtml(p.bio || 'No bio')}</div>
+    ${p.services ? `<div style="margin-bottom:12px"><strong style="font-size:13px">Services:</strong><br><span style="font-size:13px;color:var(--muted)">${escapeHtml(p.services)}</span></div>` : ''}
+    ${p.hours ? `<div style="margin-bottom:12px"><strong style="font-size:13px">Available:</strong><br><span style="font-size:13px;color:var(--muted)">${escapeHtml(p.hours)}</span></div>` : ''}
+
+    <div class="form-group"><label>Booking Date *</label>
+      <input type="date" id="bk-date" min="${new Date().toISOString().split('T')[0]}"></div>
+    <div class="form-group"><label>Hours *</label>
+      <input type="number" id="bk-hours" value="2" min="1" max="24"
+             oninput="updateTotal(${p.rate})"></div>
+    <div class="form-group"><label>Note (optional)</label>
+      <textarea id="bk-note" placeholder="Any special request..."></textarea></div>
+
+    <div style="color:var(--gold);font-weight:700;text-align:center;margin:12px 0;font-size:18px"
+         id="bk-total">Total: ₹${p.rate * 2}</div>
+
+    <button class="btn btn-primary btn-lg" onclick="bookNow('${p.uid}')">📅 Send Booking Request</button>
+    <button class="btn btn-ghost btn-lg mt-2" style="margin-top:8px"
+            onclick="openChatWith('${p.uid}')">💬 Chat First</button>
+    <button class="btn btn-ghost btn-lg" style="margin-top:8px;background:transparent"
+            onclick="closeModal()">Cancel</button>
+  `;
+  document.getElementById('modal').classList.add('active');
+};
+
+window.updateTotal = function(rate) {
+  const h = +document.getElementById('bk-hours').value || 0;
+  document.getElementById('bk-total').textContent = 'Total: ₹' + (rate * h);
+};
+
+window.bookNow = async function(pbId) {
+  const date = document.getElementById('bk-date').value;
+  const hours = +document.getElementById('bk-hours').value;
+  const note = document.getElementById('bk-note').value.trim();
+  if (!date) return toast('Select date', 'error');
+  if (!hours || hours < 1) return toast('Enter hours', 'error');
+
+  try {
+    const pbSnap = await get(ref(db, 'users/' + pbId));
+    const pb = pbSnap.val();
+    const newRef = push(ref(db, 'bookings'));
+    await set(newRef, {
+      bid: newRef.key,
+      playboyId: pbId, playboyName: pb.name,
+      customerId: me.uid, customerName: me.name,
+      date, hours, note, total: pb.rate * hours,
+      status: 'pending', createdAt: Date.now()
+    });
+    toast('Booking request sent!', 'success');
+    closeModal();
+  } catch (e) {
+    toast('Booking failed', 'error');
+  }
+};
+
+window.openChatWith = function(otherId) {
+  window.location.href = 'chat.html?with=' + otherId;
+};
+
+// INIT
+(async function init() {
+  await new Promise(r => setTimeout(r, 300));
+  document.getElementById('loader').style.display = 'none';
+
+  const saved = localStorage.getItem('currentUser');
+  if (!saved) { window.location.href = 'index.html'; return; }
+
+  try {
+    const ref_ = JSON.parse(saved);
+    const snap = await get(ref(db, 'users/' + ref_.uid));
+    if (!snap.exists()) { localStorage.removeItem('currentUser'); window.location.href = 'index.html'; return; }
+    me = snap.val();
+    if (me.role !== 'customer') { window.location.href = 'profile.html'; return; }
+    if (me.status === 'blocked') { localStorage.removeItem('currentUser'); window.location.href = 'index.html'; return; }
+
+    setupNav();
+    await loadPlayboys();
+  } catch (e) {
+    window.location.href = 'index.html';
+  }
+})();
+</script>
+</body>
+</html>
