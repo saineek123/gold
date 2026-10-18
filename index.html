@@ -2,11 +2,10 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 <meta name="theme-color" content="#ff2e63">
-<title>PlayBoy Rentals</title>
+<title>Login / Register — PlayBoy Rentals</title>
 <style>
-/* ============ RESET ============ */
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 :root{
   --primary:#ff2e63; --primary-dark:#c70039; --gold:#ffd700;
@@ -15,10 +14,14 @@
   --warning:#f39c12; --info:#3498db; --radius:14px;
 }
 html,body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
-  background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden;
-  font-size:15px;line-height:1.5;padding-bottom:env(safe-area-inset-bottom)}
+  background:var(--bg);color:var(--text);min-height:100vh;font-size:15px;line-height:1.5}
+.loader{position:fixed;inset:0;background:var(--bg);z-index:9999;
+  display:flex;align-items:center;justify-content:center;flex-direction:column;gap:16px}
+.spinner{width:44px;height:44px;border:4px solid var(--bg3);border-top-color:var(--primary);
+  border-radius:50%;animation:spin 1s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.loader p{color:var(--muted);font-size:13px}
 
-/* ============ BUTTONS ============ */
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;
   padding:12px 20px;border:none;border-radius:10px;cursor:pointer;
   font-size:15px;font-weight:600;transition:all .2s;text-decoration:none;
@@ -27,305 +30,104 @@ html,body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-se
 .btn:disabled{opacity:.5;cursor:not-allowed}
 .btn-primary{background:linear-gradient(135deg,var(--primary),var(--primary-dark));
   box-shadow:0 4px 20px rgba(255,46,99,.35)}
-.btn-outline{background:transparent;border:2px solid var(--primary);color:var(--primary)}
 .btn-ghost{background:var(--bg3);color:#fff}
-.btn-danger{background:var(--danger)}
-.btn-success{background:var(--success)}
-.btn-warning{background:var(--warning);color:#000}
 .btn-lg{padding:15px 24px;font-size:16px}
-.btn-sm{padding:8px 14px;font-size:13px;width:auto}
 
-/* ============ LOADER ============ */
-.loader{position:fixed;inset:0;background:var(--bg);z-index:9999;
-  display:flex;align-items:center;justify-content:center;flex-direction:column;gap:16px}
-.spinner{width:44px;height:44px;border:4px solid var(--bg3);border-top-color:var(--primary);
-  border-radius:50%;animation:spin 1s linear infinite}
-@keyframes spin{to{transform:rotate(360deg)}}
-.loader p{color:var(--muted);font-size:13px}
+.wrap{max-width:440px;margin:0 auto;padding:30px 20px 60px;min-height:100vh;
+  display:flex;flex-direction:column;justify-content:center}
+.logo-box{text-align:center;margin-bottom:30px}
+.logo-icon{font-size:56px;margin-bottom:8px}
+.logo-box h1{font-size:32px;font-weight:800;letter-spacing:-1px}
+.logo-box h1 span{color:var(--gold)}
+.logo-box p{color:var(--muted);font-size:13px;margin-top:4px}
 
-/* ============ LANDING ============ */
-.landing-wrap{width:100%;max-width:420px;padding:40px 24px;text-align:center;
-  margin:0 auto;min-height:100vh;display:flex;flex-direction:column;justify-content:center}
-.logo-big{font-size:64px;margin-bottom:8px;animation:bounce 2s infinite}
-@keyframes bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
-.landing-wrap h1{font-size:38px;font-weight:800;letter-spacing:-1px}
-.landing-wrap h1 span{color:var(--gold)}
-.tagline{color:var(--muted);margin-top:6px;font-size:14px}
-.landing-btns{margin:40px 0;display:flex;flex-direction:column;gap:12px}
-.landing-feats{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;
-  padding-top:24px;border-top:1px solid var(--border)}
-.feat{display:flex;flex-direction:column;align-items:center;gap:4px}
-.feat span{font-size:24px}
-.feat p{font-size:11px;color:var(--muted);text-align:center}
-.disclaimer{font-size:11px;color:#555}
+.tabs{display:flex;background:var(--bg2);border-radius:12px;padding:4px;margin-bottom:24px}
+.tabs button{flex:1;padding:12px;border:none;background:transparent;color:var(--muted);
+  font-size:14px;font-weight:600;cursor:pointer;border-radius:9px;font-family:inherit;
+  transition:.2s}
+.tabs button.active{background:var(--primary);color:#fff;box-shadow:0 2px 12px rgba(255,46,99,.4)}
 
-/* ============ TOPNAV ============ */
-.topnav{position:sticky;top:0;z-index:50;
-  background:linear-gradient(135deg,var(--primary),var(--primary-dark));
-  padding:14px 18px;display:flex;align-items:center;justify-content:space-between;
-  padding-top:calc(14px + env(safe-area-inset-top))}
-.topnav h1{font-size:18px;font-weight:700}
-.topnav h1 span{color:var(--gold)}
-.topnav button{background:rgba(255,255,255,.2);border:none;color:#fff;
-  width:36px;height:36px;border-radius:50%;font-size:16px;cursor:pointer}
-
-/* ============ CONTAINER ============ */
-.container{max-width:480px;margin:0 auto;padding:20px 18px 100px}
-
-/* ============ FORMS ============ */
-.form-group{margin-bottom:16px}
-.form-group label{display:block;font-size:13px;color:var(--muted);margin-bottom:6px;font-weight:500}
-.form-group label .req{color:var(--primary)}
-input,select,textarea{width:100%;padding:14px 16px;background:var(--bg2);
-  border:1.5px solid var(--border);color:#fff;border-radius:10px;font-size:15px;
-  font-family:inherit;transition:border-color .2s;appearance:none}
-input:focus,select:focus,textarea:focus{outline:none;border-color:var(--primary)}
-input::placeholder,textarea::placeholder{color:#555}
-textarea{resize:vertical;min-height:80px}
-select{background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'><path fill='%23888' d='M6 9L1 4h10z'/></svg>");
-  background-repeat:no-repeat;background-position:right 16px center;padding-right:40px}
-
-/* ============ ROLE PICKER ============ */
 .role-picker{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:20px}
-.role-card{padding:18px 12px;background:var(--bg2);border:2px solid var(--border);
+.role-card{padding:16px 10px;background:var(--bg2);border:2px solid var(--border);
   border-radius:12px;text-align:center;cursor:pointer;transition:all .2s}
-.role-card .icon{font-size:30px;display:block;margin-bottom:6px}
-.role-card .name{font-size:14px;font-weight:600}
-.role-card .desc{font-size:11px;color:var(--muted);margin-top:2px}
+.role-card .icon{font-size:26px;display:block;margin-bottom:4px}
+.role-card .name{font-size:13px;font-weight:600}
 .role-card.active{border-color:var(--primary);background:rgba(255,46,99,.1)}
 
-/* ============ CARDS ============ */
-.card{background:var(--bg2);border-radius:var(--radius);border:1px solid var(--border);
-  overflow:hidden;transition:all .2s}
-.card:active{transform:scale(.98)}
-.pb-card{margin-bottom:14px;padding:16px;display:flex;gap:14px;cursor:pointer}
-.pb-avatar{width:70px;height:70px;border-radius:50%;flex-shrink:0;
-  background:linear-gradient(135deg,var(--primary),var(--primary-dark));
-  display:flex;align-items:center;justify-content:center;font-size:30px;
-  border:2px solid var(--gold);overflow:hidden}
-.pb-avatar img{width:100%;height:100%;object-fit:cover}
-.pb-info{flex:1;min-width:0}
-.pb-info h3{font-size:16px;margin-bottom:3px;display:flex;align-items:center;gap:6px}
-.pb-info .rate{color:var(--gold);font-weight:700;font-size:15px}
-.pb-info .bio{color:var(--muted);font-size:12px;margin-top:4px;
-  overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.form-group{margin-bottom:14px}
+.form-group label{display:block;font-size:12px;color:var(--muted);margin-bottom:6px;font-weight:500}
+.form-group label .req{color:var(--primary)}
+input{width:100%;padding:13px 16px;background:var(--bg2);border:1.5px solid var(--border);
+  color:#fff;border-radius:10px;font-size:15px;font-family:inherit;transition:.2s}
+input:focus{outline:none;border-color:var(--primary)}
+input::placeholder{color:#555}
 
-.badge{display:inline-block;padding:2px 8px;border-radius:10px;font-size:10px;font-weight:700}
-.badge-verified{background:var(--success);color:#fff}
-.badge-pending{background:var(--warning);color:#fff}
+.check-row{display:flex;gap:10px;align-items:flex-start;font-size:12px;color:var(--muted);
+  margin:14px 0}
+.check-row input{width:18px;height:18px;margin-top:2px;flex-shrink:0}
 
-/* ============ SECTION ============ */
-.section-title{font-size:20px;font-weight:700;margin:24px 0 14px}
-.section-title:first-child{margin-top:0}
+.divider{text-align:center;color:var(--muted);font-size:12px;margin:20px 0}
+.link{color:var(--primary);text-decoration:none;font-weight:600;cursor:pointer}
 
-/* ============ KYC STEPS ============ */
-.steps-bar{display:flex;gap:6px;margin-bottom:24px}
-.steps-bar .step{flex:1;height:4px;background:var(--bg3);border-radius:2px;transition:.3s}
-.steps-bar .step.active{background:var(--primary)}
-.steps-bar .step.done{background:var(--success)}
-.step-page{display:none}.step-page.active{display:block;animation:fadeIn .3s}
-@keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
-
-/* ============ PROFILE ============ */
-.profile-head{display:flex;flex-direction:column;align-items:center;text-align:center;
-  padding:24px;background:var(--bg2);border-radius:var(--radius);
-  border:1px solid var(--border);margin-bottom:20px}
-.profile-avatar{width:90px;height:90px;border-radius:50%;margin-bottom:12px;
-  background:linear-gradient(135deg,var(--primary),var(--primary-dark));
-  display:flex;align-items:center;justify-content:center;font-size:40px;
-  border:3px solid var(--gold);position:relative;overflow:hidden}
-.profile-avatar img{width:100%;height:100%;object-fit:cover}
-.profile-avatar .tick{position:absolute;bottom:0;right:0;background:var(--success);
-  color:#fff;width:26px;height:26px;border-radius:50%;display:flex;
-  align-items:center;justify-content:center;font-size:13px;border:2px solid var(--bg2)}
-.profile-head h2{font-size:20px;margin-bottom:4px}
-.profile-head .username{color:var(--muted);font-size:13px}
-.profile-head .rate-tag{color:var(--gold);font-weight:700;font-size:16px;margin-top:8px}
-
-/* ============ BOTTOM NAV ============ */
-.bottom-nav{position:fixed;bottom:0;left:0;right:0;background:var(--bg2);
-  border-top:1px solid var(--border);display:flex;
-  padding:8px 0 calc(8px + env(safe-area-inset-bottom));z-index:40}
-.bottom-nav a{flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;
-  text-decoration:none;color:var(--muted);font-size:11px;padding:6px 0;cursor:pointer;border:none;
-  background:transparent;font-family:inherit}
-.bottom-nav a .icon{font-size:20px}
-.bottom-nav a.active{color:var(--primary)}
-
-/* ============ CHAT ============ */
-.chat-list-item{display:flex;gap:12px;align-items:center;padding:14px;
-  background:var(--bg2);border-radius:12px;margin-bottom:10px;
-  text-decoration:none;color:#fff;border:1px solid var(--border);cursor:pointer}
-.chat-avatar{width:48px;height:48px;border-radius:50%;background:var(--bg3);
-  display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0;overflow:hidden}
-.chat-avatar img{width:100%;height:100%;object-fit:cover}
-.chat-list-item .info{flex:1;min-width:0}
-.chat-list-item h4{font-size:15px;margin-bottom:2px}
-.chat-list-item p{font-size:12px;color:var(--muted);overflow:hidden;
-  text-overflow:ellipsis;white-space:nowrap}
-
-.chat-window{display:flex;flex-direction:column;height:calc(100vh - 64px);
-  padding-bottom:env(safe-area-inset-bottom)}
-.chat-messages{flex:1;overflow-y:auto;padding:16px;display:flex;flex-direction:column;gap:8px}
-.msg{max-width:75%;padding:10px 14px;border-radius:16px;font-size:14px;word-wrap:break-word}
-.msg.me{background:var(--primary);color:#fff;align-self:flex-end;border-bottom-right-radius:4px}
-.msg.them{background:var(--bg3);color:#fff;align-self:flex-start;border-bottom-left-radius:4px}
-.chat-input-bar{display:flex;gap:8px;padding:12px;background:var(--bg2);border-top:1px solid var(--border)}
-.chat-input-bar input{margin:0;padding:12px 16px}
-.chat-input-bar button{width:46px;height:46px;border-radius:50%;border:none;
-  background:var(--primary);color:#fff;font-size:18px;cursor:pointer;flex-shrink:0}
-
-/* ============ BOOKING ============ */
-.booking-card{background:var(--bg2);border-radius:var(--radius);padding:16px;
-  margin-bottom:12px;border-left:4px solid var(--primary)}
-.booking-card .row{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
-.booking-card h4{font-size:15px}
-.booking-card .meta{font-size:12px;color:var(--muted)}
-.booking-card .price{color:var(--gold);font-weight:700}
-.booking-actions{display:flex;gap:8px;margin-top:12px}
-.booking-actions .btn{flex:1;padding:10px;font-size:13px}
-
-.status{padding:4px 10px;border-radius:20px;font-size:11px;font-weight:700;text-transform:uppercase}
-.status.pending{background:var(--warning);color:#000}
-.status.accepted{background:var(--success);color:#fff}
-.status.rejected{background:var(--danger);color:#fff}
-.status.completed{background:var(--info);color:#fff}
-.status.blocked{background:#444;color:#fff}
-
-/* ============ MODAL ============ */
-.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:100;
-  display:none;align-items:flex-end;justify-content:center}
-.modal-overlay.active{display:flex}
-.modal{background:var(--bg2);width:100%;max-width:480px;
-  border-radius:20px 20px 0 0;padding:24px 20px calc(24px + env(safe-area-inset-bottom));
-  max-height:90vh;overflow-y:auto;animation:slideUp .3s ease}
-@keyframes slideUp{from{transform:translateY(100%)}to{transform:translateY(0)}}
-.modal-handle{width:40px;height:4px;background:#444;border-radius:2px;margin:0 auto 16px}
-.modal h3{font-size:18px;margin-bottom:16px;color:var(--primary)}
-
-/* ============ TOAST ============ */
-.toast{position:fixed;bottom:90px;left:50%;transform:translateX(-50%);
-  background:var(--bg3);color:#fff;padding:12px 24px;border-radius:30px;
-  font-size:14px;font-weight:500;z-index:9999;white-space:nowrap;
+.hidden{display:none!important}
+.toast{position:fixed;bottom:30px;left:50%;transform:translateX(-50%);
+  background:var(--bg3);color:#fff;padding:13px 24px;border-radius:30px;
+  font-size:14px;font-weight:500;z-index:9999;max-width:90vw;text-align:center;
   box-shadow:0 8px 30px rgba(0,0,0,.4);animation:toastIn .3s;
-  border:1px solid var(--border);max-width:90vw;text-align:center;white-space:normal}
+  border:1px solid var(--border)}
 @keyframes toastIn{from{opacity:0;transform:translate(-50%,20px)}to{opacity:1;transform:translate(-50%,0)}}
 .toast.success{border-color:var(--success)}
 .toast.error{border-color:var(--danger)}
 
-/* ============ EMPTY ============ */
-.empty{text-align:center;padding:60px 20px;color:#555;font-size:14px}
-.empty .big{font-size:48px;display:block;margin-bottom:12px;opacity:.5}
-
-/* ============ UPLOAD ============ */
-.upload-box{border:2px dashed var(--border);border-radius:12px;padding:24px;
-  text-align:center;cursor:pointer;transition:.2s;margin-bottom:12px}
-.upload-box:active,.upload-box.has-file{border-color:var(--primary);background:rgba(255,46,99,.05)}
-.upload-box .icon{font-size:32px;display:block;margin-bottom:8px}
-.upload-box p{font-size:13px;color:var(--muted)}
-.upload-box .file-name{color:var(--success);font-size:13px;font-weight:600;margin-top:6px}
-.upload-preview{width:100%;max-height:200px;object-fit:contain;border-radius:8px;margin-top:8px}
-
-/* ============ ADMIN ============ */
-.admin-stat-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-bottom:20px}
-.admin-stat{background:var(--bg2);border:1px solid var(--border);border-radius:12px;
-  padding:16px;text-align:center}
-.admin-stat .num{font-size:26px;font-weight:800;color:var(--primary)}
-.admin-stat .lbl{font-size:11px;color:var(--muted);margin-top:2px;text-transform:uppercase;letter-spacing:.5px}
-.admin-tabs{display:flex;gap:6px;overflow-x:auto;margin-bottom:16px;padding-bottom:4px}
-.admin-tab{padding:8px 16px;background:var(--bg3);border:none;color:#fff;
-  border-radius:20px;font-size:13px;font-weight:600;cursor:pointer;white-space:nowrap;font-family:inherit}
-.admin-tab.active{background:var(--primary)}
-.admin-user-card{background:var(--bg2);border:1px solid var(--border);border-radius:12px;
-  padding:16px;margin-bottom:12px}
-.admin-user-card .head{display:flex;align-items:center;gap:12px;margin-bottom:12px}
-.admin-user-card .head .av{width:50px;height:50px;border-radius:50%;background:var(--bg3);
-  display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0;overflow:hidden}
-.admin-user-card .head .av img{width:100%;height:100%;object-fit:cover}
-.admin-user-card .head .det{flex:1;min-width:0}
-.admin-user-card .head h4{font-size:15px}
-.admin-user-card .head p{font-size:11px;color:var(--muted)}
-.admin-user-card .info-row{font-size:12px;color:var(--muted);margin-bottom:4px;
-  word-break:break-word}
-.admin-user-card .info-row strong{color:#fff}
-.admin-actions{display:flex;gap:6px;margin-top:12px;flex-wrap:wrap}
-.admin-actions .btn{flex:1;padding:8px 12px;font-size:12px;min-width:100px}
-.id-preview{display:flex;gap:8px;margin-top:8px}
-.id-preview img{width:80px;height:60px;object-fit:cover;border-radius:6px;
-  border:1px solid var(--border);cursor:pointer}
-
-/* ============ SUPPORT ============ */
-.support-card{background:var(--bg2);border:1px solid var(--border);border-radius:12px;
-  padding:16px;margin-bottom:12px}
-.support-card .head{display:flex;justify-content:space-between;margin-bottom:8px}
-.support-card .head h4{font-size:14px}
-.support-card .head .time{font-size:11px;color:var(--muted)}
-.support-card p{font-size:13px;color:var(--muted)}
-.support-card .reply{margin-top:10px;padding:10px;background:var(--bg3);border-radius:8px;
-  font-size:13px;border-left:3px solid var(--success)}
-
-/* ============ UTILS ============ */
-.text-center{text-align:center}
-.mt-2{margin-top:12px}.mt-3{margin-top:20px}.mb-2{margin-bottom:12px}
-.hidden{display:none!important}
-.link{color:var(--primary);text-decoration:none;font-weight:600;cursor:pointer}
-.divider{text-align:center;color:var(--muted);font-size:12px;margin:20px 0}
+.admin-link{text-align:center;margin-top:24px;font-size:11px;color:#444}
+.admin-link a{color:var(--muted);text-decoration:none}
 </style>
 </head>
 <body>
 
-<!-- ============================================= -->
-<!-- ================= LOADER ==================== -->
-<!-- ============================================= -->
 <div class="loader" id="loader">
   <div class="spinner"></div>
   <p>Loading...</p>
 </div>
 
-<!-- ============================================= -->
-<!-- ================= LANDING =================== -->
-<!-- ============================================= -->
-<div id="page-landing" class="hidden">
-  <div class="landing-wrap">
-    <div class="logo-big">💋</div>
+<div class="wrap" id="mainWrap" style="display:none">
+  <div class="logo-box">
+    <div class="logo-icon">💋</div>
     <h1>Play<span>Boy</span></h1>
-    <p class="tagline">Premium Companionship Platform</p>
-    <div class="landing-btns">
-      <button class="btn btn-primary btn-lg" onclick="go('signup')">Create Account</button>
-      <button class="btn btn-outline btn-lg" onclick="go('login')">Login</button>
-    </div>
-    <div class="landing-feats">
-      <div class="feat"><span>🔐</span><p>KYC Verified</p></div>
-      <div class="feat"><span>💬</span><p>Direct Chat</p></div>
-      <div class="feat"><span>📅</span><p>Easy Booking</p></div>
-      <div class="feat"><span>💰</span><p>Own Rates</p></div>
-    </div>
-    <p class="disclaimer">18+ only · Terms & Privacy apply</p>
-    <p class="disclaimer" style="margin-top:8px">
-      <a class="link" onclick="go('adminlogin')" style="color:var(--muted);font-size:11px">Admin Login</a>
-    </p>
+    <p>Premium Companionship Platform</p>
   </div>
-</div>
 
-<!-- ============================================= -->
-<!-- ================= SIGNUP ==================== -->
-<!-- ============================================= -->
-<div id="page-signup" class="hidden">
-  <div class="topnav">
-    <button onclick="go('landing')">←</button>
-    <h1>Create <span>Account</span></h1>
-    <div style="width:36px"></div>
+  <div class="tabs">
+    <button class="active" id="tabLoginBtn" onclick="switchTab('login')">Login</button>
+    <button id="tabSignupBtn" onclick="switchTab('signup')">Register</button>
   </div>
-  <div class="container">
-    <p style="color:var(--muted);font-size:14px;margin-bottom:20px">Choose how you want to join</p>
+
+  <!-- LOGIN -->
+  <div id="loginForm">
     <div class="role-picker">
-      <div class="role-card" data-role="playboy" onclick="pickRole(this)">
-        <span class="icon">👨</span><div class="name">PlayBoy</div>
-        <div class="desc">Offer companionship</div>
-      </div>
-      <div class="role-card active" data-role="customer" onclick="pickRole(this)">
+      <div class="role-card active" data-role="customer" onclick="pickRole(this,'login')">
         <span class="icon">👤</span><div class="name">Customer</div>
-        <div class="desc">Book companions</div>
+      </div>
+      <div class="role-card" data-role="playboy" onclick="pickRole(this,'login')">
+        <span class="icon">👨</span><div class="name">PlayBoy</div>
+      </div>
+    </div>
+    <div class="form-group"><label>Username</label>
+      <input type="text" id="li-user" placeholder="Your username" autocapitalize="off"></div>
+    <div class="form-group"><label>Password</label>
+      <input type="password" id="li-pass" placeholder="Your password"
+             onkeypress="if(event.key==='Enter')doLogin()"></div>
+    <button class="btn btn-primary btn-lg" id="loginBtn" onclick="doLogin()">Login</button>
+  </div>
+
+  <!-- SIGNUP -->
+  <div id="signupForm" class="hidden">
+    <div class="role-picker">
+      <div class="role-card active" data-role="customer" onclick="pickRole(this,'signup')">
+        <span class="icon">👤</span><div class="name">Customer</div>
+      </div>
+      <div class="role-card" data-role="playboy" onclick="pickRole(this,'signup')">
+        <span class="icon">👨</span><div class="name">PlayBoy</div>
       </div>
     </div>
     <div class="form-group"><label>Full Name <span class="req">*</span></label>
@@ -340,290 +142,21 @@ select{background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.o
       <input type="password" id="su-pass" placeholder="Min 6 characters"></div>
     <div class="form-group"><label>Confirm Password <span class="req">*</span></label>
       <input type="password" id="su-pass2" placeholder="Re-enter password"></div>
-    <label style="display:flex;gap:10px;align-items:flex-start;font-size:13px;color:var(--muted);margin:16px 0">
-      <input type="checkbox" id="su-age" style="width:18px;height:18px;margin-top:2px;flex-shrink:0">
+    <label class="check-row">
+      <input type="checkbox" id="su-age">
       <span>I confirm I am 18+ and agree to Terms & Privacy</span>
     </label>
-    <button class="btn btn-primary btn-lg" id="signup-btn" onclick="doSignup()">Create Account</button>
-    <p class="divider">Already have an account? <a class="link" onclick="go('login')">Login</a></p>
+    <button class="btn btn-primary btn-lg" id="signupBtn" onclick="doSignup()">Create Account</button>
+  </div>
+
+  <div class="admin-link">
+    <a href="admin.html">Admin Login →</a>
   </div>
 </div>
 
-<!-- ============================================= -->
-<!-- ================= LOGIN ===================== -->
-<!-- ============================================= -->
-<div id="page-login" class="hidden">
-  <div class="topnav">
-    <button onclick="go('landing')">←</button>
-    <h1>Welcome <span>Back</span></h1>
-    <div style="width:36px"></div>
-  </div>
-  <div class="container">
-    <div class="role-picker">
-      <div class="role-card active" data-role="customer" onclick="pickLoginRole(this)">
-        <span class="icon">👤</span><div class="name">Customer</div>
-      </div>
-      <div class="role-card" data-role="playboy" onclick="pickLoginRole(this)">
-        <span class="icon">👨</span><div class="name">PlayBoy</div>
-      </div>
-    </div>
-    <div class="form-group"><label>Username</label>
-      <input type="text" id="li-user" placeholder="Your username" autocapitalize="off"></div>
-    <div class="form-group"><label>Password</label>
-      <input type="password" id="li-pass" placeholder="Your password"
-             onkeypress="if(event.key==='Enter')doLogin()"></div>
-    <button class="btn btn-primary btn-lg" id="login-btn" onclick="doLogin()">Login</button>
-    <p class="divider">New here? <a class="link" onclick="go('signup')">Create account</a></p>
-  </div>
-</div>
-
-<!-- ============================================= -->
-<!-- =============== ADMIN LOGIN ================= -->
-<!-- ============================================= -->
-<div id="page-adminlogin" class="hidden">
-  <div class="topnav">
-    <button onclick="go('landing')">←</button>
-    <h1>Admin <span>Login</span></h1>
-    <div style="width:36px"></div>
-  </div>
-  <div class="container">
-    <div style="text-align:center;padding:20px 0;font-size:60px">🛡️</div>
-    <div class="form-group"><label>Admin Username</label>
-      <input type="text" id="adm-user" placeholder="admin" autocapitalize="off"></div>
-    <div class="form-group"><label>Admin Password</label>
-      <input type="password" id="adm-pass" placeholder="Enter password"
-             onkeypress="if(event.key==='Enter')doAdminLogin()"></div>
-    <button class="btn btn-primary btn-lg" id="adm-login-btn" onclick="doAdminLogin()">Login as Admin</button>
-    <p class="divider" style="font-size:11px">Default: admin / admin123 (change later)</p>
-  </div>
-</div>
-
-<!-- ============================================= -->
-<!-- ============= PLAYBOY SETUP / KYC =========== -->
-<!-- ============================================= -->
-<div id="page-setup" class="hidden">
-  <div class="topnav">
-    <h1>Complete <span>Profile</span></h1>
-    <button onclick="logout()">⏻</button>
-  </div>
-  <div class="container">
-    <div class="steps-bar">
-      <div class="step active" id="kstep1"></div>
-      <div class="step" id="kstep2"></div>
-      <div class="step" id="kstep3"></div>
-    </div>
-
-    <div class="step-page active" id="ks1">
-      <h2 class="section-title">Step 1 · Personal Details</h2>
-      <div class="form-group"><label>Age <span class="req">*</span></label>
-        <input type="number" id="k-age" placeholder="Your age (18+)" min="18" max="99"></div>
-      <div class="form-group"><label>Gender <span class="req">*</span></label>
-        <select id="k-gender"><option value="">Select</option>
-          <option value="male">Male</option><option value="female">Female</option>
-          <option value="other">Other</option></select></div>
-      <div class="form-group"><label>City <span class="req">*</span></label>
-        <input type="text" id="k-city" placeholder="Your city"></div>
-      <div class="form-group"><label>Height (cm)</label>
-        <input type="number" id="k-height" placeholder="e.g. 175"></div>
-      <div class="form-group"><label>About You <span class="req">*</span></label>
-        <textarea id="k-bio" placeholder="Tell customers about yourself, your interests, what kind of companionship you offer..."></textarea></div>
-      <div class="form-group"><label>Languages Spoken</label>
-        <input type="text" id="k-lang" placeholder="Hindi, English, ..."></div>
-      <button class="btn btn-primary btn-lg" onclick="setupStep(1)">Next →</button>
-    </div>
-
-    <div class="step-page" id="ks2">
-      <h2 class="section-title">Step 2 · Rates & Preferences</h2>
-      <div class="form-group"><label>Hourly Rate (₹) <span class="req">*</span></label>
-        <input type="number" id="k-rate" placeholder="Set your own rate, e.g. 500" min="0"></div>
-      <div class="form-group"><label>Available Hours</label>
-        <input type="text" id="k-hours" placeholder="e.g. 6 PM - 11 PM"></div>
-      <div class="form-group"><label>Services Offered</label>
-        <input type="text" id="k-services" placeholder="e.g. Dinner date, Movie, Event plus-one"></div>
-      <div class="form-group"><label>Public Photo <span class="req">*</span></label>
-        <div class="upload-box" id="photo-box" onclick="document.getElementById('k-photo').click()">
-          <span class="icon">📷</span>
-          <p>Tap to upload profile photo</p>
-          <div class="file-name" id="photo-name"></div>
-        </div>
-        <input type="file" id="k-photo" accept="image/*" class="hidden" onchange="handlePhoto(this)">
-      </div>
-      <button class="btn btn-primary btn-lg" onclick="setupStep(2)">Next →</button>
-      <button class="btn btn-ghost mt-2" onclick="showKycStep(1)">← Back</button>
-    </div>
-
-    <div class="step-page" id="ks3">
-      <h2 class="section-title">Step 3 · KYC Verification</h2>
-      <p style="color:var(--muted);font-size:13px;margin-bottom:20px">
-        Aadhaar / PAN verification required. <strong style="color:var(--gold)">Your photos are stored securely and only visible to admin.</strong>
-      </p>
-      <div class="form-group"><label>ID Type <span class="req">*</span></label>
-        <select id="k-idtype">
-          <option value="aadhaar">Aadhaar Card</option>
-          <option value="pan">PAN Card</option>
-          <option value="dl">Driving License</option>
-        </select></div>
-      <div class="form-group"><label>ID Number <span class="req">*</span></label>
-        <input type="text" id="k-idnum" placeholder="Enter ID number" autocapitalize="characters"></div>
-      <div class="form-group"><label>Upload ID Photo <span class="req">*</span></label>
-        <div class="upload-box" id="id-box" onclick="document.getElementById('k-idphoto').click()">
-          <span class="icon">🪪</span>
-          <p>Tap to upload ID photo (hidden from public)</p>
-          <div class="file-name" id="id-name"></div>
-        </div>
-        <input type="file" id="k-idphoto" accept="image/*" class="hidden" onchange="handleIdPhoto(this)">
-      </div>
-      <div class="form-group"><label>Selfie with ID <span class="req">*</span></label>
-        <div class="upload-box" id="selfie-box" onclick="document.getElementById('k-selfie').click()">
-          <span class="icon">🤳</span>
-          <p>Tap to upload selfie (hidden from public)</p>
-          <div class="file-name" id="selfie-name"></div>
-        </div>
-        <input type="file" id="k-selfie" accept="image/*" class="hidden" onchange="handleSelfie(this)">
-      </div>
-      <button class="btn btn-primary btn-lg" onclick="setupStep(3)">Submit for Approval ✓</button>
-      <button class="btn btn-ghost mt-2" onclick="showKycStep(2)">← Back</button>
-    </div>
-  </div>
-</div>
-
-<!-- ============================================= -->
-<!-- ============== CUSTOMER HOME ================ -->
-<!-- ============================================= -->
-<div id="page-home" class="hidden">
-  <div class="topnav">
-    <h1>Play<span>Boy</span> 💋</h1>
-    <button onclick="logout()">⏻</button>
-  </div>
-  <div class="container">
-    <h2 class="section-title">🔥 Available Companions</h2>
-    <div id="home-list"></div>
-  </div>
-  <div class="bottom-nav" id="nav-customer"></div>
-</div>
-
-<!-- ============================================= -->
-<!-- =============== PLAYBOY HOME ================ -->
-<!-- ============================================= -->
-<div id="page-pbhome" class="hidden">
-  <div class="topnav">
-    <h1>My <span>Profile</span></h1>
-    <button onclick="logout()">⏻</button>
-  </div>
-  <div class="container">
-    <div id="pb-profile-box"></div>
-    <h2 class="section-title">Edit Details</h2>
-    <div class="form-group"><label>Rate (₹/hour)</label>
-      <input type="number" id="e-rate"></div>
-    <div class="form-group"><label>Bio</label>
-      <textarea id="e-bio"></textarea></div>
-    <div class="form-group"><label>City</label>
-      <input type="text" id="e-city"></div>
-    <div class="form-group"><label>Available Hours</label>
-      <input type="text" id="e-hours"></div>
-    <div class="form-group"><label>Services</label>
-      <input type="text" id="e-services"></div>
-    <button class="btn btn-primary" id="save-profile-btn" onclick="saveProfile()">💾 Save Changes</button>
-  </div>
-  <div class="bottom-nav" id="nav-playboy"></div>
-</div>
-
-<!-- ============================================= -->
-<!-- ================== CHAT ===================== -->
-<!-- ============================================= -->
-<div id="page-chatlist" class="hidden">
-  <div class="topnav">
-    <h1>Messages 💬</h1>
-    <button onclick="logout()">⏻</button>
-  </div>
-  <div class="container">
-    <div id="chat-list-box"></div>
-  </div>
-  <div class="bottom-nav" id="nav-chatlist"></div>
-</div>
-
-<div id="page-chat" class="hidden">
-  <div class="topnav">
-    <button onclick="go('chatlist')">←</button>
-    <h1 id="chat-title">Chat</h1>
-    <div style="width:36px"></div>
-  </div>
-  <div class="chat-window">
-    <div class="chat-messages" id="chat-messages"></div>
-    <div class="chat-input-bar">
-      <input type="text" id="chat-input" placeholder="Type message..."
-             onkeypress="if(event.key==='Enter')sendMsg()">
-      <button onclick="sendMsg()">➤</button>
-    </div>
-  </div>
-</div>
-
-<!-- ============================================= -->
-<!-- ================ BOOKINGS =================== -->
-<!-- ============================================= -->
-<div id="page-bookings" class="hidden">
-  <div class="topnav">
-    <h1>Bookings 📋</h1>
-    <button onclick="logout()">⏻</button>
-  </div>
-  <div class="container">
-    <div id="bookings-box"></div>
-  </div>
-  <div class="bottom-nav" id="nav-bookings"></div>
-</div>
-
-<!-- ============================================= -->
-<!-- ================= SUPPORT =================== -->
-<!-- ============================================= -->
-<div id="page-support" class="hidden">
-  <div class="topnav">
-    <h1>Support 🛟</h1>
-    <button onclick="logout()">⏻</button>
-  </div>
-  <div class="container">
-    <div class="form-group"><label>Subject</label>
-      <input type="text" id="sup-subject" placeholder="e.g. Booking issue"></div>
-    <div class="form-group"><label>Message <span class="req">*</span></label>
-      <textarea id="sup-msg" placeholder="Describe your issue..."></textarea></div>
-    <button class="btn btn-primary btn-lg" id="sup-btn" onclick="submitSupport()">Send to Admin</button>
-    <h2 class="section-title">My Tickets</h2>
-    <div id="support-list"></div>
-  </div>
-  <div class="bottom-nav" id="nav-support"></div>
-</div>
-
-<!-- ============================================= -->
-<!-- ================= ADMIN ===================== -->
-<!-- ============================================= -->
-<div id="page-admin" class="hidden">
-  <div class="topnav">
-    <h1>Admin <span>Panel</span> 🛡️</h1>
-    <button onclick="adminLogout()">⏻</button>
-  </div>
-  <div class="container">
-    <div class="admin-stat-grid" id="admin-stats"></div>
-    <div class="admin-tabs">
-      <button class="admin-tab active" data-tab="pending" onclick="switchAdminTab(this,'pending')">⏳ Pending KYC</button>
-      <button class="admin-tab" data-tab="all" onclick="switchAdminTab(this,'all')">👥 All Users</button>
-      <button class="admin-tab" data-tab="tickets" onclick="switchAdminTab(this,'tickets')">🛟 Tickets</button>
-    </div>
-    <div id="admin-content"></div>
-  </div>
-</div>
-
-<!-- ============================================= -->
-<!-- ================= MODAL ===================== -->
-<!-- ============================================= -->
-<div class="modal-overlay" id="modal" onclick="if(event.target===this)closeModal()">
-  <div class="modal" id="modal-content"></div>
-</div>
-
-<!-- ============================================= -->
-<!-- ============== FIREBASE SDK ================= -->
-<!-- ============================================= -->
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-import { getDatabase, ref, set, get, update, push, onValue, remove, query, orderByChild, equalTo }
+import { getDatabase, ref, get, set, push }
   from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
 
 const firebaseConfig = {
@@ -640,110 +173,66 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
 
-/* ============================================================
-   GLOBAL STATE
-   ============================================================ */
-const App = {
-  me: null,
-  admin: null,
-  currentChat: null,
-  chatUnsub: null,
-  usersUnsub: null,
-  bookingsUnsub: null,
-  ticketsUnsub: null,
-  chatListUnsub: null,
-  kycData: { photo: '', idPhoto: '', selfie: '' },
-  signupRole: 'customer',
-  loginRole: 'customer',
-  adminTab: 'pending',
-  usersCache: [],
-  bookingsCache: [],
-  ticketsCache: []
-};
-window.App = App;
+let loginRole = 'customer';
+let signupRole = 'customer';
 
-/* ============================================================
-   HELPERS
-   ============================================================ */
-window.toast = function(msg, type) {
+function toast(msg, type) {
   const t = document.createElement('div');
   t.className = 'toast ' + (type || '');
   t.textContent = msg;
   document.body.appendChild(t);
   setTimeout(() => t.remove(), 2800);
-};
-
-window.go = function(page) {
-  document.querySelectorAll('[id^="page-"]').forEach(p => p.classList.add('hidden'));
-  const el = document.getElementById('page-' + page);
-  if (el) el.classList.remove('hidden');
-  window.scrollTo(0, 0);
-
-  // unsubscribe previous listeners
-  if (App.chatListUnsub) { App.chatListUnsub(); App.chatListUnsub = null; }
-
-  if (page === 'home') renderHome();
-  if (page === 'pbhome') renderPlayboyHome();
-  if (page === 'chatlist') renderChatList();
-  if (page === 'bookings') renderBookings();
-  if (page === 'support') renderSupport();
-  if (page === 'admin') renderAdmin();
-};
-
-function escapeHtml(s) {
-  return String(s || '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 }
 
-function readImage(file, maxKB = 700) {
-  return new Promise((resolve, reject) => {
-    const reader = new FileReader();
-    reader.onload = e => {
-      const img = new Image();
-      img.onload = () => {
-        // Compress via canvas
-        const maxDim = 800;
-        let { width, height } = img;
-        if (width > maxDim || height > maxDim) {
-          const scale = maxDim / Math.max(width, height);
-          width = Math.round(width * scale);
-          height = Math.round(height * scale);
-        }
-        const canvas = document.createElement('canvas');
-        canvas.width = width; canvas.height = height;
-        canvas.getContext('2d').drawImage(img, 0, 0, width, height);
-        let quality = 0.75;
-        let dataUrl = canvas.toDataURL('image/jpeg', quality);
-        // Reduce until under limit
-        while (dataUrl.length / 1024 > maxKB && quality > 0.3) {
-          quality -= 0.1;
-          dataUrl = canvas.toDataURL('image/jpeg', quality);
-        }
-        resolve(dataUrl);
-      };
-      img.onerror = reject;
-      img.src = e.target.result;
-    };
-    reader.onerror = reject;
-    reader.readAsDataURL(file);
-  });
-}
-
-/* ============================================================
-   AUTH
-   ============================================================ */
-window.pickRole = function(el) {
-  document.querySelectorAll('#page-signup .role-card').forEach(c => c.classList.remove('active'));
-  el.classList.add('active');
-  App.signupRole = el.dataset.role;
+window.switchTab = function(tab) {
+  document.getElementById('tabLoginBtn').classList.toggle('active', tab === 'login');
+  document.getElementById('tabSignupBtn').classList.toggle('active', tab === 'signup');
+  document.getElementById('loginForm').classList.toggle('hidden', tab !== 'login');
+  document.getElementById('signupForm').classList.toggle('hidden', tab !== 'signup');
 };
-window.pickLoginRole = function(el) {
-  document.querySelectorAll('#page-login .role-card').forEach(c => c.classList.remove('active'));
+
+window.pickRole = function(el, ctx) {
+  el.parentElement.querySelectorAll('.role-card').forEach(c => c.classList.remove('active'));
   el.classList.add('active');
-  App.loginRole = el.dataset.role;
+  if (ctx === 'login') loginRole = el.dataset.role;
+  else signupRole = el.dataset.role;
+};
+
+window.doLogin = async function() {
+  const u = document.getElementById('li-user').value.trim().toLowerCase();
+  const p = document.getElementById('li-pass').value;
+  if (!u || !p) return toast('Enter credentials', 'error');
+
+  const btn = document.getElementById('loginBtn');
+  btn.disabled = true; btn.textContent = 'Logging in...';
+  try {
+    const snap = await get(ref(db, 'users'));
+    if (!snap.exists()) throw new Error('No users found');
+    const found = Object.values(snap.val()).find(x =>
+      x.username === u && x.pass === p && x.role === loginRole
+    );
+    if (!found) throw new Error('Invalid credentials');
+    if (found.status === 'blocked') throw new Error('Account blocked. Contact support.');
+
+    localStorage.setItem('currentUser', JSON.stringify({ uid: found.uid, role: found.role }));
+    toast('Welcome ' + found.name, 'success');
+
+    setTimeout(() => {
+      if (found.role === 'playboy') {
+        window.location.href = found.kycDone && found.status === 'active'
+          ? 'profile.html' : 'profile.html';
+      } else {
+        window.location.href = 'home.html';
+      }
+    }, 500);
+  } catch (e) {
+    toast(e.message, 'error');
+  } finally {
+    btn.disabled = false; btn.textContent = 'Login';
+  }
 };
 
 window.doSignup = async function() {
-  const btn = document.getElementById('signup-btn');
   const name = document.getElementById('su-name').value.trim();
   const username = document.getElementById('su-user').value.trim().toLowerCase();
   const phone = document.getElementById('su-phone').value.trim();
@@ -752,880 +241,68 @@ window.doSignup = async function() {
   const pass2 = document.getElementById('su-pass2').value;
   const age18 = document.getElementById('su-age').checked;
 
-  if (!name || !username || !phone || !pass) return toast('Fill all required fields', 'error');
-  if (pass.length < 6) return toast('Password min 6 characters', 'error');
+  if (!name || !username || !phone || !pass) return toast('Fill required fields', 'error');
+  if (pass.length < 6) return toast('Password min 6 chars', 'error');
   if (pass !== pass2) return toast('Passwords do not match', 'error');
-  if (!/^[0-9]{10}$/.test(phone)) return toast('Enter valid 10-digit phone', 'error');
-  if (!/^[a-z0-9_]{3,}$/.test(username)) return toast('Username: 3+ chars (a-z, 0-9, _)', 'error');
+  if (!/^[0-9]{10}$/.test(phone)) return toast('Valid 10-digit phone required', 'error');
+  if (!/^[a-z0-9_]{3,}$/.test(username)) return toast('Username: 3+ chars (a-z 0-9 _)', 'error');
   if (!age18) return toast('You must be 18+', 'error');
 
+  const btn = document.getElementById('signupBtn');
   btn.disabled = true; btn.textContent = 'Creating...';
   try {
-    // Check username unique across all users
     const snap = await get(ref(db, 'users'));
     if (snap.exists()) {
-      const users = snap.val();
-      const taken = Object.values(users).some(u => u.username === username);
+      const taken = Object.values(snap.val()).some(u => u.username === username);
       if (taken) throw new Error('Username already taken');
     }
-
     const newRef = push(ref(db, 'users'));
     const uid = newRef.key;
     const user = {
-      uid, role: App.signupRole, name, username, phone, email, pass,
+      uid, role: signupRole, name, username, phone, email, pass,
       bio: '', rate: 0, city: '', hours: '', services: '', photo: '',
       age: 0, gender: '', height: '', lang: '',
       kycDone: false, kyc: null, verified: false,
-      status: App.signupRole === 'playboy' ? 'kyc_pending' : 'active',
+      status: signupRole === 'playboy' ? 'kyc_pending' : 'active',
       createdAt: Date.now()
     };
     await set(newRef, user);
-
-    localStorage.setItem('currentUser', JSON.stringify({ uid, role: user.role }));
-    App.me = user;
+    localStorage.setItem('currentUser', JSON.stringify({ uid, role: signupRole }));
     toast('Account created!', 'success');
-    setTimeout(() => go(user.role === 'playboy' ? 'setup' : 'home'), 500);
+    setTimeout(() => {
+      window.location.href = signupRole === 'playboy' ? 'profile.html' : 'home.html';
+    }, 500);
   } catch (e) {
-    toast(e.message || 'Signup failed', 'error');
+    toast(e.message, 'error');
   } finally {
     btn.disabled = false; btn.textContent = 'Create Account';
   }
 };
 
-window.doLogin = async function() {
-  const btn = document.getElementById('login-btn');
-  const u = document.getElementById('li-user').value.trim().toLowerCase();
-  const p = document.getElementById('li-pass').value;
-  if (!u || !p) return toast('Enter credentials', 'error');
-
-  btn.disabled = true; btn.textContent = 'Logging in...';
-  try {
-    const snap = await get(ref(db, 'users'));
-    if (!snap.exists()) throw new Error('No users yet');
-    const users = snap.val();
-    const found = Object.values(users).find(x => x.username === u && x.pass === p && x.role === App.loginRole);
-    if (!found) throw new Error('Invalid credentials');
-
-    // Blocked check
-    if (found.status === 'blocked') throw new Error('Account blocked by admin. Contact support.');
-
-    localStorage.setItem('currentUser', JSON.stringify({ uid: found.uid, role: found.role }));
-    App.me = found;
-    toast('Welcome ' + found.name, 'success');
-    setTimeout(() => {
-      if (found.role === 'playboy') {
-        if (found.status === 'kyc_pending') go('setup');
-        else go('pbhome');
-      } else {
-        go('home');
-      }
-    }, 400);
-  } catch (e) {
-    toast(e.message || 'Login failed', 'error');
-  } finally {
-    btn.disabled = false; btn.textContent = 'Login';
-  }
-};
-
-window.doAdminLogin = async function() {
-  const u = document.getElementById('adm-user').value.trim();
-  const p = document.getElementById('adm-pass').value;
-  if (!u || !p) return toast('Enter credentials', 'error');
-
-  const btn = document.getElementById('adm-login-btn');
-  btn.disabled = true; btn.textContent = 'Checking...';
-  try {
-    // First time: create default admin if not exists
-    const snap = await get(ref(db, 'admins'));
-    if (!snap.exists()) {
-      await set(ref(db, 'admins'), { master: { username: 'admin', pass: 'admin123' } });
-    }
-    const admins = (await get(ref(db, 'admins'))).val();
-    const ok = Object.values(admins).some(a => a.username === u && a.pass === p);
-    if (!ok) throw new Error('Invalid admin credentials');
-
-    sessionStorage.setItem('admin', u);
-    App.admin = u;
-    toast('Admin logged in', 'success');
-    setTimeout(() => go('admin'), 400);
-  } catch (e) {
-    toast(e.message, 'error');
-  } finally {
-    btn.disabled = false; btn.textContent = 'Login as Admin';
-  }
-};
-
-window.adminLogout = function() {
-  if (!confirm('Logout admin?')) return;
-  sessionStorage.removeItem('admin');
-  App.admin = null;
-  go('landing');
-};
-
-window.logout = function() {
-  if (!confirm('Logout?')) return;
-  localStorage.removeItem('currentUser');
-  App.me = null;
-  if (App.chatUnsub) { App.chatUnsub(); App.chatUnsub = null; }
-  go('landing');
-};
-
-/* ============================================================
-   KYC SETUP
-   ============================================================ */
-window.showKycStep = function(n) {
-  document.querySelectorAll('.step-page').forEach(p => p.classList.remove('active'));
-  document.getElementById('ks' + n).classList.add('active');
-  for (let i = 1; i <= 3; i++) {
-    const el = document.getElementById('kstep' + i);
-    el.className = 'step';
-    if (i < n) el.classList.add('done');
-    if (i === n) el.classList.add('active');
-  }
-  window.scrollTo(0, 0);
-};
-
-window.handlePhoto = async function(inp) {
-  const f = inp.files[0]; if (!f) return;
-  try {
-    const data = await readImage(f, 600);
-    App.kycData.photo = data;
-    document.getElementById('photo-name').textContent = '✓ ' + f.name;
-    document.getElementById('photo-box').classList.add('has-file');
-  } catch { toast('Photo read failed', 'error'); }
-};
-window.handleIdPhoto = async function(inp) {
-  const f = inp.files[0]; if (!f) return;
-  try {
-    const data = await readImage(f, 500);
-    App.kycData.idPhoto = data;
-    document.getElementById('id-name').textContent = '✓ ' + f.name;
-    document.getElementById('id-box').classList.add('has-file');
-  } catch { toast('ID photo read failed', 'error'); }
-};
-window.handleSelfie = async function(inp) {
-  const f = inp.files[0]; if (!f) return;
-  try {
-    const data = await readImage(f, 500);
-    App.kycData.selfie = data;
-    document.getElementById('selfie-name').textContent = '✓ ' + f.name;
-    document.getElementById('selfie-box').classList.add('has-file');
-  } catch { toast('Selfie read failed', 'error'); }
-};
-
-window.setupStep = async function(n) {
-  if (!App.me) return go('login');
-
-  if (n === 1) {
-    const age = +document.getElementById('k-age').value;
-    const gender = document.getElementById('k-gender').value;
-    const city = document.getElementById('k-city').value.trim();
-    const height = document.getElementById('k-height').value;
-    const bio = document.getElementById('k-bio').value.trim();
-    const lang = document.getElementById('k-lang').value.trim();
-
-    if (!age || age < 18) return toast('Age 18+ required', 'error');
-    if (!gender) return toast('Select gender', 'error');
-    if (!city) return toast('Enter city', 'error');
-    if (!bio) return toast('Write about yourself', 'error');
-
-    await update(ref(db, 'users/' + App.me.uid), { age, gender, city, height, bio, lang });
-    App.me = { ...App.me, age, gender, city, height, bio, lang };
-    showKycStep(2);
-    return;
-  }
-
-  if (n === 2) {
-    const rate = +document.getElementById('k-rate').value;
-    const hours = document.getElementById('k-hours').value.trim();
-    const services = document.getElementById('k-services').value.trim();
-    if (!rate || rate <= 0) return toast('Set valid rate', 'error');
-    if (!App.kycData.photo) return toast('Upload profile photo', 'error');
-
-    await update(ref(db, 'users/' + App.me.uid), { rate, hours, services, photo: App.kycData.photo });
-    App.me = { ...App.me, rate, hours, services, photo: App.kycData.photo };
-    showKycStep(3);
-    return;
-  }
-
-  if (n === 3) {
-    const idType = document.getElementById('k-idtype').value;
-    const idNum = document.getElementById('k-idnum').value.trim();
-    if (!idNum) return toast('Enter ID number', 'error');
-    if (!App.kycData.idPhoto) return toast('Upload ID photo', 'error');
-    if (!App.kycData.selfie) return toast('Upload selfie', 'error');
-
-    await update(ref(db, 'users/' + App.me.uid), {
-      kycDone: true,
-      status: 'kyc_pending', // admin approval pending
-      kyc: {
-        idType, idNum,
-        idPhoto: App.kycData.idPhoto,
-        selfie: App.kycData.selfie,
-        submittedAt: Date.now()
-      }
-    });
-    toast('KYC submitted! Waiting for admin approval ✅', 'success');
-    setTimeout(() => go('landing'), 1200);
-  }
-};
-
-/* ============================================================
-   RENDER HELPERS — AVATAR
-   ============================================================ */
-function avatarHTML(user, size) {
-  const icon = user.role === 'playboy' ? '👨' : '👤';
-  if (user.photo) return `<img src="${user.photo}" alt="${escapeHtml(user.name)}">`;
-  return icon;
-}
-
-/* ============================================================
-   CUSTOMER HOME
-   ============================================================ */
-async function renderHome() {
-  if (!App.me) return go('login');
-  setupCustomerNav('home');
-
-  const box = document.getElementById('home-list');
-  box.innerHTML = '<div class="empty"><div class="spinner" style="margin:0 auto 16px"></div>Loading...</div>';
-
-  try {
-    const snap = await get(ref(db, 'users'));
-    if (!snap.exists()) { box.innerHTML = '<div class="empty"><span class="big">😕</span>No companions yet</div>'; return; }
-    const users = Object.values(snap.val()).filter(u =>
-      u.role === 'playboy' && u.status === 'active' && u.kycDone
-    );
-    if (!users.length) {
-      box.innerHTML = '<div class="empty"><span class="big">😕</span>No verified companions available<br><small>Check back soon</small></div>';
-      return;
-    }
-    box.innerHTML = users.map(p => `
-      <div class="card pb-card" onclick="openPlayboyCard('${p.uid}')">
-        <div class="pb-avatar">${avatarHTML(p)}</div>
-        <div class="pb-info">
-          <h3>${escapeHtml(p.name)} <span class="badge badge-verified">✓ VERIFIED</span></h3>
-          <div class="rate">₹${p.rate}/hour</div>
-          <div class="bio">${escapeHtml((p.bio || '').substring(0, 60))}</div>
-          <div style="font-size:11px;color:var(--muted);margin-top:4px">📍 ${escapeHtml(p.city || 'N/A')}</div>
-        </div>
-      </div>`).join('');
-  } catch (e) {
-    box.innerHTML = '<div class="empty">Failed to load: ' + e.message + '</div>';
-  }
-}
-
-window.openPlayboyCard = async function(uid) {
-  const snap = await get(ref(db, 'users/' + uid));
-  if (!snap.exists()) return toast('User not found', 'error');
-  const p = snap.val();
-  document.getElementById('modal-content').innerHTML = `
-    <div class="modal-handle"></div>
-    <div style="text-align:center;margin-bottom:16px">
-      <div class="pb-avatar" style="margin:0 auto 12px;width:90px;height:90px;font-size:40px">${avatarHTML(p)}</div>
-      <h3 style="margin-bottom:4px">${escapeHtml(p.name)} ✓</h3>
-      <div style="color:var(--gold);font-weight:700;font-size:18px">₹${p.rate}/hour</div>
-      <div style="color:var(--muted);font-size:13px;margin-top:4px">📍 ${escapeHtml(p.city || 'N/A')} ${p.age ? '· ' + p.age + ' yrs' : ''}</div>
-    </div>
-    <div style="background:var(--bg3);padding:14px;border-radius:10px;margin-bottom:16px;font-size:13px">${escapeHtml(p.bio || 'No bio')}</div>
-    ${p.services ? `<div style="margin-bottom:12px"><strong style="font-size:13px">Services:</strong><br><span style="font-size:13px;color:var(--muted)">${escapeHtml(p.services)}</span></div>` : ''}
-    ${p.hours ? `<div style="margin-bottom:12px"><strong style="font-size:13px">Available:</strong><br><span style="font-size:13px;color:var(--muted)">${escapeHtml(p.hours)}</span></div>` : ''}
-
-    <label style="display:block;font-size:13px;color:var(--muted);margin-bottom:6px">Booking Date *</label>
-    <input type="date" id="bk-date" min="${new Date().toISOString().split('T')[0]}">
-
-    <label style="display:block;font-size:13px;color:var(--muted);margin:12px 0 6px">Hours *</label>
-    <input type="number" id="bk-hours" value="2" min="1" max="24" oninput="updateTotal(${p.rate})">
-
-    <label style="display:block;font-size:13px;color:var(--muted);margin:12px 0 6px">Note (optional)</label>
-    <textarea id="bk-note" placeholder="Any special request..." style="min-height:60px"></textarea>
-
-    <div style="color:var(--gold);font-weight:700;text-align:center;margin:12px 0" id="bk-total">Total: ₹${p.rate * 2}</div>
-
-    <button class="btn btn-primary btn-lg" onclick="bookPlayboy('${p.uid}')">📅 Send Booking Request</button>
-    <button class="btn btn-ghost mt-2" onclick="startChat('${p.uid}')">💬 Chat First</button>
-    <button class="btn btn-ghost mt-2" onclick="closeModal()">Cancel</button>
-  `;
-  document.getElementById('modal').classList.add('active');
-};
-
-window.updateTotal = function(rate) {
-  const h = +document.getElementById('bk-hours').value || 0;
-  document.getElementById('bk-total').textContent = 'Total: ₹' + (rate * h);
-};
-
-window.bookPlayboy = async function(pbId) {
-  if (!App.me) return;
-  const date = document.getElementById('bk-date').value;
-  const hours = +document.getElementById('bk-hours').value;
-  const note = document.getElementById('bk-note').value.trim();
-  if (!date) return toast('Select date', 'error');
-  if (!hours || hours < 1) return toast('Enter hours', 'error');
-
-  try {
-    const pbSnap = await get(ref(db, 'users/' + pbId));
-    const pb = pbSnap.val();
-    const newRef = push(ref(db, 'bookings'));
-    await set(newRef, {
-      bid: newRef.key,
-      playboyId: pbId, playboyName: pb.name,
-      customerId: App.me.uid, customerName: App.me.name,
-      date, hours, note, total: pb.rate * hours,
-      status: 'pending', createdAt: Date.now()
-    });
-    toast('Booking sent!', 'success');
-    closeModal();
-  } catch (e) {
-    toast('Booking failed: ' + e.message, 'error');
-  }
-};
-
-window.startChat = async function(otherId) {
-  if (!App.me) return;
-  closeModal();
-  await openChat(otherId);
-};
-
-/* ============================================================
-   PLAYBOY HOME
-   ============================================================ */
-async function renderPlayboyHome() {
-  if (!App.me || App.me.role !== 'playboy') return go('login');
-  setupPlayboyNav('pbhome');
-
-  const snap = await get(ref(db, 'users/' + App.me.uid));
-  const me = snap.val();
-  App.me = me;
-
-  let statusBadge = '';
-  if (me.status === 'active' && me.verified) statusBadge = '<div class="badge badge-verified" style="margin-top:8px">✓ KYC VERIFIED</div>';
-  else if (me.status === 'kyc_pending') statusBadge = '<div class="badge badge-pending" style="margin-top:8px">⏳ WAITING FOR ADMIN APPROVAL</div>';
-  else if (me.status === 'blocked') statusBadge = '<div class="badge" style="margin-top:8px;background:#444">🚫 BLOCKED</div>';
-  else if (me.status === 'rejected') statusBadge = '<div class="badge" style="margin-top:8px;background:var(--danger)">❌ KYC REJECTED</div>';
-
-  document.getElementById('pb-profile-box').innerHTML = `
-    <div class="profile-head">
-      <div class="profile-avatar">${avatarHTML(me)}
-        ${me.verified ? '<div class="tick">✓</div>' : ''}
-      </div>
-      <h2>${escapeHtml(me.name)}</h2>
-      <div class="username">@${escapeHtml(me.username)}</div>
-      <div class="rate-tag">₹${me.rate}/hour</div>
-      <div style="color:var(--muted);font-size:12px;margin-top:6px">📍 ${escapeHtml(me.city || 'N/A')} · 📞 ${escapeHtml(me.phone || 'N/A')}</div>
-      ${statusBadge}
-    </div>
-  `;
-
-  document.getElementById('e-rate').value = me.rate || '';
-  document.getElementById('e-bio').value = me.bio || '';
-  document.getElementById('e-city').value = me.city || '';
-  document.getElementById('e-hours').value = me.hours || '';
-  document.getElementById('e-services').value = me.services || '';
-}
-
-window.saveProfile = async function() {
-  if (!App.me) return;
-  const btn = document.getElementById('save-profile-btn');
-  btn.disabled = true; btn.textContent = 'Saving...';
-  try {
-    const patch = {
-      rate: +document.getElementById('e-rate').value || 0,
-      bio: document.getElementById('e-bio').value.trim(),
-      city: document.getElementById('e-city').value.trim(),
-      hours: document.getElementById('e-hours').value.trim(),
-      services: document.getElementById('e-services').value.trim()
-    };
-    await update(ref(db, 'users/' + App.me.uid), patch);
-    App.me = { ...App.me, ...patch };
-    toast('Profile updated!', 'success');
-    renderPlayboyHome();
-  } catch (e) {
-    toast('Save failed: ' + e.message, 'error');
-  } finally {
-    btn.disabled = false; btn.textContent = '💾 Save Changes';
-  }
-};
-
-/* ============================================================
-   CHAT
-   ============================================================ */
-function chatId(a, b) { return [a, b].sort().join('_'); }
-
-async function renderChatList() {
-  if (!App.me) return go('login');
-  if (App.me.role === 'customer') setupCustomerNav('chatlist');
-  else setupPlayboyNav('chatlist');
-
-  const box = document.getElementById('chat-list-box');
-  box.innerHTML = '<div class="empty"><div class="spinner" style="margin:0 auto 16px"></div>Loading...</div>';
-
-  const chatsSnap = await get(ref(db, 'chats'));
-  if (!chatsSnap.exists()) {
-    box.innerHTML = '<div class="empty"><span class="big">💬</span>No chats yet</div>';
-    return;
-  }
-  const chats = chatsSnap.val();
-  const myChats = Object.keys(chats).filter(k => k.includes(App.me.uid));
-
-  if (!myChats.length) {
-    box.innerHTML = '<div class="empty"><span class="big">💬</span>No chats yet<br><small>Start a booking to chat</small></div>';
-    return;
-  }
-
-  const rows = await Promise.all(myChats.map(async cid => {
-    const otherId = cid.split('_').find(p => p !== App.me.uid);
-    const us = await get(ref(db, 'users/' + otherId));
-    const other = us.val();
-    if (!other) return '';
-    const msgs = chats[cid] || {};
-    const msgArr = Object.values(msgs).sort((a, b) => a.time - b.time);
-    const last = msgArr[msgArr.length - 1];
-    const preview = last ? ((last.from === App.me.uid ? 'You: ' : '') + last.text).substring(0, 30) : 'No messages';
-    return `<div class="chat-list-item" onclick="openChat('${otherId}')">
-      <div class="chat-avatar">${avatarHTML(other)}</div>
-      <div class="info">
-        <h4>${escapeHtml(other.name)}</h4>
-        <p>${escapeHtml(preview)}</p>
-      </div>
-    </div>`;
-  }));
-  box.innerHTML = rows.join('');
-}
-
-window.openChat = async function(otherId) {
-  if (!App.me) return;
-  const cid = chatId(App.me.uid, otherId);
-  App.currentChat = { cid, otherId };
-
-  const us = await get(ref(db, 'users/' + otherId));
-  const other = us.val();
-  document.getElementById('chat-title').textContent = other ? other.name : 'Chat';
-
-  go('chat');
-  renderMessages();
-
-  if (App.chatUnsub) App.chatUnsub();
-  App.chatUnsub = onValue(ref(db, 'chats/' + cid), () => renderMessages());
-};
-
-async function renderMessages() {
-  if (!App.me || !App.currentChat) return;
-  const { cid } = App.currentChat;
-  const snap = await get(ref(db, 'chats/' + cid));
-  const box = document.getElementById('chat-messages');
-  if (!snap.exists()) { box.innerHTML = '<div class="empty" style="padding:20px">Say hi 👋</div>'; return; }
-  const msgs = Object.values(snap.val()).sort((a, b) => a.time - b.time);
-  box.innerHTML = msgs.map(m => `
-    <div class="msg ${m.from === App.me.uid ? 'me' : 'them'}">${escapeHtml(m.text)}</div>
-  `).join('');
-  box.scrollTop = box.scrollHeight;
-}
-
-window.sendMsg = async function() {
-  if (!App.me || !App.currentChat) return;
-  const inp = document.getElementById('chat-input');
-  const text = inp.value.trim();
-  if (!text) return;
-  inp.value = '';
-  const { cid } = App.currentChat;
-  try {
-    const msgRef = push(ref(db, 'chats/' + cid));
-    await set(msgRef, { from: App.me.uid, text, time: Date.now() });
-  } catch (e) { toast('Send failed', 'error'); }
-};
-
-/* ============================================================
-   BOOKINGS
-   ============================================================ */
-async function renderBookings() {
-  if (!App.me) return go('login');
-  if (App.me.role === 'customer') setupCustomerNav('bookings');
-  else setupPlayboyNav('bookings');
-
-  const box = document.getElementById('bookings-box');
-  box.innerHTML = '<div class="empty"><div class="spinner" style="margin:0 auto 16px"></div>Loading...</div>';
-
-  const snap = await get(ref(db, 'bookings'));
-  if (!snap.exists()) { box.innerHTML = '<div class="empty"><span class="big">📋</span>No bookings yet</div>'; return; }
-
-  let all = Object.values(snap.val());
-  if (App.me.role === 'customer') all = all.filter(b => b.customerId === App.me.uid);
-  else all = all.filter(b => b.playboyId === App.me.uid);
-  all.sort((a, b) => b.createdAt - a.createdAt);
-
-  if (!all.length) { box.innerHTML = '<div class="empty"><span class="big">📋</span>No bookings yet</div>'; return; }
-
-  box.innerHTML = all.map(b => {
-    let actions = '';
-    if (App.me.role === 'playboy' && b.status === 'pending') {
-      actions = `<div class="booking-actions">
-        <button class="btn btn-success btn-sm" onclick="updateBooking('${b.bid}','accepted')">✓ Accept</button>
-        <button class="btn btn-danger btn-sm" onclick="updateBooking('${b.bid}','rejected')">✕ Reject</button>
-      </div>`;
-    } else if (App.me.role === 'playboy' && b.status === 'accepted') {
-      actions = `<div class="booking-actions">
-        <button class="btn btn-ghost btn-sm" onclick="updateBooking('${b.bid}','completed')">Mark Completed</button>
-        <button class="btn btn-ghost btn-sm" onclick="openChat('${b.customerId}')">💬 Chat</button>
-      </div>`;
-    } else if (App.me.role === 'customer' && b.status === 'accepted') {
-      actions = `<div class="booking-actions">
-        <button class="btn btn-ghost btn-sm" onclick="openChat('${b.playboyId}')">💬 Chat</button>
-      </div>`;
-    }
-    return `<div class="booking-card">
-      <div class="row">
-        <h4>${escapeHtml(App.me.role === 'customer' ? b.playboyName : b.customerName)}</h4>
-        <span class="status ${b.status}">${b.status}</span>
-      </div>
-      <div class="meta">📅 ${b.date} · ${b.hours}h · <span class="price">₹${b.total}</span></div>
-      ${b.note ? `<div class="meta" style="margin-top:6px">📝 ${escapeHtml(b.note)}</div>` : ''}
-      ${actions}
-    </div>`;
-  }).join('');
-}
-
-window.updateBooking = async function(bid, status) {
-  try {
-    await update(ref(db, 'bookings/' + bid), { status });
-    toast('Booking ' + status, 'success');
-    renderBookings();
-  } catch (e) { toast('Update failed', 'error'); }
-};
-
-/* ============================================================
-   SUPPORT
-   ============================================================ */
-async function renderSupport() {
-  if (!App.me) return go('login');
-  setupSupportNav();
-
-  const box = document.getElementById('support-list');
-  box.innerHTML = 'Loading...';
-  const snap = await get(ref(db, 'tickets'));
-  if (!snap.exists()) { box.innerHTML = '<div class="empty"><span class="big">🛟</span>No tickets yet</div>'; return; }
-  const all = Object.values(snap.val())
-    .filter(t => t.userId === App.me.uid)
-    .sort((a, b) => b.createdAt - a.createdAt);
-
-  if (!all.length) { box.innerHTML = '<div class="empty"><span class="big">🛟</span>No tickets yet</div>'; return; }
-
-  box.innerHTML = all.map(t => `
-    <div class="support-card">
-      <div class="head">
-        <h4>${escapeHtml(t.subject || 'Support Request')}</h4>
-        <span class="time">${new Date(t.createdAt).toLocaleDateString()}</span>
-      </div>
-      <p>${escapeHtml(t.message)}</p>
-      ${t.reply ? `<div class="reply"><strong>Admin:</strong> ${escapeHtml(t.reply)}</div>` : '<div style="font-size:11px;color:var(--warning);margin-top:8px">⏳ Waiting for admin reply</div>'}
-    </div>
-  `).join('');
-}
-
-window.submitSupport = async function() {
-  if (!App.me) return;
-  const subject = document.getElementById('sup-subject').value.trim();
-  const msg = document.getElementById('sup-msg').value.trim();
-  if (!msg) return toast('Write your message', 'error');
-
-  const btn = document.getElementById('sup-btn');
-  btn.disabled = true; btn.textContent = 'Sending...';
-  try {
-    const newRef = push(ref(db, 'tickets'));
-    await set(newRef, {
-      tid: newRef.key,
-      userId: App.me.uid,
-      userName: App.me.name,
-      userRole: App.me.role,
-      phone: App.me.phone,
-      subject: subject || 'Support Request',
-      message: msg,
-      reply: '',
-      status: 'open',
-      createdAt: Date.now()
-    });
-    document.getElementById('sup-subject').value = '';
-    document.getElementById('sup-msg').value = '';
-    toast('Ticket sent to admin!', 'success');
-    renderSupport();
-  } catch (e) { toast('Failed: ' + e.message, 'error'); }
-  finally { btn.disabled = false; btn.textContent = 'Send to Admin'; }
-};
-
-/* ============================================================
-   ADMIN PANEL
-   ============================================================ */
-window.switchAdminTab = function(btn, tab) {
-  document.querySelectorAll('.admin-tab').forEach(b => b.classList.remove('active'));
-  btn.classList.add('active');
-  App.adminTab = tab;
-  renderAdminContent();
-};
-
-async function renderAdmin() {
-  if (!App.admin) return go('landing');
-
-  const usersSnap = await get(ref(db, 'users'));
-  const ticketsSnap = await get(ref(db, 'tickets'));
-  const users = usersSnap.exists() ? Object.values(usersSnap.val()) : [];
-  const tickets = ticketsSnap.exists() ? Object.values(ticketsSnap.val()) : [];
-  App.usersCache = users;
-  App.ticketsCache = tickets;
-
-  const pendingKyc = users.filter(u => u.role === 'playboy' && u.status === 'kyc_pending').length;
-  const activePb = users.filter(u => u.role === 'playboy' && u.status === 'active').length;
-  const customers = users.filter(u => u.role === 'customer').length;
-  const openTickets = tickets.filter(t => !t.reply).length;
-
-  document.getElementById('admin-stats').innerHTML = `
-    <div class="admin-stat"><div class="num">${pendingKyc}</div><div class="lbl">Pending KYC</div></div>
-    <div class="admin-stat"><div class="num">${activePb}</div><div class="lbl">Active PlayBoys</div></div>
-    <div class="admin-stat"><div class="num">${customers}</div><div class="lbl">Customers</div></div>
-    <div class="admin-stat"><div class="num">${openTickets}</div><div class="lbl">Open Tickets</div></div>
-  `;
-
-  renderAdminContent();
-}
-
-function renderAdminContent() {
-  const box = document.getElementById('admin-content');
-  if (App.adminTab === 'pending') {
-    const pend = App.usersCache.filter(u => u.role === 'playboy' && u.status === 'kyc_pending');
-    if (!pend.length) { box.innerHTML = '<div class="empty"><span class="big">✓</span>No pending KYC</div>'; return; }
-    box.innerHTML = pend.map(u => adminUserCard(u, true)).join('');
-  } else if (App.adminTab === 'all') {
-    box.innerHTML = App.usersCache.map(u => adminUserCard(u, false)).join('');
-  } else if (App.adminTab === 'tickets') {
-    if (!App.ticketsCache.length) { box.innerHTML = '<div class="empty"><span class="big">🛟</span>No tickets</div>'; return; }
-    const sorted = [...App.ticketsCache].sort((a, b) => b.createdAt - a.createdAt);
-    box.innerHTML = sorted.map(t => `
-      <div class="admin-user-card">
-        <div class="head">
-          <div class="av">${t.userRole === 'playboy' ? '👨' : '👤'}</div>
-          <div class="det">
-            <h4>${escapeHtml(t.userName)} <span style="font-size:11px;color:var(--muted)">(${t.userRole})</span></h4>
-            <p>${escapeHtml(t.subject)} · ${new Date(t.createdAt).toLocaleString()}</p>
-          </div>
-        </div>
-        <div style="font-size:13px;margin-bottom:10px;padding:10px;background:var(--bg3);border-radius:8px">
-          ${escapeHtml(t.message)}
-        </div>
-        ${t.reply ?
-          `<div class="reply" style="background:var(--bg3);padding:10px;border-radius:8px;border-left:3px solid var(--success);margin-bottom:10px"><strong>Reply:</strong> ${escapeHtml(t.reply)}</div>` :
-          `<textarea id="reply-${t.tid}" placeholder="Type reply..." style="margin-bottom:8px;min-height:60px"></textarea>
-           <button class="btn btn-success btn-sm" onclick="adminReply('${t.tid}')">Send Reply</button>`
-        }
-        <div style="font-size:11px;color:var(--muted);margin-top:8px">📞 ${escapeHtml(t.phone || 'N/A')}</div>
-      </div>
-    `).join('');
-  }
-}
-
-function adminUserCard(u, showKyc) {
-  let statusBadge = '';
-  if (u.status === 'active') statusBadge = '<span class="status accepted">Active</span>';
-  else if (u.status === 'kyc_pending') statusBadge = '<span class="status pending">KYC Pending</span>';
-  else if (u.status === 'rejected') statusBadge = '<span class="status rejected">Rejected</span>';
-  else if (u.status === 'blocked') statusBadge = '<span class="status blocked">Blocked</span>';
-
-  let kycPreview = '';
-  if (u.kyc) {
-    kycPreview = `
-      <div class="id-preview">
-        ${u.kyc.idPhoto ? `<img src="${u.kyc.idPhoto}" onclick="viewImage('${u.kyc.idPhoto}')">` : ''}
-        ${u.kyc.selfie ? `<img src="${u.kyc.selfie}" onclick="viewImage('${u.kyc.selfie}')">` : ''}
-      </div>
-      <div style="font-size:11px;color:var(--muted);margin-top:6px">
-        ID: ${escapeHtml(u.kyc.idType || '')} · ${escapeHtml((u.kyc.idNum || '').replace(/(.{4})/g, '$1 '))}
-      </div>`;
-  }
-
-  let actions = '';
-  if (u.status === 'kyc_pending') {
-    actions = `
-      <button class="btn btn-success btn-sm" onclick="adminApprove('${u.uid}')">✓ Approve</button>
-      <button class="btn btn-danger btn-sm" onclick="adminReject('${u.uid}')">✕ Reject</button>
-    `;
-  } else if (u.status === 'active') {
-    actions = `<button class="btn btn-danger btn-sm" onclick="adminBlock('${u.uid}')">🚫 Block</button>`;
-  } else if (u.status === 'blocked' || u.status === 'rejected') {
-    actions = `<button class="btn btn-success btn-sm" onclick="adminApprove('${u.uid}')">✓ Unblock/Approve</button>`;
-  }
-
-  return `
-    <div class="admin-user-card">
-      <div class="head">
-        <div class="av">${avatarHTML(u)}</div>
-        <div class="det">
-          <h4>${escapeHtml(u.name)} ${statusBadge}</h4>
-          <p>@${escapeHtml(u.username)} · ${u.role}</p>
-        </div>
-      </div>
-      <div class="info-row">📞 <strong>${escapeHtml(u.phone || 'N/A')}</strong></div>
-      ${u.email ? `<div class="info-row">📧 <strong>${escapeHtml(u.email)}</strong></div>` : ''}
-      ${u.role === 'playboy' ? `
-        <div class="info-row">💰 Rate: <strong>₹${u.rate || 0}/hr</strong></div>
-        <div class="info-row">📍 City: <strong>${escapeHtml(u.city || 'N/A')}</strong></div>
-      ` : ''}
-      ${showKyc ? kycPreview : (u.kyc ? kycPreview : '')}
-      <div class="admin-actions">${actions}</div>
-    </div>
-  `;
-}
-
-window.viewImage = function(src) {
-  document.getElementById('modal-content').innerHTML = `
-    <div class="modal-handle"></div>
-    <img src="${src}" style="width:100%;border-radius:12px">
-    <button class="btn btn-ghost mt-2" onclick="closeModal()">Close</button>
-  `;
-  document.getElementById('modal').classList.add('active');
-};
-
-window.adminApprove = async function(uid) {
-  try {
-    await update(ref(db, 'users/' + uid), { status: 'active', verified: true, kycDone: true });
-    toast('Approved ✓', 'success');
-    renderAdmin();
-  } catch (e) { toast('Failed', 'error'); }
-};
-
-window.adminReject = async function(uid) {
-  const reason = prompt('Rejection reason (optional):', 'KYC not clear');
-  try {
-    await update(ref(db, 'users/' + uid), { status: 'rejected', verified: false });
-    toast('Rejected', 'success');
-    renderAdmin();
-  } catch { toast('Failed', 'error'); }
-};
-
-window.adminBlock = async function(uid) {
-  if (!confirm('Block this user?')) return;
-  try {
-    await update(ref(db, 'users/' + uid), { status: 'blocked' });
-    toast('Blocked', 'success');
-    renderAdmin();
-  } catch { toast('Failed', 'error'); }
-};
-
-window.adminReply = async function(tid) {
-  const inp = document.getElementById('reply-' + tid);
-  const reply = inp.value.trim();
-  if (!reply) return toast('Write reply', 'error');
-  try {
-    await update(ref(db, 'tickets/' + tid), { reply, status: 'replied', repliedAt: Date.now() });
-    toast('Reply sent', 'success');
-    renderAdmin();
-  } catch { toast('Failed', 'error'); }
-};
-
-/* ============================================================
-   BOTTOM NAV
-   ============================================================ */
-function navHTML(active, items) {
-  return items.map(i => `
-    <a class="${active === i.key ? 'active' : ''}" onclick="go('${i.key}')">
-      <span class="icon">${i.icon}</span><span>${i.label}</span>
-    </a>
-  `).join('');
-}
-
-function setupCustomerNav(active) {
-  document.getElementById('nav-customer').innerHTML = navHTML(active, [
-    { key: 'home', icon: '🏠', label: 'Home' },
-    { key: 'chatlist', icon: '💬', label: 'Chat' },
-    { key: 'bookings', icon: '📋', label: 'Bookings' },
-    { key: 'support', icon: '🛟', label: 'Support' }
-  ]);
-}
-function setupPlayboyNav(active) {
-  document.getElementById('nav-playboy').innerHTML = navHTML(active, [
-    { key: 'pbhome', icon: '👨', label: 'Profile' },
-    { key: 'chatlist', icon: '💬', label: 'Chat' },
-    { key: 'bookings', icon: '📋', label: 'Bookings' },
-    { key: 'support', icon: '🛟', label: 'Support' }
-  ]);
-  document.getElementById('nav-chatlist').innerHTML = navHTML('chatlist', [
-    { key: 'pbhome', icon: '👨', label: 'Profile' },
-    { key: 'chatlist', icon: '💬', label: 'Chat' },
-    { key: 'bookings', icon: '📋', label: 'Bookings' },
-    { key: 'support', icon: '🛟', label: 'Support' }
-  ]);
-  document.getElementById('nav-bookings').innerHTML = navHTML('bookings', [
-    { key: 'pbhome', icon: '👨', label: 'Profile' },
-    { key: 'chatlist', icon: '💬', label: 'Chat' },
-    { key: 'bookings', icon: '📋', label: 'Bookings' },
-    { key: 'support', icon: '🛟', label: 'Support' }
-  ]);
-  document.getElementById('nav-support').innerHTML = navHTML('support', [
-    { key: 'pbhome', icon: '👨', label: 'Profile' },
-    { key: 'chatlist', icon: '💬', label: 'Chat' },
-    { key: 'bookings', icon: '📋', label: 'Bookings' },
-    { key: 'support', icon: '🛟', label: 'Support' }
-  ]);
-}
-function setupSupportNav() {
-  if (App.me.role === 'customer') {
-    document.getElementById('nav-support').innerHTML = navHTML('support', [
-      { key: 'home', icon: '🏠', label: 'Home' },
-      { key: 'chatlist', icon: '💬', label: 'Chat' },
-      { key: 'bookings', icon: '📋', label: 'Bookings' },
-      { key: 'support', icon: '🛟', label: 'Support' }
-    ]);
-    document.getElementById('nav-chatlist').innerHTML = navHTML('chatlist', [
-      { key: 'home', icon: '🏠', label: 'Home' },
-      { key: 'chatlist', icon: '💬', label: 'Chat' },
-      { key: 'bookings', icon: '📋', label: 'Bookings' },
-      { key: 'support', icon: '🛟', label: 'Support' }
-    ]);
-    document.getElementById('nav-bookings').innerHTML = navHTML('bookings', [
-      { key: 'home', icon: '🏠', label: 'Home' },
-      { key: 'chatlist', icon: '💬', label: 'Chat' },
-      { key: 'bookings', icon: '📋', label: 'Bookings' },
-      { key: 'support', icon: '🛟', label: 'Support' }
-    ]);
-  } else {
-    setupPlayboyNav('support');
-  }
-}
-
-/* ============================================================
-   MODAL
-   ============================================================ */
-window.closeModal = function() { document.getElementById('modal').classList.remove('active'); };
-
-/* ============================================================
-   INIT
-   ============================================================ */
-async function init() {
+// Init — auto-redirect if logged in
+(async function init() {
   await new Promise(r => setTimeout(r, 300));
   document.getElementById('loader').style.display = 'none';
+  document.getElementById('mainWrap').style.display = 'flex';
 
   const saved = localStorage.getItem('currentUser');
-  const admin = sessionStorage.getItem('admin');
-  if (admin) { App.admin = admin; go('admin'); return; }
   if (saved) {
     try {
-      const { uid } = JSON.parse(saved);
+      const { uid, role } = JSON.parse(saved);
       const snap = await get(ref(db, 'users/' + uid));
       if (snap.exists()) {
-        App.me = snap.val();
-        if (App.me.status === 'blocked') { App.me = null; localStorage.removeItem('currentUser'); go('landing'); return; }
-        if (App.me.role === 'playboy') {
-          go(App.me.status === 'kyc_pending' ? 'setup' : 'pbhome');
-        } else {
-          go('home');
+        const user = snap.val();
+        if (user.status === 'blocked') {
+          localStorage.removeItem('currentUser');
+          return;
         }
-        return;
+        window.location.href = role === 'playboy' ? 'profile.html' : 'home.html';
+      } else {
+        localStorage.removeItem('currentUser');
       }
     } catch {}
-    localStorage.removeItem('currentUser');
   }
-  go('landing');
-}
-
-init();
-
-// Expose toast, go etc to window
-window.toast = window.toast || toast;
+})();
 </script>
 </body>
 </html>
